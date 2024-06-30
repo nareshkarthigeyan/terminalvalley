@@ -10,13 +10,20 @@ class Player
     string name;
     float bankBalance;
     float luck = 0;
+    int mineLevel;
 
     void createPlayer()
     {
         cout << "Enter the name of the player: ";
         getline(cin, name);
         bankBalance = 1000.0;
+        mineLevel = 0;
         cout << "Created " << name << " with initial Bank Balance: " << bankBalance << endl;
+    }
+
+    void display()
+    {
+        cout << "Name: " << name << "\nBank Balance: $" << bankBalance << "\nLuck: " << luck << endl;
     }
 };
 
@@ -62,25 +69,39 @@ class Gamble
         return gambleAtRisk(gambleAmount, gamemode);
     }
 };
+void gamble(Player &player);
+void mine(Player &player);
 
-int main(void){
-    Player  player;
-    player.createPlayer();
+void mainmenu(Player &player)
+{
+    cout << "Player: " << player.name << "\nBank Balance: $" << player.bankBalance << endl << endl;
+    cout << "GAME ACTIONS" << "\na) Gamble\nm) mine\n>> ";
+    char response[2] = {'a', '\0'};
+    cin >> response[0];
+
+    switch (response[0])
+    {
+    case 'a':
+        gamble(player);
+        break;
+
+    case 'm':
+        mine(player);
+    
+    default:
+        break;
+    }
+
+}
+
+void gamble(Player &player)
+{
     char response[2]; // +1 for the null terminator.
     response[1] = '\0';
     float gambleAmount;
-    int luck = 0;
-    float moneyAdded;
     while(true)
     {
-        cout << "Bank balance: " << player.bankBalance << endl;
-        cout << "Do you wanna gamble? (y/n): ";
-        cin >> response[0];
-        if (response[0] == 'n' || response[0] == 'N')
-        {
-            break;
-        }
-        else{
+        cout << "Current Bank balance: " << player.bankBalance << endl;
             do {    
                 cout << "Enter gamble amount: ";
                 cin >> gambleAmount;
@@ -107,32 +128,45 @@ int main(void){
             cout << "You made a loss of "  << profit <<  " for " << gambleAmount << " Thats a " << (profit)/gambleAmount*100 <<  "\% decrease. Bad luck!" << endl << endl;
             player.bankBalance += gambleAmount - profit;
         }
+        cout << "Do you want to gamble again? (y/n): ";
+        cin >> response[0];
+        if (response[0] == 'n' || response[0] == 'N')
+        {
+            break;
+        }
     }
+}
+
+void mine(Player &player)
+{
+    cout << "You have entered the mine at mine level " << player.mineLevel << ". Enter 'm' to mine the ground.\n";
+    char res = 'a';
+    while(true)
+    {
+        cout << ">> ";
+        cin >> res;
+        if (res != 'm')
+        {
+            break;     
+        }
+        cout << "mining the ground..." << endl;
+        sleep(1);
+        //mining logic
     }
+    cout << "exiting mine..." << endl;
+    sleep(2);
+}
 
-    // //FUN:
-    // gambleAmount = player.bankBalance;
-    // float initialAmount =  gambleAmount;
-    // for (int i = 0; i < 100; i++){
-    // srand(time(0));
-    //     player.bankBalance -= gambleAmount;
+int main(void){
+    Player  player;
+    player.createPlayer();
 
-    //     sleep(1);
-    //     Gamble session;
-    //     float profit = session.highRisk(gambleAmount);
-    //     int pf = rand();
-    //     if (pf % 2 == 0){
-    //         // Profit:
-    //         player.bankBalance += gambleAmount + profit;
-    //         cout << i << ". \t" <<  player.bankBalance << "\tProfit: " << profit << "\t" << (profit)/gambleAmount*100 <<  "%" << endl;
-    //     }
-    //     else{
-    //         player.bankBalance += gambleAmount - profit;
-    //         cout << i << ". \t" << player.bankBalance << "\tLoss: " << profit << "\t" << (profit)/gambleAmount*100 <<  "%" << endl;
-    //     }
-    // }
-    // float finalAmount = player.bankBalance;
-    // cout << "SUMMARY" << endl << "Intiial Amount: " << initialAmount << endl << "Final Amount: " << finalAmount << endl << "\% increase/decrease = " << initialAmount / finalAmount * 100 << endl;
+    while(true)
+    {
+        mainmenu(player);
+        cout << "Details: \n";
+        player.display();
+    }
     return 0;
 }
 
