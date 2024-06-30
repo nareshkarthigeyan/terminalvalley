@@ -20,6 +20,8 @@ struct tool
     string name;
     int level {0};
     float health {100};
+    int waitTimeByLevel[5] = {5, 3, 2, 1, 0};
+
 };
 
 class Inventory
@@ -28,15 +30,27 @@ class Inventory
     bool hasPickaxe = false;
 
     tool pickaxe = {"Pickaxe", 0};
-    tool fishingRod = {"Fishin Rod", 0};
-    item dirt = {"Dirt", 0, 0.1};
-    item rock = {"Rock", 0, 0.2};
-    item iron = {"Iron", 0, 0.5};
+    tool fishingRod = {"Fishing Rod", 0};
 
+    //Rarity - lower, the rarer
+    item dirt = {"Dirt", 0, 0.99};
+    item rock = {"Rock", 0, 0.98};
+    item wood = {"Iron", 0, 0.87};
+    item coal = {"Coal", 0, 0.69};
+    item granite = {"Granite", 0, 0.76};
+    item iron = {"Iron", 0, 0.38};
+    item copper = {"Copper", 0, 0.47};
+    item hardRock = {"Hard Rock", 0, 0.68};
+    item gold = {"Gold", 0, 0.145};
+    item diamond = {"Diamond", 0, 0.09};
+    item ruby = {"Ruby", 0, 0.08};
+    item blackStone = {"Black Stone", 0, 0.58};
+    item magma = {"Magma", 0, 0.17};
+    item bedrock = {"Bedrock", 0, 0.25};
 
     vector<item> getItems()
     {
-        vector<item> items = {dirt, rock, iron};
+        vector<item> items = {dirt, rock, wood, coal, granite, iron, copper, hardRock, gold, diamond, ruby, blackStone, magma, bedrock};
         return items;
     }
     vector<tool> getTools()
@@ -65,7 +79,7 @@ class Player : public Inventory
     public:
     string name;
     float bankBalance;
-    float luck = 0;
+    float luck {1};
     int timesMined;
 
     void createPlayer()
@@ -144,7 +158,7 @@ class Mine
         }
     }
 
-    void display(Player &player)
+    int getMineLevelAsInt(Player &player)
     {
         int currentMineLevel = 0;
         int minesLeft;
@@ -167,6 +181,13 @@ class Mine
             }
 
         }
+        return currentMineLevel;
+    }
+
+    void display(Player &player)
+    {
+        int currentMineLevel = getMineLevelAsInt(player);
+        int minesLeft;
         minesLeft = mineLevels[currentMineLevel + 1] - player.timesMined;
         minesLeft = minesLeft == 0 ? mineLevels[currentMineLevel + 1] : minesLeft;
         cout << "Times Mined: " << player.timesMined << endl;
@@ -177,26 +198,113 @@ class Mine
 
     void mine(Player &player)
     {
-        vector<item> items = player.getItems();
+        int mineLevel = getMineLevelAsInt(player);
         int x = rand() % 101;
+        int y = ((rand() % 14)) * player.luck;
+        string mineable[10];
+        float mineableRarity[10];
+        int mineableCount[2] = {0, 3};           //                         0    1      2    3      4       5       6       7       8       9       10      11      12      13
+        vector<item> items = player.getItems();  // vector<item> items = {dirt, rock, wood, coal, granite, iron, copper, hardRock, gold, diamond, ruby, blackStone, magma, bedrock};
+        switch (mineLevel)
+        {
+        case 0:
+            mineableCount[0] = 0;
+            mineableCount[1] = 3;
+            break;
+        case 1:
+            mineableCount[0] = 0;
+            mineableCount[1] = 4;
+            break;
+        case 2:
+            mineableCount[0] = 1;
+            mineableCount[1] = 5;
+            break;
+        case 3:
+            mineableCount[0] = 1;
+            mineableCount[1] = 6;
+            break;
+        case 4:
+            mineableCount[0] = 2;
+            mineableCount[1] = 6;
+            break;
+        case 5:
+            mineableCount[0] = 3;
+            mineableCount[1] = 7;
+            break;
+        case 6:
+            mineableCount[0] = 4;
+            mineableCount[1] = 8;
+            break;
+        case 7:
+            mineableCount[0] = 4;
+            mineableCount[1] = 9;
+            break;
+        case 8:
+            mineableCount[0] = 5;
+            mineableCount[1] = 9;
+            break;
+        case 9:
+            mineableCount[0] = 5;
+            mineableCount[1] = 10;
+            break;
+        case 10:
+            mineableCount[0] = 5;
+            mineableCount[1] = 11;
+            break;
+        case 11:
+            mineableCount[0] = 5;
+            mineableCount[1] = 12;
+            break;
+        case 12:
+            mineableCount[0] = 5;
+            mineableCount[1] = 13;
+            break;
+        default:
+            break;
+        }
 
-        if (x < 30)
+        for (int i = 0, j = mineableCount[0]; i < mineableCount[1]; i ++, j++)
         {
-            cout << "You found dirt!" << endl;
-            player.dirt.count++;
+            mineable[i] = items[mineableCount[j]].name;
+            mineableRarity[i] = items[mineableCount[j]].rareity * player.luck;
         }
-        else if (x < 85)
-        {
-            cout << "You found rock!" << endl;
-            player.rock.count++;
-        }
-        else
-        {
-            cout << "You found Iron!" << endl;
-            player.iron.count++;
-        }
+
+        //mining logic here:
 
     }
+
+    void enter(Player player)
+    {
+        cout << "You have entered the mine. Enter 'm' to mine the ground. and 'd' to show your current status, and 'i' to view inventory.\n";
+        char res = 'a';
+        while(true)
+        {
+            cout << ">> ";
+            cin >> res;
+            if (res == 'd')
+            {
+                display(player);
+                continue;
+            }
+            if (res == 'i')
+            {
+                player.displayInventory();
+                continue;
+            }
+            if (res != 'm')
+            {
+                break;     
+            }
+            cout << "mining..." << endl;
+            player.timesMined++;
+            getMineLevel(player);
+            // sleep(player.pickaxe.waitTimeByLevel[player.pickaxe.level]);
+            mine(player);
+            //mining logic
+        }
+        cout << "exiting mine..." << endl;
+        sleep(2);
+        }
 
 };
 
@@ -272,35 +380,7 @@ void gamble(Player &player)
 void mine(Player &player)
 {
     Mine mine;
-    cout << "You have entered the mine. Enter 'm' to mine the ground. and 'd' to show your current status, and 'i' to view inventory.\n";
-    char res = 'a';
-    while(true)
-    {
-        cout << ">> ";
-        cin >> res;
-        if (res == 'd')
-        {
-            mine.display(player);
-            continue;
-        }
-        if (res == 'i')
-        {
-            player.displayInventory();
-            continue;
-        }
-        if (res != 'm')
-        {
-            break;     
-        }
-        cout << "mining..." << endl;
-        player.timesMined++;
-        mine.getMineLevel(player);
-        sleep(1);
-        mine.mine(player);
-        //mining logic
-    }
-    cout << "exiting mine..." << endl;
-    sleep(2);
+    mine.enter(player);
 }
 
 int main(void){
