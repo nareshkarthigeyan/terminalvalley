@@ -23,24 +23,12 @@ class Player
 class Gamble
 {
     private:
-    float lowRisk(float money)
+    float gambleAtRisk(float money, int riskLevel)
     {
-        float x = (rand() % 28000);
+        const int riskFactor[3] = {22000, 54000, 111000};
+        float x = (rand() % riskFactor[riskLevel]);
         float profit;
             profit = ((x/(100000))*money);
-        return profit;
-    }
-    float mediumRisk(float money)
-    {
-        float x = (rand() % 61000);
-        float profit;
-            profit = ((x/(100000))*money);
-        return profit;
-    }
-    float highRisk(float money)
-    {
-        float x = (rand() % 111000);
-        float profit = ((x/(100000))*money);
         return profit;
     }
 
@@ -63,28 +51,15 @@ class Gamble
         {
             return 2;
         }
-        return 3;
+        return 1;
     }
     int gamble(float gambleAmount, int gamemode)
     {
-        switch (gamemode)
+        if (gamemode < 0 || gamemode > 2)
         {
-        case 0:
-            return lowRisk(gambleAmount);
-            break;
-        
-        case 1:
-            return mediumRisk(gambleAmount);
-            break;
-
-        case 2:
-            return highRisk(gambleAmount);
-            break;
-
-        default:
-            return mediumRisk(gambleAmount);
-            break;
+            gamemode = 1;
         }
+        return gambleAtRisk(gambleAmount, gamemode);
     }
 };
 
@@ -114,28 +89,22 @@ int main(void){
                     cout << "Insufficient Balance! Try again with less bet money." << endl;
                 }
             } while (gambleAmount > player.bankBalance);
-        cout << "SUMMARY:" << endl << "You are gambling " << gambleAmount / player.bankBalance* 100 << "% of your funds" << endl;
         player.bankBalance -= gambleAmount;
 
         Gamble session;
         int gamemode = session.chooseGameMode();
+        cout << "You are gambling " << gambleAmount / player.bankBalance* 100 << "% of your total funds" << endl;
         float profit = session.gamble(gambleAmount, gamemode);
         int pf = rand();
         cout << "gambling...";
         sleep(2);
-        if (pf % 2 == 0){
+        if (pf % 2 == 0){ // 50% chance only - add more randomness.... TO DO
             // Profit:
-
-            cout << "You made " << profit << " Profit! Thats a " << (profit)/gambleAmount*100 <<  "% increase! Congrats!" << endl;
+            cout << "You made " << profit << " Profit for " << gambleAmount << " Thats a " << (profit)/gambleAmount*100 <<  "% increase! Congrats!" << endl;
             player.bankBalance += gambleAmount + profit;
         }
         else{
-            while(pf >= gambleAmount * (0.67))
-            {
-                pf = pf / 2;
-            }
-            float profitAmout = pf / gambleAmount * 100;
-            cout << "You made a loss of "  << profit <<  "! Thats a " << (profit)/gambleAmount*100 <<  "\% decrease. Bad luck!" << endl << endl;
+            cout << "You made a loss of "  << profit <<  " for " << gambleAmount << " Thats a " << (profit)/gambleAmount*100 <<  "\% decrease. Bad luck!" << endl << endl;
             player.bankBalance += gambleAmount - profit;
         }
     }
