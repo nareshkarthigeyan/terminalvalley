@@ -18,6 +18,13 @@ int randInt(int min, int max)
     return distr(gen);
 }
 
+void showMessage(string s1, string s2, int timeOut)
+{
+    cout << s1;
+    sleep(timeOut);
+    cout << s2;
+}
+
 struct item
 {
     string name;
@@ -115,13 +122,14 @@ class Player : public Inventory
     float luck {1};
     int timesMined;
 
+    bool firstTime = true;
+
     void createPlayer()
     {
         cout << "Enter the name of the player: ";
         getline(cin, name);
-        bankBalance = 1000.0;
+        bankBalance = 0;
         timesMined = 0;
-        cout << "Created " << name << " with initial Bank Balance: " << bankBalance << endl;
     }
 
     void display()
@@ -182,12 +190,41 @@ class Mine
 
     void getMineLevel(Player &player)
     {
+        if (player.firstTime)
+        {
+            showMessage("...\n", "*blink* *blink*\n", 2);
+            sleep(2);
+            showMessage("[looks around] ", "Where am I?\n", 2);
+            sleep(2);
+            showMessage("in a...", " terminal?\n", 3);
+            sleep(3);
+        }
+        player.firstTime = false;
+
         for (int i = 0; i < MAX_MINE_LEVELS; i++)
         {
             if(player.timesMined == mineLevels[i])
             {
                 cout << "You are at mine level " << i << "." << endl;
             }
+        }
+
+        switch(player.timesMined)
+        {
+            case 0:
+            showMessage("Click 'm' to start mining...\n", "", 0);
+            break;
+            case 3:
+            showMessage("The items you mine would be stored in your inventory...\n", "click 'i' on the prompt menu to access it.\n", 1);
+            break;
+            case 6:
+            showMessage("Mining takes so long...\n", "If only there was a way to speed things up...\n", 1);
+            break;
+            case 9:
+            showMessage("To get details about your position in the mine, enter 'd' into the terminal when in the mine.\n", "", 0);
+            break;
+            case 10:
+            showMessage("oh... and you can quit the mine by entering 'q'\n", "", 0);
         }
     }
 
@@ -309,12 +346,10 @@ class Mine
         {
             totalWeight += mineable[i].weight;
         }
-        cout << totalWeight << endl;
         float random = static_cast<float>(rand()) / static_cast<float>(RAND_MAX) * totalWeight;
         item selecteditem;
 
         float accWeight = 0;
-        cout << random << endl;
         for(int i = 0; i < mineableCount[1]; i++)
         {
             accWeight += mineable[i].weight;
@@ -332,9 +367,9 @@ class Mine
 
     }
 
-    void enter(Player player)
+    void enter(Player &player)
     {
-        cout << "You have entered the mine. Enter 'm' to mine the ground. and 'd' to show your current status, and 'i' to view inventory.\n";
+        getMineLevel(player);
         char res = 'a';
         while(true)
         {
@@ -350,14 +385,18 @@ class Mine
                 player.displayInventory();
                 continue;
             }
-            if (res != 'm')
+            if (res == 'q')
             {
                 break;     
+            }
+            if (res != 'm')
+            {
+                continue;
             }
             cout << "mining..." << endl;
             player.timesMined++;
             getMineLevel(player);
-            // sleep(player.pickaxe.waitTimeByLevel[player.pickaxe.level]);
+            sleep(player.pickaxe.waitTimeByLevel[player.pickaxe.level]);
             mine(player);
             //mining logic
         }
@@ -374,18 +413,21 @@ void mine(Player &player);
 void mainmenu(Player &player)
 {
     cout << "Player: " << player.name << "\nBank Balance: $" << player.bankBalance << endl << endl;
-    cout << "GAME ACTIONS" << "\na) Gamble\nm) mine\n>> ";
+    cout << "GAME ACTIONS" << "\nm) mine\ng) gamble\ni) view inventory\nb) bank\nw) check weather\n>> ";
     char response[2] = {'a', '\0'};
     cin >> response[0];
 
     switch (response[0])
     {
-    case 'a':
+    case 'g':
         gamble(player);
         break;
 
     case 'm':
         mine(player);
+
+    case 'i':
+        player.displayInventory();
     
     default:
         break;
@@ -446,22 +488,27 @@ int main(void){
     Player  player;
     player.createPlayer();
 
+    if(player.firstTime)
+    {
+        mine(player);
+        player.firstTime = false;
+    }
+
     while(true)
     {
         mainmenu(player);
-        cout << "Details: \n";
-        player.display();
     }
     return 0;
 }
 
 /*
 TO DO:
-- Class of players with their own bank account for PvP?
-- low risk, high risk, and meduim risk mode
-- better stats
-- ability to take loan from the bank + paying back.
-- use money to buy upgrades.
-- store the data in a file to retirve and use it to play again.
-- auto gambling market (like universal paperclip model)
+- Make better monologue (maybe a guide talking to you and getting your name, uk.)
+- introduce market (to sell and buy)
+- introuce weather system (that determines luck, cannot be changed for next 7 - 15 mines);
+- introduce bank (40% of the time there will be a lunch break)
+- introduce to buy pickaxe - level one, increases weight  of iron, granite by 0.2, reduce wait time by 1 second. price: 750;
+- introduce missions (like side quests)
+- event based main menu... so fun!!!
+SO MANY IDEAS
 */
