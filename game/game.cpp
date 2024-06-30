@@ -1,12 +1,66 @@
 #include <iostream>
 #include <cstdlib>
 #include <unistd.h>
+#include <iterator>
+#include <vector>
 
 #define MAX_MINE_LEVELS 12
 
 using namespace std;
 
-class Player
+struct item
+{
+    string name;
+    int count {0};
+    float rareity;
+};
+
+struct tool
+{
+    string name;
+    int level {0};
+    float health {100};
+};
+
+class Inventory
+{
+    public:
+    bool hasPickaxe = false;
+
+    tool pickaxe = {"Pickaxe", 0};
+    tool fishingRod = {"Fishin Rod", 0};
+    item dirt = {"Dirt", 0, 0.1};
+    item rock = {"Rock", 0, 0.2};
+    item iron = {"Iron", 0, 0.5};
+
+
+    vector<item> getItems()
+    {
+        vector<item> items = {dirt, rock, iron};
+        return items;
+    }
+    vector<tool> getTools()
+    {
+        vector<tool> tools = {pickaxe, fishingRod};
+        return tools;
+    }
+
+    void displayInventory(){
+        vector<item> items = getItems();
+        vector<tool> tools = getTools();
+        for (int i =0; i < items.size(); i++)
+        {
+            if(items[i].count > 0)
+            {
+                cout << items[i].name << ": " << items[i].count << endl;
+            }
+        }
+    }
+
+    
+};
+
+class Player : public Inventory
 {
     public:
     string name;
@@ -28,6 +82,7 @@ class Player
         cout << "Name: " << name << "\nBank Balance: $" << bankBalance << "\nLuck: " << luck << endl;
     }
 };
+
 
 class Gamble
 {
@@ -95,14 +150,14 @@ class Mine
         int minesLeft;
         for (int i = 1; i < MAX_MINE_LEVELS - 2; i++)
         {
-            if(player.timesMined < 55)
+            if(player.timesMined < mineLevels[0])
             {
                 currentMineLevel = 0;
                 break;
             }
-            else if (player.timesMined > 1001)
+            else if (player.timesMined > mineLevels[MAX_MINE_LEVELS - 1])
             {
-                currentMineLevel = 7;
+                currentMineLevel = MAX_MINE_LEVELS;
                 break;
             }
             
@@ -117,6 +172,29 @@ class Mine
         cout << "Times Mined: " << player.timesMined << endl;
         cout << "Current Mine Level: " << currentMineLevel << endl;
         cout << "Mines left to reach next mine level: " << minesLeft << endl;
+
+    }
+
+    void mine(Player &player)
+    {
+        vector<item> items = player.getItems();
+        int x = rand() % 101;
+
+        if (x < 30)
+        {
+            cout << "You found dirt!" << endl;
+            player.dirt.count++;
+        }
+        else if (x < 85)
+        {
+            cout << "You found rock!" << endl;
+            player.rock.count++;
+        }
+        else
+        {
+            cout << "You found Iron!" << endl;
+            player.iron.count++;
+        }
 
     }
 
@@ -194,7 +272,7 @@ void gamble(Player &player)
 void mine(Player &player)
 {
     Mine mine;
-    cout << "You have entered the mine. Enter 'm' to mine the ground. and 'd' to show your current status.\n";
+    cout << "You have entered the mine. Enter 'm' to mine the ground. and 'd' to show your current status, and 'i' to view inventory.\n";
     char res = 'a';
     while(true)
     {
@@ -205,14 +283,20 @@ void mine(Player &player)
             mine.display(player);
             continue;
         }
+        if (res == 'i')
+        {
+            player.displayInventory();
+            continue;
+        }
         if (res != 'm')
         {
             break;     
         }
-        cout << "mining the ground..." << endl;
+        cout << "mining..." << endl;
         player.timesMined++;
         mine.getMineLevel(player);
-        // sleep(1);
+        sleep(1);
+        mine.mine(player);
         //mining logic
     }
     cout << "exiting mine..." << endl;
