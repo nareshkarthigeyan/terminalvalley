@@ -2,6 +2,8 @@
 #include <cstdlib>
 #include <unistd.h>
 
+#define MAX_MINE_LEVELS 12
+
 using namespace std;
 
 class Player
@@ -10,14 +12,14 @@ class Player
     string name;
     float bankBalance;
     float luck = 0;
-    int mineLevel;
+    int timesMined;
 
     void createPlayer()
     {
         cout << "Enter the name of the player: ";
         getline(cin, name);
         bankBalance = 1000.0;
-        mineLevel = 0;
+        timesMined = 0;
         cout << "Created " << name << " with initial Bank Balance: " << bankBalance << endl;
     }
 
@@ -69,6 +71,58 @@ class Gamble
         return gambleAtRisk(gambleAmount, gamemode);
     }
 };
+
+class Mine
+{
+    public:
+    int mineLevels[MAX_MINE_LEVELS] = {0, 55, 127, 377, 695, 889, 780, 1001, 2350, 3978, 5111, 7500};
+
+
+    void getMineLevel(Player &player)
+    {
+        for (int i = 0; i < 8; i++)
+        {
+            if(player.timesMined == mineLevels[i])
+            {
+                cout << "You are at mine level " << i << "." << endl;
+            }
+        }
+    }
+
+    void display(Player &player)
+    {
+        int currentMineLevel = 0;
+        int minesLeft;
+        for (int i = 1; i < MAX_MINE_LEVELS - 2; i++)
+        {
+            if(player.timesMined < 55)
+            {
+                currentMineLevel = 0;
+                break;
+            }
+            else if (player.timesMined > 1001)
+            {
+                currentMineLevel = 7;
+                break;
+            }
+            
+            if (player.timesMined > mineLevels[i - 1] && player.timesMined < mineLevels[i + 1])
+            {
+                currentMineLevel = i - 1;
+            }
+
+        }
+        minesLeft = mineLevels[currentMineLevel + 1] - player.timesMined;
+        minesLeft = minesLeft == 0 ? mineLevels[currentMineLevel + 1] : minesLeft;
+        cout << "Times Mined: " << player.timesMined << endl;
+        cout << "Current Mine Level: " << currentMineLevel << endl;
+        cout << "Mines left to reach next mine level: " << minesLeft << endl;
+
+    }
+
+};
+
+
 void gamble(Player &player);
 void mine(Player &player);
 
@@ -139,18 +193,26 @@ void gamble(Player &player)
 
 void mine(Player &player)
 {
-    cout << "You have entered the mine at mine level " << player.mineLevel << ". Enter 'm' to mine the ground.\n";
+    Mine mine;
+    cout << "You have entered the mine. Enter 'm' to mine the ground. and 'd' to show your current status.\n";
     char res = 'a';
     while(true)
     {
         cout << ">> ";
         cin >> res;
+        if (res == 'd')
+        {
+            mine.display(player);
+            continue;
+        }
         if (res != 'm')
         {
             break;     
         }
         cout << "mining the ground..." << endl;
-        sleep(1);
+        player.timesMined++;
+        mine.getMineLevel(player);
+        // sleep(1);
         //mining logic
     }
     cout << "exiting mine..." << endl;
