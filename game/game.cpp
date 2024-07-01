@@ -40,6 +40,8 @@ struct item
     float rareity {1};
     float luckFactor {1};
     float weight = WEIGHT / rareity;
+    float sellPrice;
+    float buyPrice;
     
 };
 
@@ -48,13 +50,13 @@ struct tool
     string name;
     int level {0};
     float health {100};
-    int waitTimeByLevel[5] = {5, 3, 2, 1, 0};
+    int waitTimeByLevel[5] = {6, 5, 4, 3, 2}; //to change
 
 };
 
 struct event
 {
-    bool occured{false};
+    bool occured{false}; //change to false before game
     int timesOccured {0};
 };
 
@@ -68,16 +70,16 @@ class Inventory
     tool fishingRod = {"Fishing Rod", 0};
 
     //Rarity - lower, the rarer
-    item dirt = {"Dirt", 0, 0.80};
+    item dirt = {"Dirt", 0, 0.85};
     item rock = {"Rock", 0, 0.75};
-    item wood = {"Wood", 0, 0.45};
-    item coal = {"Coal", 0, 0.70};
-    item granite = {"Granite", 0, 0.380};
-    item iron = {"Iron", 0, 0.15};
-    item copper = {"Copper", 0, 0.15};
-    item hardRock = {"Hard Rock", 0, 0.12};
-    item gold = {"Gold", 0, 0.08};
-    item diamond = {"Diamond", 0, 0.05};
+    item wood = {"Wood", 0, 0.68};
+    item coal = {"Coal", 0, 0.72};
+    item granite = {"Granite", 0, 0.38};
+    item iron = {"Iron", 0, 0.21};
+    item copper = {"Copper", 0, 0.22};
+    item hardRock = {"Hard Rock", 0, 0.19};
+    item gold = {"Gold", 0, 0.09};
+    item diamond = {"Diamond", 0, 0.06};
     item ruby = {"Ruby", 0, 0.04};
     item blackStone = {"Black Stone", 0, 0.10};
     item magma = {"Magma", 0, 0.07};
@@ -93,6 +95,21 @@ class Inventory
     {
         vector<item*> items = {&dirt, &rock, &wood, &coal, &granite, &iron, &copper, &hardRock, &gold, &diamond, &ruby, &blackStone, &magma, &bedrock};
         return items;
+    }
+
+    vector <item*> getActiveItems()
+    {
+        vector<item*> items = getItemsByAddress();
+        vector<item*> activeItems;
+
+        for (int i = 0; i < items.size(); i++)
+        {
+            if(items[i]->count != 0)
+            {
+                activeItems.push_back(items[i]);
+            }
+        }
+        return activeItems;
     }
 
     vector<tool> getTools()
@@ -225,6 +242,115 @@ class Events
         sleep(2);
         cout << endl;
         sleep(2);
+
+    }
+};
+
+class Market
+{
+    public:
+    double basePrice = 10.0;
+    double priceMultiplyer = 100.0;
+
+    vector<item*> setPrices(vector<item*> items)
+    {
+        for(int i = 0; i < items.size(); i++)
+        {
+            items[i]->sellPrice = basePrice * pow(priceMultiplyer, 1.0 - items[i]->rareity);
+        }
+        return items;
+    }
+
+    void menu(Player &player)
+    {
+        basePrice *= player.luck;
+        priceMultiplyer *= player.luck;
+        cout << "You have entered the market... buckle up!" << endl;
+        sleep(1);
+        cout << "s) SELL\nb) BUY\nq) quit market\n>> ";
+        char res[2] = {'a', '\n'};
+        cin >> res[0];
+
+        if (res[0] == 's')
+        {
+            while (true)
+            {
+                sell(player);
+
+                char r;
+                cout << "Do you want to continue selling? (y)\n>> ";
+                cin >> r;
+
+                if(r != 'y')
+                {
+                    break;
+                }
+
+            }
+            
+        }
+        else if (res[0] == 'b')
+        {
+            buy();
+        }
+    }
+    void sell(Player &player)
+    {
+        // vector<item*> activeItems = player.getActiveItems(); //
+        // cout << "active items recieved to sell fn" << endl;
+        vector<item*> items = setPrices(player.getActiveItems());
+
+        if (items.size() > 0)
+        {
+            for (int i = 0; i < items.size(); i++)
+            {
+                cout <<  i + 1 << ") " << items[i]->name << ": $" << items[i]->sellPrice << " per unit \t|\t You have: " << items[i]->count << "." << endl;
+            }
+
+            cout <<  "0) Quit"<< endl;
+            int res;
+            do
+            {
+            cout << "Sell Item by index >> ";
+            cin >> res;
+            } while (res > items.size() || res < 0);
+            
+            res--;
+
+            if(res == -1)
+            {
+                return;
+            }
+
+            for (int i = 0; i < items.size(); i++)
+            {
+                if(items[i] == items[res])
+                {
+                    cout << "You have: [" << items[res]->count << items[res]->name << "] - Sell price: [$" << items[res]->sellPrice << "] per unit." << " (Max profit: [" << items[res]->sellPrice * items[res]->count << "])" << endl;
+
+                    int countSelling;
+                    do
+                    {
+                        cout << "Enter Quantity >> ";
+                        cin >> countSelling;
+
+                    } while(countSelling < 0 || countSelling > items[res]->count);
+
+                    player.bankBalance += items[res]->sellPrice * countSelling;
+                    cout << "selling..." << endl;
+                    items[res]->count -= countSelling;
+                    sleep(2);
+                    cout << "Business sucessful!\n\t+ " << items[res]->sellPrice * countSelling << "$.\tKa-ching!" << endl;
+                    sleep(1);
+                }
+            }
+            return;
+
+            
+        }
+    }
+    void buy()
+    {
 
     }
 };
@@ -435,7 +561,7 @@ class Mine
             }
             random -= mineable[i].weight;
         }
-        int count = (randInt(1, 15) * selecteditem.rareity) + 1;
+        int count = (randInt(0, 7) * selecteditem.rareity) + 1;
         
         cout << "You got " << count  << " pieces of " << selecteditem.name << endl;
         player.incrementItemCount(selecteditem.name, count);
@@ -494,7 +620,7 @@ void mine(Player &player);
 void mainmenu(Player &player)
 {
     cout << "Player: " << player.name << "\nBank Balance: $" << player.bankBalance << endl << endl;
-    cout << "GAME ACTIONS" << "\nm) mine\ng) gamble\ni) view inventory\nb) bank\nw) check weather\n>> ";
+    cout << "GAME ACTIONS" << "\nm) mine\ng) gamble\ni) view inventory\ns) Market\nb) bank\nw) check weather\n>> ";
     char response[2] = {'a', '\0'};
     cin >> response[0];
 
@@ -506,10 +632,18 @@ void mainmenu(Player &player)
 
     case 'm':
         mine(player);
+        break;
 
     case 'i':
         player.displayInventory();
-    
+        break;
+
+    case 's':
+    {
+        Market market;
+        market.menu(player);
+        break;
+    }
     default:
         break;
     }
