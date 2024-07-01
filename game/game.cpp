@@ -3,24 +3,12 @@
 #include <unistd.h>
 #include <random>
 #include <vector>
+#include "utiliteS.h"
 
 #define MAX_MINE_LEVELS 12
 #define WEIGHT 1
 
 using namespace std;
-
-void clearScreen() {
-    std::cout << "\033[2J\033[1;1H"; // ANSI escape code to clear screen and move cursor to home position
-}
-
-int randInt(int min, int max)
-{
-    //Stack overflowed this part... IDK
-    random_device rd; // obtain a random number from hardware
-    mt19937 gen(rd()); // seed the generator
-    uniform_int_distribution<> distr(min, max);
-    return distr(gen);
-}
 
 void showMessage(string s1 = "", string s2 = "", int timeOut = 0, string name = "")
 {
@@ -141,7 +129,24 @@ class Inventory
     
 };
 
-class Player : public Inventory
+
+
+class PlayerEvents
+{
+    public:
+    //Event List
+    //boot event:
+    event firstBoot;
+
+    //mine events
+    event inventoryUnlock;
+    event mineDetailsUnlock;
+    event quitMineUnlock;
+    event shopUnlock;
+};
+
+
+class Player : public Inventory, public PlayerEvents
 {
     public:
     string name;
@@ -151,7 +156,6 @@ class Player : public Inventory
 
     bool firstTime = true;
 
-    event firstBoot;
 
     void createPlayer(string namePrompt)
     {
@@ -169,7 +173,7 @@ class Player : public Inventory
 class Events 
 {
     public:
-    void firstBoot(Player &player)
+    void FirstBoot(Player &player)
     {
         clearScreen();
         showMessage("...","*blinks*", 2, "???");
@@ -216,7 +220,7 @@ class Events
         
 
 
-        sleep(3);
+        sleep(2);
         clearScreen();
         sleep(2);
         cout << endl;
@@ -290,16 +294,19 @@ class Mine
             showMessage("This might take a while...", "", 0);
             break;
             case 3:
-            showMessage("The items you mine would be stored in your inventory...", "click 'i' on the prompt menu to access it.\n", 1);
+            showMessage("The items you mine would be stored in your inventory...", "click 'i' on the prompt menu to access it.", 1);
+            player.inventoryUnlock.occured = true;
             break;
             case 6:
-            showMessage("Mining takes so long...", "If only there was a way to speed things up...\n", 1);
+            showMessage("Mining takes so long...", "If only there was a way to speed things up...", 1);
             break;
             case 9:
             showMessage("To get details about your position in the mine, enter 'd' into the terminal when in the mine.", "", 0);
+            player.mineDetailsUnlock.occured = true;
             break;
             case 10:
             showMessage("And you can quit the mine by entering 'q'.", "", 0);
+            player.quitMineUnlock.occured = true;
         }
     }
 
@@ -442,24 +449,24 @@ class Mine
         getMineLevel(player);
         }
         else {
-            cout << "You are now in a mine. Enter 'm' to mine it...";
+            cout << "It's dark. You are now in a mine. Enter 'm' to mine it..." << endl;
         }
         char res = 'a';
         while(true)
         {
             cout << ">> ";
             cin >> res;
-            if (res == 'd')
+            if (res == 'd' && player.mineDetailsUnlock.occured)
             {
                 display(player);
                 continue;
             }
-            if (res == 'i')
+            if (res == 'i' && player.inventoryUnlock.occured)
             {
                 player.displayInventory();
                 continue;
             }
-            if (res == 'q')
+            if (res == 'q' && player.quitMineUnlock.occured)
             {
                 break;     
             }
@@ -564,7 +571,7 @@ int main(void){
     if (!player.firstBoot.occured)
     {
         Events event;
-        event.firstBoot(player);
+        event.FirstBoot(player);
         mine(player);
     }
     player.firstBoot.occured = true;
@@ -586,5 +593,8 @@ TO DO:
 - introduce to buy pickaxe - level one, increases weight  of iron, granite by 0.2, reduce wait time by 1 second. price: 750;
 - introduce missions (like side quests)
 - event based main menu... so fun!!!
+
+- introduce shop at 20 mines
+- in the shop, as soon as you sell, introduce banks
 SO MANY IDEAS
 */
