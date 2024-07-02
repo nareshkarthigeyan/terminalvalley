@@ -36,11 +36,11 @@ void showMessage(string s1 = "", string s2 = "", int timeOut = 0, string name = 
 struct item
 {
     string name;
-    int count {0};
+    int count {0}; // change to 0
     float rareity {1};
+    long double sellPrice;
     float luckFactor {1};
     float weight = WEIGHT / rareity;
-    float sellPrice;
     float buyPrice;
     
 };
@@ -50,13 +50,13 @@ struct tool
     string name;
     int level {0};
     float health {100};
-    int waitTimeByLevel[5] = {6, 5, 4, 3, 2}; //to change
+    int waitTimeByLevel[5] = {0, 5, 4, 3, 2}; //to change
 
 };
 
 struct event
 {
-    bool occured{false}; //change to false before game
+    bool occured{true}; //change to false before game
     int timesOccured {0};
 };
 
@@ -70,30 +70,32 @@ class Inventory
     tool fishingRod = {"Fishing Rod", 0};
 
     //Rarity - lower, the rarer
-    item dirt = {"Dirt", 0, 0.85};
-    item rock = {"Rock", 0, 0.75};
-    item wood = {"Wood", 0, 0.68};
-    item coal = {"Coal", 0, 0.72};
-    item granite = {"Granite", 0, 0.38};
-    item iron = {"Iron", 0, 0.21};
-    item copper = {"Copper", 0, 0.22};
-    item hardRock = {"Hard Rock", 0, 0.19};
-    item gold = {"Gold", 0, 0.09};
-    item diamond = {"Diamond", 0, 0.06};
-    item ruby = {"Ruby", 0, 0.04};
-    item blackStone = {"Black Stone", 0, 0.10};
-    item magma = {"Magma", 0, 0.07};
-    item bedrock = {"Bedrock", 0, 0.03};
+    item dirt = {"Dirt", 0, 0.85, 1.79};
+    item rock = {"Rock", 0, 0.75, 2.75};
+    item wood = {"Wood", 0, 0.68, 3.25};
+    item coal = {"Coal", 0, 0.72, 5.60};
+    item granite = {"Granite", 0, 0.58, 7.68};
+    item iron = {"Iron", 0, 0.31, 25.11};
+    item copper = {"Copper", 0, 0.28, 23.21};
+    item silver = {"Silver", 0, 0.27, 69.69};
+    item tin = {"Tin", 0, 0.23, 71.42};
+    item hardRock = {"Hard Rock", 0, 0.19, 159.76};
+    item gold = {"Gold", 0, 0.09, 595.23};
+    item diamond = {"Diamond", 0, 0.06, 2800.53};
+    item ruby = {"Ruby", 0, 0.04, 3500.77};
+    item blackStone = {"Black Stone", 0, 0.10, 975.21};
+    item magma = {"Magma", 0, 0.09, 7200.33};
+    item bedrock = {"Bedrock", 0, 0.08, 10000.11};
 
     vector<item> getItems()
     {
-        vector<item> items = {dirt, rock, wood, coal, granite, iron, copper, hardRock, gold, diamond, ruby, blackStone, magma, bedrock};
+        vector<item> items = {dirt, rock, wood, coal, granite, iron, copper, silver, tin, hardRock, gold, diamond, ruby, blackStone, magma, bedrock};
         return items;
     }
 
     vector<item*> getItemsByAddress()
     {
-        vector<item*> items = {&dirt, &rock, &wood, &coal, &granite, &iron, &copper, &hardRock, &gold, &diamond, &ruby, &blackStone, &magma, &bedrock};
+        vector<item*> items = {&dirt, &rock, &wood, &coal, &granite, &iron, &copper, &silver, &tin, &hardRock, &gold, &diamond, &ruby, &blackStone, &magma, &bedrock};
         return items;
     }
 
@@ -104,6 +106,7 @@ class Inventory
 
         for (int i = 0; i < items.size(); i++)
         {
+           // items[i]->count = 1; //remove this
             if(items[i]->count != 0)
             {
                 activeItems.push_back(items[i]);
@@ -167,7 +170,7 @@ class Player : public Inventory, public PlayerEvents
 {
     public:
     string name;
-    float bankBalance;
+    long double bankBalance;
     float luck {1};
     int timesMined;
 
@@ -249,14 +252,14 @@ class Events
 class Market
 {
     public:
-    double basePrice = 10.0;
-    double priceMultiplyer = 100.0;
+    double basePrice = 0.25;
+    double priceMultiplyer = 10.0;
 
     vector<item*> setPrices(vector<item*> items)
     {
         for(int i = 0; i < items.size(); i++)
         {
-            items[i]->sellPrice = basePrice * pow(priceMultiplyer, 1.0 - items[i]->rareity);
+            items[i]->sellPrice *= basePrice * pow(priceMultiplyer, 1 - items[i]->rareity);
         }
         return items;
     }
@@ -478,60 +481,60 @@ class Mine
         int mineLevel = getMineLevelAsInt(player);
         item mineable[25];
         int mineableCount[2] = {0, 3};           //                         0    1      2    3      4       5       6       7       8       9       10      11      12      13
-        vector<item> items = player.getItems();  // vector<item> items = {dirt, rock, wood, coal, granite, iron, copper, hardRock, gold, diamond, ruby, blackStone, magma, bedrock};
+        vector<item> items = player.getItems();  // vector<item> items = {dirt, rock, wood, coal, granite, iron, copper, silver, tin,   hardRock, gold, diamond, ruby, blackStone, magma, bedrock}; vector<item*> items = {&dirt, &rock, &wood, &coal, &granite, &iron, &copper, &silver, &tin, &hardRock, &gold, &diamond, &ruby, &blackStone, &magma, &bedrock};
         switch (mineLevel)
         {
         case 0:
             mineableCount[0] = 0;
-            mineableCount[1] = 3;
+            mineableCount[1] = 4;
             break;
         case 1:
             mineableCount[0] = 0;
-            mineableCount[1] = 4;
+            mineableCount[1] = 5;
             break;
         case 2:
             mineableCount[0] = 0;
-            mineableCount[1] = 5;
+            mineableCount[1] = 6;
             break;
         case 3:
             mineableCount[0] = 0;
-            mineableCount[1] = 6;
+            mineableCount[1] = 7;
             break;
         case 4:
             mineableCount[0] = 0;
-            mineableCount[1] = 6;
+            mineableCount[1] = 8;
             break;
         case 5:
             mineableCount[0] = 0;
-            mineableCount[1] = 7;
+            mineableCount[1] = 9;
             break;
         case 6:
             mineableCount[0] = 0;
-            mineableCount[1] = 8;
+            mineableCount[1] = 10;
             break;
         case 7:
             mineableCount[0] = 0;
-            mineableCount[1] = 9;
+            mineableCount[1] = 11;
             break;
         case 8:
             mineableCount[0] = 0;
-            mineableCount[1] = 9;
+            mineableCount[1] = 12;
             break;
         case 9:
             mineableCount[0] = 0;
-            mineableCount[1] = 10;
+            mineableCount[1] = 14;
             break;
         case 10:
             mineableCount[0] = 0;
-            mineableCount[1] = 11;
+            mineableCount[1] = 15;
             break;
         case 11:
             mineableCount[0] = 0;
-            mineableCount[1] = 12;
+            mineableCount[1] = 15;
             break;
         case 12:
             mineableCount[0] = 0;
-            mineableCount[1] = 13;
+            mineableCount[1] = 15;
             break;
         default:
             break;
