@@ -7,6 +7,8 @@
 #include "utiliteS.h"
 #include <sstream>
 #include <string>
+#include <vector>
+#include <algorithm>
 
 #define MAX_MINE_LEVELS 12
 #define WEIGHT 1
@@ -71,13 +73,13 @@ struct tool
     string name;
     int level {0};
     float health {100};
-    int waitTimeByLevel[5] = {0, 5, 4, 3, 2}; //to change
+    int waitTimeByLevel[5] = {6, 5, 4, 3, 2}; //to change
 
 };
 
 struct event
 {
-    bool occured{true}; //change to false before game
+    bool occured{false}; //change to false before game
     int timesOccured {0};
 };
 
@@ -368,7 +370,7 @@ class Market
             {
                 if(items[i] == items[res])
                 {
-                    cout << "You have: [" << items[res]->count << items[res]->name << "] - Sell price: [$" << items[res]->sellPrice << "] per unit." << " (Max profit: [" << moneyAsString(items[res]->sellPrice * items[res]->count) << "])" << endl;
+                    cout << "You have: [" << items[res]->name << " - " << items[res]->count << "] - Sell price: [$" << items[res]->sellPrice << "] per unit." << " (Max profit: [" << moneyAsString(items[res]->sellPrice * items[res]->count) << "])" << endl;
 
                     int countSelling;
                     do
@@ -523,7 +525,7 @@ class Mine
     {
 
         int mineLevel = getMineLevelAsInt(player);
-        item* mineable[25];
+        vector<item*> mineable;
         int mineableCount[2] = {0, 3};           //                         0    1      2    3      4       5       6       7       8       9       10      11      12      13
         vector<item*> items = player.getItemsByAddress();  // vector<item> items = {dirt, rock, wood, coal, granite, iron, copper, silver, tin,   hardRock, gold, diamond, ruby, blackStone, magma, bedrock}; vector<item*> items = {&dirt, &rock, &wood, &coal, &granite, &iron, &copper, &silver, &tin, &hardRock, &gold, &diamond, &ruby, &blackStone, &magma, &bedrock};
         player.caluclateWeights(items);
@@ -584,7 +586,7 @@ class Mine
 
         for (int i = 0, j = mineableCount[0]; i < mineableCount[1]; i++, j++)
         {
-            mineable[i] = items[j];
+            mineable.push_back(items[j]);
         }
 
         float totalWeight = 0;
@@ -593,26 +595,42 @@ class Mine
             totalWeight += mineable[i]->weight;
         }
 
+        int itemRepeatCount = player.dualItems.occured ? randInt(2,3) : 1;
+        cout << "You got: " << endl;
 
-        float random = static_cast<float>(rand()) / static_cast<float>(RAND_MAX) * totalWeight;
-        item* selecteditem;
+        for(int i = 0; i < itemRepeatCount; i++){
+            float random = static_cast<float>(rand()) / static_cast<float>(RAND_MAX) * totalWeight;
+            item* selecteditem;
 
-        float accWeight = 0;
-        for(int i = 0; i < mineableCount[1]; i++)
-        {
-            accWeight += mineable[i]->weight;
-            if(random < accWeight)
+            float accWeight = 0;
+            for(int i = 0; i < mineableCount[1]; i++)
             {
-                selecteditem = mineable[i];
-                break;
+                accWeight += mineable[i]->weight;
+                if(random < accWeight)
+                {
+                    selecteditem = mineable[i];
+                    break;
+                }
+                random -= mineable[i]->weight;
             }
-            random -= mineable[i]->weight;
+            int itemCountByLevel = 7;
+            int count = (randInt(1, itemCountByLevel) * selecteditem->rareity) + 1;
+            
+            cout << count  << " pieces of " << selecteditem->name << endl;
+            player.incrementItemCount(selecteditem->name, count);
+
+             auto it = find(mineable.begin(), mineable.end(), selecteditem);
+                if (it != mineable.end())
+                {
+                    mineable.erase(it);
+                    // Recalculate total weight after removal
+                    totalWeight = 0;
+                    for (auto& itemPtr : mineable)
+                    {
+                        totalWeight += itemPtr->weight;
+                    }
+                }
         }
-        int itemCountByLevel = 15;
-        int count = (randInt(1, itemCountByLevel) * selecteditem->rareity) + 1;
-        
-        cout << "You got " << count  << " pieces of " << selecteditem->name << endl;
-        player.incrementItemCount(selecteditem->name, count);
 
 
     }
