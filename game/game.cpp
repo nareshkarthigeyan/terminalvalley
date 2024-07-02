@@ -100,7 +100,7 @@ class Inventory
     item copper = {"Copper", 0, 0.28, 23.21};
     item silver = {"Silver", 0, 0.27, 69.69};
     item tin = {"Tin", 0, 0.23, 71.42};
-    item hardRock = {"Hard Rock", 0, 0.19, 159.76};
+    item hardRock = {"Hard Rock", 0, 0.29, 159.76};
     item gold = {"Gold", 0, 0.09, 595.23};
     item diamond = {"Diamond", 0, 0.06, 2800.53};
     item ruby = {"Ruby", 0, 0.04, 3500.77};
@@ -154,6 +154,14 @@ class Inventory
         }
     }
 
+    void caluclateWeights(vector<item*> items)
+    {
+        for (int i = 0; i < items.size(); i++)
+        {
+            items[i]->weight = WEIGHT / items[i]->rareity;
+        }
+    }
+
     void incrementItemCount(string itemName, int byThis)
     {
         vector<item*> items = getItemsByAddress(); 
@@ -183,6 +191,7 @@ class PlayerEvents
     event inventoryUnlock;
     event mineDetailsUnlock;
     event quitMineUnlock;
+    event dualItems;
     event shopUnlock;
 };
 
@@ -285,6 +294,15 @@ class Market
         return items;
     }
 
+    void resetPrices(vector<item*> items)
+    {
+        for(int i = 0; i < items.size(); i++)
+        {
+            items[i]->sellPrice /= basePrice * pow(priceMultiplyer, 1 - items[i]->rareity);
+        }
+        return;
+    }
+
     void menu(Player &player)
     {
         basePrice *= player.luck;
@@ -368,6 +386,8 @@ class Market
                     sleep(1);
                 }
             }
+
+            resetPrices(items);
             return;
 
             
@@ -425,7 +445,7 @@ class Gamble
 class Mine
 {
     public:
-    int mineLevels[MAX_MINE_LEVELS] = {0, 55, 127, 377, 695, 889, 780, 1001, 2350, 3978, 5111, 7500};
+    int mineLevels[MAX_MINE_LEVELS] = {0, 55, 127, 377, 695, 889, 780, 1001, 2350, 3978, 5112, 7500};
 
 
     void getMineLevel(Player &player)
@@ -470,6 +490,9 @@ class Mine
                 currentMineLevel = i - 1;
                 break;
             }
+            if (i == MAX_MINE_LEVELS - 2 && player.timesMined >= mineLevels[i]) {
+                currentMineLevel = i;
+            }
         }
         if (player.timesMined >= mineLevels[MAX_MINE_LEVELS - 1])
         {
@@ -500,9 +523,10 @@ class Mine
     {
 
         int mineLevel = getMineLevelAsInt(player);
-        item mineable[25];
+        item* mineable[25];
         int mineableCount[2] = {0, 3};           //                         0    1      2    3      4       5       6       7       8       9       10      11      12      13
-        vector<item> items = player.getItems();  // vector<item> items = {dirt, rock, wood, coal, granite, iron, copper, silver, tin,   hardRock, gold, diamond, ruby, blackStone, magma, bedrock}; vector<item*> items = {&dirt, &rock, &wood, &coal, &granite, &iron, &copper, &silver, &tin, &hardRock, &gold, &diamond, &ruby, &blackStone, &magma, &bedrock};
+        vector<item*> items = player.getItemsByAddress();  // vector<item> items = {dirt, rock, wood, coal, granite, iron, copper, silver, tin,   hardRock, gold, diamond, ruby, blackStone, magma, bedrock}; vector<item*> items = {&dirt, &rock, &wood, &coal, &granite, &iron, &copper, &silver, &tin, &hardRock, &gold, &diamond, &ruby, &blackStone, &magma, &bedrock};
+        player.caluclateWeights(items);
         switch (mineLevel)
         {
         case 0:
@@ -543,19 +567,16 @@ class Mine
             break;
         case 9:
             mineableCount[0] = 0;
-            mineableCount[1] = 14;
+            mineableCount[1] = 13;
             break;
         case 10:
             mineableCount[0] = 0;
-            mineableCount[1] = 15;
+            mineableCount[1] = 14;
             break;
         case 11:
-            mineableCount[0] = 0;
-            mineableCount[1] = 15;
-            break;
         case 12:
             mineableCount[0] = 0;
-            mineableCount[1] = 15;
+            mineableCount[1] = 16;
             break;
         default:
             break;
@@ -569,26 +590,30 @@ class Mine
         float totalWeight = 0;
         for (int i = 0; i < mineableCount[1]; i++)
         {
-            totalWeight += mineable[i].weight;
+            totalWeight += mineable[i]->weight;
         }
+
+
         float random = static_cast<float>(rand()) / static_cast<float>(RAND_MAX) * totalWeight;
-        item selecteditem;
+        item* selecteditem;
 
         float accWeight = 0;
         for(int i = 0; i < mineableCount[1]; i++)
         {
-            accWeight += mineable[i].weight;
+            accWeight += mineable[i]->weight;
             if(random < accWeight)
             {
                 selecteditem = mineable[i];
                 break;
             }
-            random -= mineable[i].weight;
+            random -= mineable[i]->weight;
         }
-        int count = (randInt(0, 7) * selecteditem.rareity) + 1;
+        int itemCountByLevel = 15;
+        int count = (randInt(1, itemCountByLevel) * selecteditem->rareity) + 1;
         
-        cout << "You got " << count  << " pieces of " << selecteditem.name << endl;
-        player.incrementItemCount(selecteditem.name, count);
+        cout << "You got " << count  << " pieces of " << selecteditem->name << endl;
+        player.incrementItemCount(selecteditem->name, count);
+
 
     }
 
