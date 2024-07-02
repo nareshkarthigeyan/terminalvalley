@@ -1,9 +1,12 @@
 #include <iostream>
+#include <iomanip>
 #include <cstdlib>
 #include <unistd.h>
 #include <random>
 #include <vector>
 #include "utiliteS.h"
+#include <sstream>
+#include <string>
 
 #define MAX_MINE_LEVELS 12
 #define WEIGHT 1
@@ -31,6 +34,24 @@ void showMessage(string s1 = "", string s2 = "", int timeOut = 0, string name = 
     cout << s2 << endl;
     }
 
+}
+
+string moneyAsString(long double money, int precision = 2) {
+    ostringstream numStr;
+    numStr << fixed << setprecision(precision) << money;
+    string numStrStr = numStr.str();
+
+    int n = numStrStr.find('.');
+    string integerPart = (n == string::npos) ? numStrStr : numStrStr.substr(0, n);
+    string fractionalPart = (n == string::npos) ? "" : numStrStr.substr(n);
+
+    int insertPosition = integerPart.length() - 3;
+    while (insertPosition > 0) {
+        integerPart.insert(insertPosition, ",");
+        insertPosition -= 3;
+    }
+
+    return integerPart + fractionalPart;
 }
 
 struct item
@@ -186,7 +207,7 @@ class Player : public Inventory, public PlayerEvents
 
     void display()
     {
-        cout << "Name: " << name << "\nBank Balance: $" << bankBalance << "\nLuck: " << luck << endl;
+        cout << "Name: " << name << "\nBank Balance: $" << moneyAsString(bankBalance) << "\nLuck: " << luck << endl;
     }
 };
 
@@ -329,7 +350,7 @@ class Market
             {
                 if(items[i] == items[res])
                 {
-                    cout << "You have: [" << items[res]->count << items[res]->name << "] - Sell price: [$" << items[res]->sellPrice << "] per unit." << " (Max profit: [" << items[res]->sellPrice * items[res]->count << "])" << endl;
+                    cout << "You have: [" << items[res]->count << items[res]->name << "] - Sell price: [$" << items[res]->sellPrice << "] per unit." << " (Max profit: [" << moneyAsString(items[res]->sellPrice * items[res]->count) << "])" << endl;
 
                     int countSelling;
                     do
@@ -343,7 +364,7 @@ class Market
                     cout << "selling..." << endl;
                     items[res]->count -= countSelling;
                     sleep(2);
-                    cout << "Business sucessful!\n\t+ " << items[res]->sellPrice * countSelling << "$.\tKa-ching!" << endl;
+                    cout << "Business sucessful!\n\t+ " << moneyAsString(items[res]->sellPrice * countSelling) << "$.\tKa-ching!" << endl;
                     sleep(1);
                 }
             }
@@ -622,7 +643,7 @@ void mine(Player &player);
 
 void mainmenu(Player &player)
 {
-    cout << "Player: " << player.name << "\nBank Balance: $" << player.bankBalance << endl << endl;
+    cout << "Player: " << player.name << "\nBank Balance: $" << moneyAsString(player.bankBalance) << endl << endl;
     cout << "GAME ACTIONS" << "\nm) mine\ng) gamble\ni) view inventory\ns) Market\nb) bank\nw) check weather\n>> ";
     char response[2] = {'a', '\0'};
     cin >> response[0];
@@ -660,7 +681,7 @@ void gamble(Player &player)
     float gambleAmount;
     while(true)
     {
-        cout << "Current Bank balance: " << player.bankBalance << endl;
+        cout << "Current Bank balance: " << moneyAsString( player.bankBalance ) << endl;
             do {    
                 cout << "Enter gamble amount: ";
                 cin >> gambleAmount;
@@ -673,18 +694,18 @@ void gamble(Player &player)
 
         Gamble session;
         int gamemode = session.chooseGameMode();
-        cout << "You are gambling " << gambleAmount / player.bankBalance* 100 << "% of your total funds" << endl;
+        cout << "You are gambling " << (gambleAmount / player.bankBalance) * 100 << "% of your total funds" << endl;
         float profit = session.gamble(gambleAmount, gamemode);
         int pf = rand();
         cout << "gambling...";
         sleep(2);
         if (pf % 2 == 0){ // 50% chance only - add more randomness.... TO DO
             // Profit:
-            cout << "You made " << profit << " Profit for " << gambleAmount << " Thats a " << (profit)/gambleAmount*100 <<  "% increase! Congrats!" << endl;
+            cout << "You made " << moneyAsString(profit) << " Profit for " << moneyAsString( gambleAmount ) << " Thats a " << ((profit)/gambleAmount)*100 <<  "% increase! Congrats!" << endl;
             player.bankBalance += gambleAmount + profit;
         }
         else{
-            cout << "You made a loss of "  << profit <<  " for " << gambleAmount << " Thats a " << (profit)/gambleAmount*100 <<  "\% decrease. Bad luck!" << endl << endl;
+            cout << "You made a loss of "  << moneyAsString(profit) <<  " for " << moneyAsString(gambleAmount) << " Thats a " << (profit/gambleAmount)*100 <<  "\% decrease. Bad luck!" << endl << endl;
             player.bankBalance += gambleAmount - profit;
         }
         cout << "Do you want to gamble again? (y/n): ";
