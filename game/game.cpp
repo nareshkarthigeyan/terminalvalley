@@ -89,6 +89,15 @@ struct event
     int timesOccured {0};
 };
 
+class NPC
+{
+    public:
+    string name;
+    string description;
+    int interactionCount;
+    vector<string> dialogues;
+
+};
 
 class Inventory
 {
@@ -205,6 +214,7 @@ class PlayerEvents
     //bank events:
     event bankBoot;
     event bankOnLunchBreak;
+    event loansUnlocked;
 };
 
 
@@ -231,6 +241,39 @@ class Player : public Inventory, public PlayerEvents
         cout << "Name: " << name << "\nBank Balance: $" << moneyAsString(bankBalance) << "\nLuck: " << luck << endl;
     }
 };
+
+//NPC INIT:
+NPC Vivian = {"Vivian", "Bank Handler", 0};
+NPC Manjunath = {"Manjunath", "Buyer. Likes Dad Jokes", 0};
+NPC HomelessMan = {"Homeless Man", "Asks for spare change. Claims to be your guardian angel", 0};
+NPC Redacted = {"???", "Player guide.", 0};
+NPC System42 = {"System42", "Prevents 4th wall breaks.", 0};
+NPC Sally = {"Sally", "Weather report girl", 0};
+NPC Rick = {"Rick", "Guild Master", 0};
+
+void npcDialogueInit(Player &player)
+{
+    Vivian.dialogues = {"Heyy... " + player.name + "! How's it going?", "You know, sometimes, the bank manager says I need to be more polite, but I don't understand - aren't I poilite enough?", "I wonder what's for lunch today... spheggati would be nice!",
+                        "Do you need a loan?", "Tell me " + player.name + "... don't you think pinapple pizza is a crime?", "The best food is eaten when you're the most hungry!", "I have so much paperwork left...! It's making me so hungry!!",
+                        "I'm really looking forward to my lunch today!", "I went to my best friend's marriage the other day, and the food was awful!", "The bank manager is such as ass sometimes, he calls me to his cabin for no reason!",
+                        "The restaurant across the road is new, I'll go check it out after tending you.", "If the universe started from big bang, what's before big bang? What's the something that made nothing into not-nothing? Tell me " + player.name,
+                        "Hmmm... I'm not it the mood to talk now, tell me what you want?", "The best way to ask me out on a date is offer me food.", "Sometimes I think I'm not good enough, but then I see other people who are worse than me, and then I feel better.",
+                        "Am I married? Uh....", "...", "[picks nose]", "My last boyfriend was a jerk, he was the best chef in town too...", "Why does this imaginary use of numbers in economy hold so much power?", "Do you think the terminal universe also has inflation?",
+                        "It has been 3 hours not thinking about food.... oh... I just did.", "Nothing makes sense in life.", "Between you and me, the credit card system is rigged to make you poor, but that's just me though.", 
+                        "You won't believe me, but I walked into the bank manager while he was changing, and he wore panties!", "The Indian filter coffee has got to be the best coffee in the world!", "Uhm, why haven't I accepted your request on Instagram...? uh...",
+                        "Have you got any gossip?"};
+}
+
+string getDialogue(NPC npc)
+{
+    int size = npc.dialogues.size();
+    string dialogue;
+    int random = randInt(0, size - 1);
+
+    dialogue = npc.dialogues[random];
+    npc.interactionCount++;
+    return dialogue;
+}
 
 class Events 
 {
@@ -763,17 +806,54 @@ class Bank
         
         if(player.bankOnLunchBreak.occured)
         {
-            cout << "The bank is on a lunch break. Come back in a while!" << endl;
+            achievementMessage( "The bank is on a lunch break. Come back in a while!" );
+
         } else {
 
-            cout << "Name: " << player.name << endl;
-            cout << "Bank Balance: " << moneyAsString( player.bankBalance ) << endl;
-            // create debt scene later
-        }
+            showMessage(getDialogue(Vivian), "", 2, Vivian.name);
 
+            while(true)
+            {    
+            cout << "a) Check Balance\nb) Get a Loan\nq) Quit Bank\n>> ";
+            char res;
+            cin >> res;
+
+            if (res == 'a')
+            {
+                cout << "Name: " << player.name << endl;
+                cout << "Bank Balance: $" << moneyAsString( player.bankBalance ) << endl;
+
+            }
+            if (res == 'b')
+            {
+                if(!player.loansUnlocked.occured)
+                {
+                    achievementMessage("You are not eligible for bank loans as of now");
+                }
+            }
+            if (res == 'q')
+            {
+                goto quitBank;
+            }
+                cout << "Back to main screen (b)\nQuit (q)\n>> ";
+                cin >> res;
+                if(res == 'q')
+                {
+                    goto quitBank;
+                }
+                else if (res != 'b')
+                {
+                    break;
+                }
+
+            // create debt scene later
+            }
+        }
+        cout << "q) Quit Bank\n>> ";
         char res;
-        cout << "Quit Bank?\n>> ";
         cin >> res;
+        
+        quitBank:
         player.bankOnLunchBreak.occured = false;
         cout << "exiting bank..." << endl;
         sleep(1);
@@ -885,8 +965,10 @@ int main(void){
     player.firstBoot.occured = true;
     player.firstBoot.timesOccured++;
 
+    npcDialogueInit(player);
+
     player.name = "Naresh";
-    player.bankBoot.occured = false; //remove later
+    player.loansUnlocked.occured = false;
     while(true)
     {
         mainmenu(player);
