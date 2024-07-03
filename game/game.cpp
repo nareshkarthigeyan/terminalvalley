@@ -38,6 +38,12 @@ void showMessage(string s1 = "", string s2 = "", int timeOut = 0, string name = 
 
 }
 
+void achievementMessage(string s1)
+{
+    cout << "\033[1;32m" << "[ " << s1 << " ]" << "\033[0m" << std::endl;
+    return;
+}
+
 string moneyAsString(long double money, int precision = 2) {
     ostringstream numStr;
     numStr << fixed << setprecision(precision) << money;
@@ -73,13 +79,13 @@ struct tool
     string name;
     int level {0};
     float health {100};
-    int waitTimeByLevel[5] = {6, 5, 4, 3, 2}; //to change
+    int waitTimeByLevel[5] = {0, 5, 4, 3, 2}; //to change
 
 };
 
 struct event
 {
-    bool occured{false}; //change to false before game
+    bool occured{true}; //change to false before game
     int timesOccured {0};
 };
 
@@ -195,6 +201,10 @@ class PlayerEvents
     event quitMineUnlock;
     event dualItems;
     event shopUnlock;
+
+    //bank events:
+    event bankBoot;
+    event bankOnLunchBreak;
 };
 
 
@@ -278,6 +288,41 @@ class Events
         cout << endl;
         sleep(2);
 
+    }
+
+    void bankBoot(Player &player)
+    {
+        showMessage("Hello there, wanderer. Look's like you are just in time!", "We were just about to go on a lunch break!", 3, "Vivian");
+        sleep(3);
+        showMessage("My name is Vivian, and I am the local bank handler", "The best one at that, you could say!", 3, "Vivian");
+        sleep(2);
+        showMessage("[Vivian chuckles to herself]", "", 1);
+        sleep(2);
+        showMessage("Oh, the lunch break? That happens once a while, don't worry!", "Anyways, you must be the new one in town!", 3, "Vivian");
+        sleep(2);
+        ostringstream welcomeMessage;
+        welcomeMessage << player.name << "... right? Welcome!";
+        showMessage(welcomeMessage.str(), "So as per procedure, you will be given a default Savings Bank account. Should I proceed?", 2, "Vivian");
+        sleep(3);
+        showMessage("Savings acoount for......" + player.name + "...aaaaaaaannnd, done!", "", 0, "Vivian");
+        sleep(2);
+        achievementMessage("Bank account created!");
+        sleep(3);
+        showMessage("However, I would recommend you take our credit card plans they are much more benificial to us- I mean, you.", "Or, you could take a loan, at very low intrest rates starting at just 20.8%", 4, "Vivian");
+        sleep(3);
+        showMessage("[ Vivian checks her watch ]");
+        sleep(3);
+        ostringstream welcomeMessage2;
+        welcomeMessage2 << player.name << ", I would love to tell you more about our plans...";
+        showMessage(welcomeMessage2.str(), "But I need to have lunch now, so apologies, the bank must close!", 2, "Vivian");
+        sleep(2);
+        showMessage("You can always come back to the bank, to check your balance", "and maybe when you are rich enough, you can take loans from us! Assuming we are open, ofcourse, but, [in a hurry], bye for now!", 3, "Vivian");
+        sleep(6);
+        cout << "exiting bank..." << endl;
+        sleep(3);
+        cout << endl;
+
+        
     }
 };
 
@@ -680,13 +725,68 @@ class Mine
 
 };
 
+class Bank
+{
+    public:
+    long double bankBalance;
+
+    void bankBoot(Player &player)
+    {
+        cout << "Welcome to the city bank!" << endl;
+        sleep(1);
+        Events event;
+        event.bankBoot(player);
+
+    }
+
+    void enter(Player &player)
+    {
+        if(!player.bankBoot.occured)
+        {
+            bankBoot(player);
+            player.bankBoot.occured = true;
+            player.bankBoot.timesOccured++;
+            player.bankOnLunchBreak.occured = false;
+            return;
+        }
+        cout << "Welcome to the city bank!" << endl;
+        bankBalance = player.bankBalance;
+        
+        sleep(1);
+        int x = randInt(0, 100);
+
+        if (x <= 15)
+        {
+            player.bankOnLunchBreak.occured = true;
+            player.bankOnLunchBreak.timesOccured++;
+        }
+        
+        if(player.bankOnLunchBreak.occured)
+        {
+            cout << "The bank is on a lunch break. Come back in a while!" << endl;
+        } else {
+
+            cout << "Name: " << player.name << endl;
+            cout << "Bank Balance: " << moneyAsString( player.bankBalance ) << endl;
+            // create debt scene later
+        }
+
+        char res;
+        cout << "Quit Bank?\n>> ";
+        cin >> res;
+        player.bankOnLunchBreak.occured = false;
+        cout << "exiting bank..." << endl;
+        sleep(1);
+        return;
+    }
+};
 
 void gamble(Player &player);
 void mine(Player &player);
 
 void mainmenu(Player &player)
 {
-    cout << "Player: " << player.name << "\nBank Balance: $" << moneyAsString(player.bankBalance) << endl << endl;
+    // cout << "Player: " << player.name << "\nBank Balance: $" << moneyAsString(player.bankBalance) << endl << endl;
     cout << "GAME ACTIONS" << "\nm) mine\ng) gamble\ni) view inventory\ns) Market\nb) bank\nw) check weather\n>> ";
     char response[2] = {'a', '\0'};
     cin >> response[0];
@@ -711,6 +811,13 @@ void mainmenu(Player &player)
         market.menu(player);
         break;
     }
+    case 'b':
+    {
+        Bank bank;
+        bank.enter(player);
+        break;
+    }
+    
     default:
         break;
     }
@@ -778,6 +885,8 @@ int main(void){
     player.firstBoot.occured = true;
     player.firstBoot.timesOccured++;
 
+    player.name = "Naresh";
+    player.bankBoot.occured = false; //remove later
     while(true)
     {
         mainmenu(player);
