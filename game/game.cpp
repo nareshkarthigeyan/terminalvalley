@@ -9,6 +9,7 @@
 #include <string>
 #include <vector>
 #include <algorithm>
+#include <string.h>
 
 #define MAX_MINE_LEVELS 12
 #define WEIGHT 1
@@ -38,13 +39,22 @@ void showMessage(string s1 = "", string s2 = "", int timeOut = 0, string name = 
 
 }
 
+char getPlayerResponse(string s1 = "")
+{
+    char res;
+    cout << s1 << "\n>> ";
+    cin >> res;
+    return res;
+}
+
 void achievementMessage(string s1)
 {
     cout << "\033[1;32m" << "[ " << s1 << " ]" << "\033[0m" << std::endl;
     return;
 }
 
-string moneyAsString(long double money, int precision = 2) {
+string moneyAsString(long double money, int precision = 2) 
+{
     ostringstream numStr;
     numStr << fixed << setprecision(precision) << money;
     string numStrStr = numStr.str();
@@ -79,7 +89,7 @@ struct tool
     string name;
     int level {0};
     float health {100};
-    int waitTimeByLevel[5] = {0, 5, 4, 3, 2}; //to change
+    int waitTimeByLevel[5] = {1, 5, 4, 3, 2}; //to change
 
 };
 
@@ -215,6 +225,9 @@ class PlayerEvents
     event bankBoot;
     event bankOnLunchBreak;
     event loansUnlocked;
+
+    //market events
+    event sellerMarketBoot;
 };
 
 
@@ -248,20 +261,20 @@ NPC Manjunath = {"Manjunath", "Buyer. Likes Dad Jokes", 0};
 NPC HomelessMan = {"Homeless Man", "Asks for spare change. Claims to be your guardian angel", 0};
 NPC Redacted = {"???", "Player guide.", 0};
 NPC System42 = {"System42", "Prevents 4th wall breaks.", 0};
-NPC Sally = {"Sally", "Weather report girl", 0};
+NPC BillMurry = {"Bill Murry", "Weather reporter.", 0};
 NPC Rick = {"Rick", "Guild Master", 0};
 
 void npcDialogueInit(Player &player)
 {
-    Vivian.dialogues = {"Heyy... " + player.name + "! How's it going?", "You know, sometimes, the bank manager says I need to be more polite, but I don't understand - aren't I poilite enough?", "I wonder what's for lunch today... spheggati would be nice!",
-                        "Do you need a loan?", "Tell me " + player.name + "... don't you think pinapple pizza is a crime?", "The best food is eaten when you're the most hungry!", "I have so much paperwork left...! It's making me so hungry!!",
-                        "I'm really looking forward to my lunch today!", "I went to my best friend's marriage the other day, and the food was awful!", "The bank manager is such as ass sometimes, he calls me to his cabin for no reason!",
-                        "The restaurant across the road is new, I'll go check it out after tending you.", "If the universe started from big bang, what's before big bang? What's the something that made nothing into not-nothing? Tell me " + player.name,
-                        "Hmmm... I'm not it the mood to talk now, tell me what you want?", "The best way to ask me out on a date is offer me food.", "Sometimes I think I'm not good enough, but then I see other people who are worse than me, and then I feel better.",
-                        "Am I married? Uh....", "...", "[picks nose]", "My last boyfriend was a jerk, he was the best chef in town too...", "Why does this imaginary use of numbers in economy hold so much power?", "Do you think the terminal universe also has inflation?",
+    Vivian.dialogues = {"Heyy... What's up!", "You know, sometimes, the bank manager says I need to be more polite, but I don't understand - aren't I poilite enough?", "I wonder what's for lunch today... spheggati would be nice!",
+                        "Do you need a loan?", "Don't you think pinapple pizza is a crime?", "The best food is eaten when you're the most hungry!", "I have so much paperwork left...! It's making me so hungry!!",
+                        "I'm really looking forward to my lunch today!", "I went to my best friend's marriage the other day, and the food was awful!", "The bank manager is such as ass sometimes, he calls me to his cabin for no reason...",
+                        "I'll go check out the restaurant across the road after dealing with you.", "If the universe started from big bang, what's before big bang? What's the something that made nothing into not-nothing?",
+                        "I'm not it the mood to talk now, tell me what you want...", "The best way to ask me out on a date is offer me food.", "Sometimes I think I'm not good enough, but then I see other people who are worse than me, and then I feel better.",
+                        "Am I married? Uh....", "...", "[picks nose]", "My last boyfriend was a jerk, but he was the best chef in town though...", "Why does imaginary use of numbers in economy hold so much power?", "Do you think the terminal universe also has inflation?",
                         "It has been 3 hours not thinking about food.... oh... I just did.", "Nothing makes sense in life.", "Between you and me, the credit card system is rigged to make you poor, but that's just me though.", 
-                        "You won't believe me, but I walked into the bank manager while he was changing, and he wore panties!", "The Indian filter coffee has got to be the best coffee in the world!", "Uhm, why haven't I accepted your request on Instagram...? uh...",
-                        "Have you got any gossip?"};
+                        "You won't believe me, but when I walked into the bank manager while he was changing, I swear he wore panties!", "The Indian filter coffee has got to be the best coffee in the world!", "Uhm, why haven't I accepted your request on Instagram...? uh...",
+                        "Hey, have you got any gossip?", "Do I manupilate tax papers? How rude...", "I could really do for a cake right now.", "A few years back, I use to like a guy named Oscar, too bad he was gay."};
 }
 
 string getDialogue(NPC npc)
@@ -347,9 +360,11 @@ class Events
         welcomeMessage << player.name << "... right? Welcome!";
         showMessage(welcomeMessage.str(), "So as per procedure, you will be given a default Savings Bank account. Should I proceed?", 2, "Vivian");
         sleep(3);
-        showMessage("Savings acoount for......" + player.name + "...aaaaaaaannnd, done!", "", 0, "Vivian");
+        showMessage("Savings acoount for... " + player.name + " ...aaand, done!", "", 0, "Vivian");
+        sleep(1);
+        achievementMessage("Bank account Created");
         sleep(2);
-        achievementMessage("Bank account created!");
+        achievementMessage("Selling Unlocked");
         sleep(3);
         showMessage("However, I would recommend you take our credit card plans they are much more benificial to us- I mean, you.", "Or, you could take a loan, at very low intrest rates starting at just 20.8%", 4, "Vivian");
         sleep(3);
@@ -366,6 +381,36 @@ class Events
         cout << endl;
 
         
+    }
+
+    void sellerMarketBoot(Player &player)
+    {
+        string name = Manjunath.name;
+        sleep(1);
+        showMessage("[Puffs out smoke]", "*cough* *cough*", 2, name);
+        sleep(2);
+        showMessage("Ahoy there, what do we have here...", "Looks like a miner, by the outfit, I suppose", 2, name);
+        sleep(2);
+        showMessage("[Laughs at his own joke]", "You know, I really ought to look forward to this", 2, name);
+        sleep(2);
+        showMessage("My knees have given up on me", "I can no longer go up those cave no more, mine them diamonds...", 3, name);
+        sleep(2);
+        showMessage("But alas, you, young soul, can do it!", "Better than me, I suppose, ha ha ha", 2, name);
+        sleep(2);
+        showMessage("And I'll do you one better, why not...", "You can always come to me and I would buy your findings from the mine", 3, name);
+        sleep(2);
+        showMessage("For a reasonable cost, ofcourse!", "So make sure you have a bank account that I can pay you to..", 2, name);
+        sleep(2);
+        achievementMessage("Selling Unlocked");
+        achievementMessage("Bank Unlocked");
+        sleep(2);
+        showMessage("Or you could just show up to have a conversation...", "This not-so-old man can really do with some companionship...", 2, name);
+        sleep(2);
+        showMessage("exiting market...");
+        sleep(3);
+        player.sellerMarketBoot.occured = true;
+        player.sellerMarketBoot.timesOccured++;
+
     }
 };
 
@@ -395,6 +440,19 @@ class Market
 
     void menu(Player &player)
     {
+        if(!player.sellerMarketBoot.occured)
+        {
+            achievementMessage("Seller's Market Unlocked");
+            Events event;
+            event.sellerMarketBoot(player);
+            return;
+        }
+
+        if(!player.bankBoot.occured)
+        {
+            cout << "You do not have a bank account to recieve money to. Go to bank!" << endl;
+            return;
+        }
         basePrice *= player.luck;
         priceMultiplyer *= player.luck;
         cout << "You have entered the market... buckle up!" << endl;
@@ -567,6 +625,26 @@ class Mine
             case 10:
             showMessage("And you can quit the mine by entering 'q'.", "", 0);
             player.quitMineUnlock.occured = true;
+            break;
+            case 15:
+            if(!player.sellerMarketBoot.occured)
+            {
+                showMessage("You can sell the items you mine in the seller's market.");
+                achievementMessage("Seller's Market Unlocked");
+                char res;
+                while(res != 's')
+                {
+                    res = getPlayerResponse("Click 's' to enter seller's market.");
+                }
+                Events event;
+                event.sellerMarketBoot(player);
+
+                cout << "Back to mine..." << endl;
+            }
+            //seller's market cutscene
+            break;
+            
+
         }
     }
 
@@ -968,7 +1046,8 @@ int main(void){
     npcDialogueInit(player);
 
     player.name = "Naresh";
-    player.loansUnlocked.occured = false;
+    player.bankBoot.occured = false;
+    player.sellerMarketBoot.occured = false;
     while(true)
     {
         mainmenu(player);
