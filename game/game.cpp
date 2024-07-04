@@ -77,10 +77,11 @@ struct item
     string name;
     int count {0}; // change to 0
     float rareity {1};
-    long double sellPrice;
+    long double buyPrice;
+    int totalCount {0};
     float luckFactor {1};
     float weight = WEIGHT / rareity;
-    float buyPrice;
+    long double sellPrice;
     
 };
 
@@ -89,7 +90,7 @@ struct tool
     string name;
     int level {0};
     float health {100};
-    int waitTimeByLevel[5] = {1, 5, 4, 3, 2}; //to change
+    int waitTimeByLevel[5] = {0, 5, 4, 3, 2}; //to change
 
 };
 
@@ -197,6 +198,7 @@ class Inventory
             if (itemName == item->name)
             {
                 item->count += byThis;
+                item->totalCount += byThis;
                 break;
             }
         }
@@ -275,6 +277,14 @@ void npcDialogueInit(Player &player)
                         "It has been 3 hours not thinking about food.... oh... I just did.", "Nothing makes sense in life.", "Between you and me, the credit card system is rigged to make you poor, but that's just me though.", 
                         "You won't believe me, but when I walked into the bank manager while he was changing, I swear he wore panties!", "The Indian filter coffee has got to be the best coffee in the world!", "Uhm, why haven't I accepted your request on Instagram...? uh...",
                         "Hey, have you got any gossip?", "Do I manupilate tax papers? How rude...", "I could really do for a cake right now.", "A few years back, I use to like a guy named Oscar, too bad he was gay."};
+
+    Manjunath.dialogues = {"Howdy! How's the business going?", "Back in my days, we use to mine by hand, the current convinences like pickaxe never existed!", "Sometimes I feel I pay too much to you...",
+                            "What makes a good miner? Well, just keep mining and you will know...", "You know, when my wife left me for that seal navy, the only thing that kept me going was the smell of coal",
+                            "I went to the bank the other day, that lady is a peculiar one, I must say...", "In my army days, the war fleet use to have magazines with pictures of women, it was popular among the folks!",
+                            "The only thing that kept me going in darkness was the light that it didn't show me.", "Kid... don't tell me you are one of those new-age miners that disregard the beauty of hand mining... ahh those days!",
+                            "The business has been a bit rough recently", "New technologies confuse me sometimes...", "Have I ever been scammed? I don't know, you should ask me when I do.", "You ough to meet my son someday, he lives across the globe.",
+                            "I wish my son would meet me some days, he works too hard for his own good...", "My son called me the other day, he can't make it this weekend... I guess I'll have to wait for the next holiday season"};
+
 }
 
 string getDialogue(NPC npc)
@@ -414,138 +424,6 @@ class Events
     }
 };
 
-class Market
-{
-    public:
-    double basePrice = 0.25;
-    double priceMultiplyer = 10.0;
-
-    vector<item*> setPrices(vector<item*> items)
-    {
-        for(int i = 0; i < items.size(); i++)
-        {
-            items[i]->sellPrice *= basePrice * pow(priceMultiplyer, 1 - items[i]->rareity);
-        }
-        return items;
-    }
-
-    void resetPrices(vector<item*> items)
-    {
-        for(int i = 0; i < items.size(); i++)
-        {
-            items[i]->sellPrice /= basePrice * pow(priceMultiplyer, 1 - items[i]->rareity);
-        }
-        return;
-    }
-
-    void menu(Player &player)
-    {
-        if(!player.sellerMarketBoot.occured)
-        {
-            achievementMessage("Seller's Market Unlocked");
-            Events event;
-            event.sellerMarketBoot(player);
-            return;
-        }
-
-        if(!player.bankBoot.occured)
-        {
-            cout << "You do not have a bank account to recieve money to. Go to bank!" << endl;
-            return;
-        }
-        basePrice *= player.luck;
-        priceMultiplyer *= player.luck;
-        cout << "You have entered the market... buckle up!" << endl;
-        sleep(1);
-        cout << "s) SELL\nb) BUY\nq) quit market\n>> ";
-        char res[2] = {'a', '\n'};
-        cin >> res[0];
-
-        if (res[0] == 's')
-        {
-            while (true)
-            {
-                sell(player);
-
-                char r;
-                cout << "Do you want to continue selling? (y)\n>> ";
-                cin >> r;
-
-                if(r != 'y')
-                {
-                    break;
-                }
-
-            }
-            
-        }
-        else if (res[0] == 'b')
-        {
-            buy();
-        }
-    }
-    void sell(Player &player)
-    {
-        // vector<item*> activeItems = player.getActiveItems(); //
-        // cout << "active items recieved to sell fn" << endl;
-        vector<item*> items = setPrices(player.getActiveItems());
-
-        if (items.size() > 0)
-        {
-            for (int i = 0; i < items.size(); i++)
-            {
-                cout <<  i + 1 << ") " << items[i]->name << ": $" << items[i]->sellPrice << " per unit \t|\t You have: " << items[i]->count << "." << endl;
-            }
-
-            cout <<  "0) Quit"<< endl;
-            int res;
-            do
-            {
-            cout << "Sell Item by index >> ";
-            cin >> res;
-            } while (res > items.size() || res < 0);
-            
-            res--;
-
-            if(res == -1)
-            {
-                return;
-            }
-
-            for (int i = 0; i < items.size(); i++)
-            {
-                if(items[i] == items[res])
-                {
-                    cout << "You have: [" << items[res]->name << " - " << items[res]->count << "] - Sell price: [$" << items[res]->sellPrice << "] per unit." << " (Max profit: [" << moneyAsString(items[res]->sellPrice * items[res]->count) << "])" << endl;
-
-                    int countSelling;
-                    do
-                    {
-                        cout << "Enter Quantity >> ";
-                        cin >> countSelling;
-
-                    } while(countSelling < 0 || countSelling > items[res]->count);
-
-                    player.bankBalance += items[res]->sellPrice * countSelling;
-                    cout << "selling..." << endl;
-                    items[res]->count -= countSelling;
-                    sleep(2);
-                    cout << "Business sucessful!\n\t+ " << moneyAsString(items[res]->sellPrice * countSelling) << "$.\tKa-ching!" << endl;
-                    sleep(1);
-                }
-            }
-
-            resetPrices(items);
-            return;
-
-            
-        }
-    }
-    void buy()
-    {
-
-    }
-};
 
 class Gamble
 {
@@ -687,14 +565,11 @@ class Mine
         }
     }
 
-    void mine(Player &player)
-    {
 
+    void getMineableCount(Player player, int mineableCount[])
+    {
         int mineLevel = getMineLevelAsInt(player);
-        vector<item*> mineable;
-        int mineableCount[2] = {0, 3};           //                         0    1      2    3      4       5       6       7       8       9       10      11      12      13
-        vector<item*> items = player.getItemsByAddress();  // vector<item> items = {dirt, rock, wood, coal, granite, iron, copper, silver, tin,   hardRock, gold, diamond, ruby, blackStone, magma, bedrock}; vector<item*> items = {&dirt, &rock, &wood, &coal, &granite, &iron, &copper, &silver, &tin, &hardRock, &gold, &diamond, &ruby, &blackStone, &magma, &bedrock};
-        player.caluclateWeights(items);
+        mineableCount[0] = 0;
         switch (mineLevel)
         {
         case 0:
@@ -749,11 +624,32 @@ class Mine
         default:
             break;
         }
+        return;
+    }
+
+    vector<item*> getMineable(Player &player)
+    {
+         int mineLevel = getMineLevelAsInt(player);
+        vector<item*> mineable;
+        int mineableCount[2] = {0, 3};           //                         0    1      2    3      4       5       6       7       8       9       10      11      12      13
+        vector<item*> items = player.getItemsByAddress();  // vector<item> items = {dirt, rock, wood, coal, granite, iron, copper, silver, tin,   hardRock, gold, diamond, ruby, blackStone, magma, bedrock}; vector<item*> items = {&dirt, &rock, &wood, &coal, &granite, &iron, &copper, &silver, &tin, &hardRock, &gold, &diamond, &ruby, &blackStone, &magma, &bedrock};
+        player.caluclateWeights(items);
+        getMineableCount(player, mineableCount);
 
         for (int i = 0, j = mineableCount[0]; i < mineableCount[1]; i++, j++)
         {
             mineable.push_back(items[j]);
         }
+
+        return mineable;
+    }
+
+    void mine(Player &player)
+    {
+        int mineableCount[2];
+        getMineableCount(player, mineableCount);
+
+        vector<item*> mineable = getMineable(player); // and caluclate item weights;
 
         float totalWeight = 0;
         for (int i = 0; i < mineableCount[1]; i++)
@@ -803,6 +699,9 @@ class Mine
 
     void enter(Player &player)
     {
+
+        cout << "entering mine..." << endl;
+        sleep(1);
         if(player.firstBoot.occured)
         {
         getMineLevel(player);
@@ -844,6 +743,205 @@ class Mine
         sleep(2);
         }
 
+};
+
+class Market
+{
+    public:
+    double basePrice = 0.25;
+    double priceMultiplyer = 10.0;
+
+    vector<item*> setPrices(vector<item*> items, int multiplier = 1)
+    {
+        for(int i = 0; i < items.size(); i++)
+        {
+            items[i]->sellPrice = items[i]->buyPrice;
+            items[i]->sellPrice *= (basePrice * pow(priceMultiplyer, 1 - items[i]->rareity) * multiplier);
+        }
+        return items;
+    }
+
+    // void resetPrices(vector<item*> items, int multiplier = 1)
+    // {
+    //     for(int i = 0; i < items.size(); i++)
+    //     {
+    //         items[i]->sellPrice /= (basePrice * pow(priceMultiplyer, 1 - items[i]->rareity) * multiplier);
+    //     }
+    //     return;
+    // }
+
+    void menu(Player &player)
+    {
+        if(!player.sellerMarketBoot.occured)
+        {
+            achievementMessage("Seller's Market Unlocked");
+            Events event;
+            event.sellerMarketBoot(player);
+            return;
+        }
+
+        if(!player.bankBoot.occured)
+        {
+            cout << "You do not have a bank account to recieve money to. Go to bank!" << endl;
+            sleep(2);
+            cout << "exiting market..." << endl;
+            sleep(1);
+            return;
+        }
+
+        basePrice *= player.luck;
+        priceMultiplyer *= player.luck;
+        cout << "You have entered the market... buckle up!" << endl;
+        sleep(1);
+        showMessage(getDialogue(Manjunath), "", 2, Manjunath.name);
+        cout << "s) SELL\nb) BUY\nq) Quit market";
+        char res = getPlayerResponse();
+
+        if (res == 's')
+        {
+            while (true)
+            {
+                sell(player);
+
+                char r;
+                cout << "Quit Market? (y)\n>> ";
+                cin >> r;
+
+                if(r == 'y')
+                {
+                    break;
+                }
+
+            }
+            
+        }
+        else if (res == 'b')
+        {
+            buy(player);
+        }
+    }
+    void sell(Player &player)
+    {
+        // vector<item*> activeItems = player.getActiveItems(); //
+        // cout << "active items recieved to sell fn" << endl;
+
+        vector<item*> items = setPrices(player.getActiveItems());
+        if (items.size() > 0)
+        {
+            for (int i = 0; i < items.size(); i++)
+            {
+                cout <<  i + 1 << ") " << items[i]->name << ": $" << items[i]->sellPrice << " per unit \t|\t You have: " << items[i]->count << "." << endl;
+            }
+
+            cout <<  "0) Quit"<< endl;
+            int res;
+            do
+            {
+            cout << "Sell Item by index >> ";
+            cin >> res;
+            } while (res > items.size() || res < 0);
+            
+            res--;
+
+            if(res == -1)
+            {
+                return;
+            }
+
+            for (int i = 0; i < items.size(); i++)
+            {
+                if(items[i] == items[res])
+                {
+                    cout << "You have: [" << items[res]->name << " - " << items[res]->count << "] - Sell price: [$" << moneyAsString( items[res]->sellPrice ) << "] per unit." << " (Max profit: [" << moneyAsString(items[res]->sellPrice * items[res]->count) << "])" << endl;
+
+                    int countSelling;
+                    do
+                    {
+                        cout << "Enter Quantity >> ";
+                        cin >> countSelling;
+
+                    } while(countSelling < 0 || countSelling > items[res]->count);
+
+                    player.bankBalance += items[res]->sellPrice * countSelling;
+                    cout << "selling..." << endl;
+                    items[res]->count -= countSelling;
+                    sleep(2);
+                    cout << "Business sucessful!\n\t+ " << moneyAsString(items[res]->sellPrice * countSelling) << "$.\tKa-ching!" << endl;
+                    sleep(1);
+                }
+            }
+
+            // resetPrices(items);
+            return;
+
+            
+        } else {
+            achievementMessage("You have nothing to sell. Try mining for resources.");
+            // resetPrices(items);
+        }
+    }
+    void buy(Player &player)
+    {
+        Mine mine;
+        int sellerInflation = randInt(2, 6);
+        vector<item*> mineable = setPrices(mine.getMineable(player), sellerInflation);
+
+        if(mineable.size() <= 0)
+        {
+            achievementMessage("You have nothing to buy right now. Go mine for some resources to unlock buying market.");
+            sleep(3);
+            return;
+        }
+        int j = 0;
+        for (int i = 0, j = 0; i < mineable.size(); i++)
+        {
+            if(mineable[i]->totalCount > 0)
+            {
+                cout <<  j + 1 << ") " << mineable[i]->name << ": $" << moneyAsString( mineable[i]->sellPrice ) << " per unit" << endl;
+                j++;
+            };
+
+        }
+
+         cout <<  "0) Quit"<< endl;
+            int res;
+            do
+            {
+            cout << "Buy Item by index >> ";
+            cin >> res;
+            } while (res > mineable.size() || res < 0);
+            
+            res--;
+
+            if(res == -1)
+            {
+                return;
+            }
+
+            for (int i = 0; i < mineable.size(); i++)
+            {
+                if(mineable[i] == mineable[res])
+                {
+                    cout << "Your bank balance: $" << moneyAsString(player.bankBalance) << endl; 
+                    int countSelling;
+                    do
+                    {
+                        cout << "Enter Quantity >> ";
+                        cin >> countSelling;
+
+                    } while(countSelling < 0 || countSelling * mineable[i]->sellPrice > player.bankBalance);
+
+                    player.bankBalance -= mineable[res]->sellPrice * countSelling;
+                    cout << "Buying..." << endl;
+                    mineable[res]->count += countSelling;
+                    sleep(2);
+                    cout << "Purchase sucessful!\n\t- " << moneyAsString(mineable[res]->sellPrice * countSelling) << "$.\tWomp-Womp!" << endl;
+                    sleep(1);
+                }
+            }
+
+        // resetPrices(mine.getMineable(player), sellerInflation);
+    }
 };
 
 class Bank
@@ -1045,9 +1143,9 @@ int main(void){
 
     npcDialogueInit(player);
 
-    player.name = "Naresh";
-    player.bankBoot.occured = false;
-    player.sellerMarketBoot.occured = false;
+    // player.name = "Naresh";
+    // player.bankBoot.occured = false;
+    // player.sellerMarketBoot.occured = false;
     while(true)
     {
         mainmenu(player);
