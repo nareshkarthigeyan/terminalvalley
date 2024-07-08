@@ -90,7 +90,7 @@ struct tool
     string name;
     int level {0};
     float health {100};
-    int waitTimeByLevel[5] = {6, 5, 4, 3, 2}; //to change
+    int waitTimeByLevel[5] = {0, 5, 4, 3, 2}; //to change
     item required[5][2];
     int requiredCount[5][2];
     long double upgradeCost[5] = {250, 1200, 2800, 8500, 17999};
@@ -99,7 +99,7 @@ struct tool
 
 struct event
 {
-    bool occured{false}; //change to false before game
+    bool occured{true}; //change to false before game
     int timesOccured {0};
 };
 
@@ -308,7 +308,7 @@ void npcDialogueInit(Player &player)
                             "The only thing that kept me going in darkness was the light that it didn't show me.", "Kid... don't tell me you are one of those new-age miners that disregard the beauty of hand mining... ahh those days!",
                             "The business has been a bit rough recently", "New technologies confuse me sometimes...", "Have I ever been scammed? I don't know, you should ask me when I do.", "You ough to meet my son someday, he lives across the globe.",
                             "I wish my son would meet me some days, he works too hard for his own good...", "My son called me the other day, he can't make it this weekend... I guess I'll have to wait for the next holiday season",
-                            "When people ask me why she left me, I still don't know what to say...", "Items use to cost way less when I was your age, stock market has ruined everything...", "Do I hate navy seals, young soul, I don't hold anything against them.",
+                            "When people ask me why she left me, I still don't know what to say...", "Items use to cost way less when I was your age, stock market has ruined everything...", "Do I hate navy seals? Young soul, I don't hold anything against them.",
                             "Discount? I'm already offering you the best prices...", "News paper companies have really \"fell off\" now...", "I could do with one of the good ol' magazines right now...", "The older you grow, the more you realise life is meaningless",
                             "It never really gets better, we just get used to things being worse and shitty all the time."};
     
@@ -317,7 +317,7 @@ void npcDialogueInit(Player &player)
                             "Being sincere can also mean being stupid at the same time.", "[puffs out smoke]... [does not give a damn]...", "love is suffering, there is no other meaning to it", "My god, a moment of bliss, isn't that enough for this lifetime?",
                             "The secure ones are the most insecure if you watch them closely...", "I have seen the things you can never imagine...", "Nowadays all capable people are terribly afraid of being judged, hence turn into miserable pieces of shits.",
                             "I will never understand how a man of my thoughts can continue living...", "Standing against injustice? Isn't is just showing off to the world how much justice you are... a good person.", "Denial of death is the single most thing that drives us from being afraid to live.",
-                            "Why bother not being rude when all your actions are rude enough?"};
+                            "Why bother not being rude when all your actions are rude enough?", "[sings 'why this kolavery']"};
 
 }
 
@@ -945,7 +945,7 @@ class Market
 
         if(!player.bankBoot.occured)
         {
-            cout << "You do not have a bank account to recieve money to. Go to bank!" << endl;
+            achievementMessage("You do not have a bank account to recieve money to. Go to bank!");
             sleep(2);
             cout << "exiting market..." << endl;
             sleep(1);
@@ -989,12 +989,23 @@ class Market
         // cout << "active items recieved to sell fn" << endl;
 
         vector<item*> items = setPrices(player.getActiveItems());
+
         if (items.size() > 0)
-        {
+        {   float totalCost = 0;
             for (int i = 0; i < items.size(); i++)
+            {
+                if (items[i]->count != 0)
+                {
+                    totalCost += (items[i]->count * items[i]->sellPrice);
+                }
+            }
+
+            int i;
+            for (i = 0; i < items.size(); i++)
             {
                 cout <<  i + 1 << ") " << items[i]->name << ": $" << items[i]->sellPrice << " per unit \t|\t You have: " << items[i]->count << "." << endl;
             }
+            cout << i + 1 << ") " << "SELL ALL: $" << moneyAsString(totalCost) << "\t\t|\t + 5% bonus." << endl;
 
             cout <<  "0) Quit"<< endl;
             int res;
@@ -1002,7 +1013,7 @@ class Market
             {
             cout << "Sell Item by index >> ";
             cin >> res;
-            } while (res > items.size() || res < 0);
+            } while (res - 1 > items.size() || res < 0);
             
             res--;
 
@@ -1011,27 +1022,53 @@ class Market
                 return;
             }
 
-            for (int i = 0; i < items.size(); i++)
+            if(res == items.size())
             {
-                if(items[i] == items[res])
+                char confirm;
+                cout << "You are about to sell all your items, this cannot be undone. Confirm? (y): " << endl;
+                confirm = getPlayerResponse();
+
+                if (confirm == 'y')
                 {
-                    cout << "You have: [" << items[res]->name << " - " << items[res]->count << "] - Sell price: [$" << moneyAsString( items[res]->sellPrice ) << "] per unit." << " (Max profit: [" << moneyAsString(items[res]->sellPrice * items[res]->count) << "])" << endl;
+                cout << "Selling all items..." << endl;
+                sleep(1);
 
-                    int countSelling;
-                    do
-                    {
-                        cout << "Enter Quantity >> ";
-                        cin >> countSelling;
-
-                    } while(countSelling < 0 || countSelling > items[res]->count);
-
-                    player.bankBalance += items[res]->sellPrice * countSelling;
-                    cout << "selling..." << endl;
-                    items[res]->count -= countSelling;
-                    sleep(2);
-                    cout << "Business sucessful!\n\t+ " << moneyAsString(items[res]->sellPrice * countSelling) << "$.\tKa-ching!" << endl;
-                    sleep(1);
+                for(int i = 0; i < items.size(); i++)
+                {
+                    items[i]->count = 0;
                 }
+
+                player.bankBalance += totalCost + (0.05*totalCost);
+
+                cout << "Business sucessful!\n\t+ " << moneyAsString(totalCost + (0.05*totalCost)) << "$.\tKa-ching!" << endl;
+                        sleep(1);
+                }
+            }
+            else{
+
+                for (i = 0; i < items.size(); i++)
+                {
+                    if(items[i] == items[res])
+                    {
+                        cout << "You have: [" << items[res]->name << " - " << items[res]->count << "] - Sell price: [$" << moneyAsString( items[res]->sellPrice ) << "] per unit." << " (Max profit: [" << moneyAsString(items[res]->sellPrice * items[res]->count) << "])" << endl;
+
+                        int countSelling;
+                        do
+                        {
+                            cout << "Enter Quantity >> ";
+                            cin >> countSelling;
+
+                        } while(countSelling < 0 || countSelling > items[res]->count);
+
+                        player.bankBalance += items[res]->sellPrice * countSelling;
+                        cout << "selling..." << endl;
+                        items[res]->count -= countSelling;
+                        sleep(2);
+                        cout << "Business sucessful!\n\t+ " << moneyAsString(items[res]->sellPrice * countSelling) << "$.\tKa-ching!" << endl;
+                        sleep(1);
+                    }
+                }
+
             }
 
             // resetPrices(items);
@@ -1379,7 +1416,6 @@ int main(void){
     // player.sellerMarketBoot.occured = false;
     while(true)
     {
-        cout << player.bankBalance << endl;
         mainmenu(player);
         
         if(!player.homeLessManBoot.occured && player.bankBalance > 0)
