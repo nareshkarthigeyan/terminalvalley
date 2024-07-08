@@ -90,13 +90,16 @@ struct tool
     string name;
     int level {0};
     float health {100};
-    int waitTimeByLevel[5] = {0, 5, 4, 3, 2}; //to change
+    int waitTimeByLevel[5] = {6, 5, 4, 3, 2}; //to change
+    item required[5][2];
+    int requiredCount[5][2];
+    long double upgradeCost[5] = {250, 1200, 2800, 8500, 17999};
 
 };
 
 struct event
 {
-    bool occured{true}; //change to false before game
+    bool occured{false}; //change to false before game
     int timesOccured {0};
 };
 
@@ -173,12 +176,32 @@ class Inventory
     void displayInventory(){
         vector<item> items = getItems();
         vector<tool> tools = getTools();
-        for (int i =0; i < items.size(); i++)
+
+        if(tools.size() > 0)
         {
-            if(items[i].count > 0)
+            cout << "Tools: " << endl;
+            for (int i = 0; i < tools.size(); i++)
             {
-                cout << items[i].name << ": " << items[i].count << endl;
+                if(tools[i].level > 0)
+                {
+                    cout << "\t" << tools[i].name << "(Level " << tools[i].level << ")" << endl;
+                }
             }
+        }
+
+        if (items.size() > 0)
+        {
+            cout << "Items: " << endl;
+            for (int i =0; i < items.size(); i++)
+            {
+                if(items[i].count > 0)
+                {
+                    cout << "\t" << items[i].name << ": " << items[i].count << endl;
+                }
+            }
+        }
+        else {
+            achievementMessage("You have no items with you. Try mining for resources!");
         }
     }
 
@@ -745,6 +768,134 @@ class Mine
 
 };
 
+class Guild
+{
+    public:
+
+    void initializePickaxe(Player &player)
+    {
+        // item pickaxe = player.pickaxe;
+        int pickLevel = player.pickaxe.level;
+        // item requiredForUpGrade[5][2] = 
+
+        switch (pickLevel)
+        {
+        case 0:
+        case 1:
+        case 2:
+        case 3:
+        case 4:
+        case 5:
+            player.pickaxe.required[0][0] = player.rock;
+            player.pickaxe.requiredCount[0][0] = 25;
+            player.pickaxe.required[0][1] = player.wood;
+            player.pickaxe.requiredCount[0][1] = 55;
+            /* code */
+            player.pickaxe.required[1][0] = player.granite;
+            player.pickaxe.requiredCount[1][0] = 35;
+            player.pickaxe.required[1][1] = player.wood;
+            player.pickaxe.requiredCount[1][1] = 175;
+
+            player.pickaxe.required[2][0] = player.copper;
+            player.pickaxe.requiredCount[2][0] = 85;
+            player.pickaxe.required[2][1] = player.tin;
+            player.pickaxe.requiredCount[2][1] = 85;
+
+            player.pickaxe.required[3][0] = player.silver;
+            player.pickaxe.requiredCount[3][0] = 125;
+            player.pickaxe.required[3][1] = player.gold;
+            player.pickaxe.requiredCount[3][1] = 100;
+
+            player.pickaxe.required[4][0] = player.diamond;
+            player.pickaxe.requiredCount[4][0] = 250;
+            player.pickaxe.required[4][1] = player.ruby;
+            player.pickaxe.requiredCount[4][1] = 20;
+
+        default:
+            break;
+        }
+    }
+
+    void upgradePickaxe(Player &player)
+    {
+        initializePickaxe(player);
+        cout << "Entering pickaxe store..." << endl;
+        sleep(1);
+        cout << "\n\n";
+        int level = player.pickaxe.level;
+        string FinalMessage;
+        if(level == 0)
+        {
+            cout << "Pickaxe" << endl;
+            cout << "Description: The one and only mining tool you need!" << endl;
+            cout << "Cost: " << endl;
+
+            FinalMessage = "Buy Pickaxe? [y/n]";
+        }
+        else {
+            cout << "Upgrade your pickaxe now!!!" << endl;
+            cout << "Current pickaxe level: " << player.pickaxe.level << "\nPickaxe Level after upgrade: " << player.pickaxe.level + 1 << endl;
+            FinalMessage = "Buy Upgrade? [y/n]";
+        }
+        cout << moneyAsString( player.pickaxe.upgradeCost[level] ) << endl;
+        for (int i = 0; i < 2; i ++)
+        {
+            cout <<  player.pickaxe.requiredCount[level][i] << " units of " << player.pickaxe.required[level][i].name << endl;
+        }
+
+        char res;
+
+        while(true)
+        {
+            res = getPlayerResponse(FinalMessage);
+            if(res == 'y')
+            {
+                for (int i = 0; i < 2; i++)
+                {
+                    if(player.pickaxe.requiredCount[level][i] > player.pickaxe.required[level][i].count || player.bankBalance < player.pickaxe.upgradeCost[level])
+                    {
+                        achievementMessage("Insufficient Materials or Funds, please come back when you have enough resources!");
+                        sleep(2);
+                        return;
+                    }
+                    else{
+                        player.pickaxe.required[level][i].count -= player.pickaxe.requiredCount[level][i];
+                    }
+                }
+
+                player.bankBalance -= player.pickaxe.upgradeCost[level];
+                cout << "\t - $" << moneyAsString(player.pickaxe.upgradeCost[level]) << "\t Successful! Keep mining!" << endl;
+                player.pickaxe.level++;
+                sleep(2);
+                break;
+            }
+            else if (res == 'n')
+            {
+                return;
+            }
+        }
+    }
+
+    void enter(Player &player)
+    {
+        char res;
+        while(true)
+        {
+            
+            res = getPlayerResponse("p) Pickaxe\nq) Quit Guild");
+            if (res == 'p')
+            {
+                upgradePickaxe(player);
+                break;
+            }
+            else if (res == 'q')
+            {
+                return;
+            }
+        }
+    }
+};
+
 class Market
 {
     public:
@@ -1043,7 +1194,7 @@ void mine(Player &player);
 void mainmenu(Player &player)
 {
     // cout << "Player: " << player.name << "\nBank Balance: $" << moneyAsString(player.bankBalance) << endl << endl;
-    cout << "GAME ACTIONS" << "\nm) mine\ng) gamble\ni) view inventory\ns) Market\nb) bank\nw) check weather\n>> ";
+    cout << "GAME ACTIONS" << "\nm) mine\ng) gamble\ni) view inventory\ns) Market\nb) bank\nw) check weather\nc) guild\n>> ";
     char response[2] = {'a', '\0'};
     cin >> response[0];
 
@@ -1073,6 +1224,9 @@ void mainmenu(Player &player)
         bank.enter(player);
         break;
     }
+    case 'c':
+        Guild guild;
+        guild.enter(player);
     
     default:
         break;
