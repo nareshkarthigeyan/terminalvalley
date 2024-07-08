@@ -238,6 +238,7 @@ class PlayerEvents
     //Event List
     //boot event:
     event firstBoot;
+    event homeLessManBoot;
 
     //mine events
     event inventoryUnlock;
@@ -306,9 +307,20 @@ void npcDialogueInit(Player &player)
                             "I went to the bank the other day, that lady is a peculiar one, I must say...", "In my army days, the war fleet use to have magazines with pictures of women, it was popular among the folks!",
                             "The only thing that kept me going in darkness was the light that it didn't show me.", "Kid... don't tell me you are one of those new-age miners that disregard the beauty of hand mining... ahh those days!",
                             "The business has been a bit rough recently", "New technologies confuse me sometimes...", "Have I ever been scammed? I don't know, you should ask me when I do.", "You ough to meet my son someday, he lives across the globe.",
-                            "I wish my son would meet me some days, he works too hard for his own good...", "My son called me the other day, he can't make it this weekend... I guess I'll have to wait for the next holiday season"};
+                            "I wish my son would meet me some days, he works too hard for his own good...", "My son called me the other day, he can't make it this weekend... I guess I'll have to wait for the next holiday season",
+                            "When people ask me why she left me, I still don't know what to say...", "Items use to cost way less when I was your age, stock market has ruined everything...", "Do I hate navy seals, young soul, I don't hold anything against them.",
+                            "Discount? I'm already offering you the best prices...", "News paper companies have really \"fell off\" now...", "I could do with one of the good ol' magazines right now...", "The older you grow, the more you realise life is meaningless",
+                            "It never really gets better, we just get used to things being worse and shitty all the time."};
+    
+    HomelessMan.dialogues = {"I say the world can go to hell, but I must have my tea", "How do you claim to be alive, and you have no story to tell", "Most things they claim to change life don't amuse me", "Morality? [laughs] what even is that? A fantasy?",
+                            "It's better to be delusional and in a mental paradise than being wound up in reality and suffering", "The stars seem to align to tell me that I am insignificant.", "There is not much difference between me and you, we both are the same, yes",
+                            "Being sincere can also mean being stupid at the same time.", "[puffs out smoke]... [does not give a damn]...", "love is suffering, there is no other meaning to it", "My god, a moment of bliss, isn't that enough for this lifetime?",
+                            "The secure ones are the most insecure if you watch them closely...", "I have seen the things you can never imagine...", "Nowadays all capable people are terribly afraid of being judged, hence turn into miserable pieces of shits.",
+                            "I will never understand how a man of my thoughts can continue living...", "Standing against injustice? Isn't is just showing off to the world how much justice you are... a good person.", "Denial of death is the single most thing that drives us from being afraid to live.",
+                            "Why bother not being rude when all your actions are rude enough?"};
 
 }
+
 
 string getDialogue(NPC npc)
 {
@@ -1283,6 +1295,71 @@ void mine(Player &player)
     mine.enter(player);
 }
 
+void triggerHomelessMan(Player &player)
+{
+    int random = randInt(1, 100);
+
+    if (random <= 6) // change to 6;
+    {
+        showMessage(getDialogue(HomelessMan), "", 1, HomelessMan.name) ;
+        char res;
+        
+        while(true)
+        {
+            res = getPlayerResponse("a) Give him money\nb) Ignore");
+            if (res == 'a')
+            {
+                float amount;
+                cout << "Enter amount ( You have: $" << moneyAsString(player.bankBalance) << " ) >> ";
+                cin >> amount;
+
+                if (amount <= 0)
+                {
+                    // cout << "walking away..." << endl;
+                    // sleep(2);
+                    res = 'b';
+                }
+                else if (amount > player.bankBalance)
+                {
+                    achievementMessage("Insufficient Funds in your bank account. Irony.");
+                    achievementMessage("\t+ 0.01 luck for the good intent\t");
+                    player.luck += 0.01;
+                    sleep(1);
+                    break;
+                }
+                else{
+                    cout << "\t- $" << moneyAsString(amount) << "\t keep the good spirits up!" << endl;
+                    player.bankBalance -= amount;
+                    float luckUp = 0.1 + ((float) (randInt(10, 90) * amount / randInt(50, 60)) / 100);
+                    player.luck += luckUp;
+                    ostringstream message;
+                    message << "\t + " << luckUp << " Player Luck!\t";
+
+                    achievementMessage(message.str());
+
+                    sleep(1);
+                    break;
+                }
+                
+            }
+            
+            if (res == 'b')
+            {
+                cout << "walking away..." << endl;
+
+                float luckUp = (float) randInt(60, 290) / 1000;
+                    player.luck -= luckUp;
+                    ostringstream message;
+                    message << "\t - " << luckUp << " Player Luck. Womp-womp.\t";
+                    achievementMessage(message.str());
+                sleep(2);
+                break;
+            }
+        }   
+    player.homeLessManBoot.timesOccured++;
+    }
+}
+
 int main(void){
     Player  player;
 
@@ -1302,7 +1379,18 @@ int main(void){
     // player.sellerMarketBoot.occured = false;
     while(true)
     {
+        cout << player.bankBalance << endl;
         mainmenu(player);
+        
+        if(!player.homeLessManBoot.occured && player.bankBalance > 0)
+        {
+            player.homeLessManBoot.occured = true;
+        }
+
+        if(player.homeLessManBoot.occured)
+        {
+            triggerHomelessMan(player);
+        }
     }
     return 0;
 }
