@@ -91,16 +91,17 @@ struct tool
     string name;
     int level {0};
     float health {100};
-    int waitTimeByLevel[5] = {0, 5, 4, 3, 2}; //to change
+    int waitTimeByLevel[5] = {6, 5, 4, 3, 2}; //to change
     item required[5][2];
     int requiredCount[5][2];
     long double upgradeCost[5] = {250, 1200, 2800, 8500, 17999};
+    long double updgradeXP[5] = {350, 450, 590, 999, 1300};
 
 };
 
 struct event
 {
-    bool occured{true}; //change to false before game
+    bool occured{false}; //change to false before game
     int timesOccured {0};
 };
 
@@ -255,6 +256,9 @@ class PlayerEvents
 
     //market events
     event sellerMarketBoot;
+
+    //guild events:
+    event guildUnlocked;
 };
 
 
@@ -559,6 +563,15 @@ class Mine
             {
                 cout << "You are at mine level " << i << "." << endl;
             }
+        }
+
+        if(player.timesMined > 45 && !player.guildUnlocked.occured && player.xp > 150)
+        {
+            achievementMessage("Guild unlocked");
+            sleep(1);
+            cout << "You have unlocked pickaxes! Speed up your mining by purchasing them in the guild. Go to main menu to checkout the guild." << endl;
+            sleep(2);
+            player.guildUnlocked.occured = true;
         }
 
         switch(player.timesMined)
@@ -905,21 +918,37 @@ class Guild
             res = getPlayerResponse(FinalMessage);
             if(res == 'y')
             {
+                bool insufficient = false;
                 for (int i = 0; i < 2; i++)
                 {
-                    if(player.pickaxe.requiredCount[level][i] > player.pickaxe.required[level][i].count || player.bankBalance < player.pickaxe.upgradeCost[level])
+                    if(player.bankBalance < player.pickaxe.upgradeCost[level])
                     {
-                        achievementMessage("Insufficient Materials or Funds, please come back when you have enough resources!");
+                        achievementMessage("Insufficient Funds!");                        
+                    }
+                    if(player.pickaxe.requiredCount[level][i] > player.pickaxe.required[level][i].count)
+                    {
+                        achievementMessage("Insufficient Materials please come back when you have enough resources!");                        
+                        cout << "Required: " << player.pickaxe.requiredCount[level][i] - player.pickaxe.required[level][i].count << " more units of " << player.pickaxe.required[level][i].name << ". Get collecting!" << endl;
                         sleep(2);
-                        return;
+
+                        insufficient = true;
                     }
-                    else{
-                        player.pickaxe.required[level][i].count -= player.pickaxe.requiredCount[level][i];
-                    }
+                }
+
+                if(insufficient)
+                {
+                    return;
+                }
+
+                for (int i = 0; i < 2; i++)
+                {
+                   
+                    player.pickaxe.required[level][i].count -= player.pickaxe.requiredCount[level][i];
                 }
 
                 player.bankBalance -= player.pickaxe.upgradeCost[level];
                 cout << "\t - $" << moneyAsString(player.pickaxe.upgradeCost[level]) << "\t Successful! Keep mining!" << endl;
+                player.addXP(player.pickaxe.updgradeXP[player.pickaxe.level]);
                 player.pickaxe.level++;
                 sleep(2);
                 break;
@@ -1338,7 +1367,6 @@ void mainmenu(Player &player)
 {
     // cout << "Player: " << player.name << "\nBank Balance: $" << moneyAsString(player.bankBalance) << endl << endl;
     vector<menu> menu;
-    menu.push_back({"p) Player details", 'p'});
 
     if(player.firstBoot.occured)
     {
@@ -1354,6 +1382,11 @@ void mainmenu(Player &player)
         menu.push_back({"b) bank", 'b'});
         menu.push_back({"s) market", 's'});
     }
+    if(player.guildUnlocked.occured && player.level > 1)
+    {
+        menu.push_back({"c) guild", 'c'});
+    }
+    menu.push_back({"p) Player details", 'p'});
     //To add: gamble, guild, weather, railway station.
     cout << "GAME ACTIONS:" << endl; // "\nm) mine\ng) gamble\ni) view inventory\ns) Market\nb) bank\nw) check weather\nc) guild\n>> ";
     for(int i = 0; i < menu.size(); i++)
