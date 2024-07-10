@@ -78,6 +78,7 @@ struct item
     int count {0}; // change to 0
     float rareity {1};
     long double buyPrice;
+    float xp {0.5};
     int totalCount {0};
     float luckFactor {1};
     float weight = WEIGHT / rareity;
@@ -122,22 +123,22 @@ class Inventory
     tool fishingRod = {"Fishing Rod", 0};
 
     //Rarity - lower, the rarer
-    item dirt = {"Dirt", 0, 0.85, 1.79};
-    item rock = {"Rock", 0, 0.75, 2.75};
-    item wood = {"Wood", 0, 0.68, 3.25};
-    item coal = {"Coal", 0, 0.72, 5.60};
-    item granite = {"Granite", 0, 0.58, 7.68};
-    item iron = {"Iron", 0, 0.31, 25.11};
-    item copper = {"Copper", 0, 0.28, 23.21};
-    item silver = {"Silver", 0, 0.27, 69.69};
-    item tin = {"Tin", 0, 0.23, 71.42};
-    item hardRock = {"Hard Rock", 0, 0.29, 159.76};
-    item gold = {"Gold", 0, 0.09, 595.23};
-    item diamond = {"Diamond", 0, 0.06, 2800.53};
-    item ruby = {"Ruby", 0, 0.04, 3500.77};
-    item blackStone = {"Black Stone", 0, 0.10, 975.21};
-    item magma = {"Magma", 0, 0.09, 7200.33};
-    item bedrock = {"Bedrock", 0, 0.08, 10000.11};
+    item dirt = {"Dirt", 0, 0.85, 1.79, 1.38};
+    item rock = {"Rock", 0, 0.75, 2.75, 2.75};
+    item wood = {"Wood", 0, 0.68, 3.25, 3.21};
+    item coal = {"Coal", 0, 0.72, 5.60, 4.11};
+    item granite = {"Granite", 0, 0.58, 7.68, 5.18};
+    item iron = {"Iron", 0, 0.31, 25.11, 11.21};
+    item copper = {"Copper", 0, 0.28, 23.21, 15.27};
+    item silver = {"Silver", 0, 0.27, 69.69, 21.69};
+    item tin = {"Tin", 0, 0.23, 71.42, 18.71};
+    item hardRock = {"Hard Rock", 0, 0.29, 159.76, 25.27};
+    item gold = {"Gold", 0, 0.09, 595.23, 57.88};
+    item diamond = {"Diamond", 0, 0.06, 2800.53, 160.71};
+    item ruby = {"Ruby", 0, 0.04, 3500.77, 441.38};
+    item blackStone = {"Black Stone", 0, 0.10, 975.21, 338.75};
+    item magma = {"Magma", 0, 0.09, 7200.33, 790.55};
+    item bedrock = {"Bedrock", 0, 0.08, 10000.11, 1590.78};
 
     vector<item> getItems()
     {
@@ -264,6 +265,10 @@ class Player : public Inventory, public PlayerEvents
     long double bankBalance;
     float luck {1};
     int timesMined;
+    long double xp;
+    int level {1};
+    int xpToLvl[7] = {300, 1500, 4750, 8900, 15000, 25000, 50000};
+
 
     bool firstTime = true;
 
@@ -273,11 +278,39 @@ class Player : public Inventory, public PlayerEvents
         name = namePrompt;
         bankBalance = 0;
         timesMined = 0;
+        xp = 0;
+    }
+
+
+    void lvl()
+    {
+        int newLevel = 1;
+        for (int i = 0; i < 7; i++)
+        {
+            if (xp >= xpToLvl[i])
+            {
+                newLevel = i + 2;
+            }
+        }
+
+        if (newLevel != level)
+        {
+            level = newLevel;
+            cout << "You are now at level " << level << "! Congrats!" << endl;
+            achievementMessage("Level Up!");
+        }
+    }
+
+    void addXP(long double additionalXP)
+    {
+        xp += additionalXP;
+        lvl();
     }
 
     void display()
     {
-        cout << "Name: " << name << "\nBank Balance: $" << moneyAsString(bankBalance) << "\nLuck: " << luck << endl;
+        lvl();
+        cout << "Name: " << name << "\nLevel: " << level << "\nXP: " << xp << " / " << xpToLvl[level - 1] << "\nLuck: " << luck << endl;
     }
 };
 
@@ -289,6 +322,7 @@ NPC Redacted = {"???", "Player guide.", 0};
 NPC System42 = {"System42", "Prevents 4th wall breaks.", 0};
 NPC BillMurry = {"Bill Murry", "Weather reporter.", 0};
 NPC Rick = {"Rick", "Guild Master", 0};
+NPC bitwise = {"Mayor Bitwise", "Mayor of the town.", 0};
 
 void npcDialogueInit(Player &player)
 {
@@ -457,6 +491,15 @@ class Events
         player.sellerMarketBoot.timesOccured++;
 
     }
+};
+
+class Quest
+{
+    string title;
+    string description;
+    int levelRequired;
+    bool isOccuring {false};
+    long double reward;
 };
 
 class Gamble
@@ -714,6 +757,7 @@ class Mine
             
             cout << count  << " pieces of " << selecteditem->name << endl;
             player.incrementItemCount(selecteditem->name, count);
+            player.addXP(selecteditem->xp);
 
              auto it = find(mineable.begin(), mineable.end(), selecteditem);
                 if (it != mineable.end())
@@ -1277,6 +1321,12 @@ class menu
         case 'c':
             Guild guild;
             guild.enter(player);
+            break;
+
+        case 'p':
+            player.display();
+            sleep(1);
+            break;
         
         default:
             break;
@@ -1288,6 +1338,8 @@ void mainmenu(Player &player)
 {
     // cout << "Player: " << player.name << "\nBank Balance: $" << moneyAsString(player.bankBalance) << endl << endl;
     vector<menu> menu;
+    menu.push_back({"p) Player details", 'p'});
+
     if(player.firstBoot.occured)
     {
         menu.push_back({"m) mine", 'm'});
@@ -1375,7 +1427,7 @@ void triggerHomelessMan(Player &player)
 {
     int random = randInt(1, 100);
 
-    if (random <= 12) // change to 6;
+    if (random <= 6) // change to 6;
     {
         showMessage(getDialogue(HomelessMan), "", 1, HomelessMan.name) ;
         char res;
@@ -1455,7 +1507,10 @@ int main(void){
     // player.sellerMarketBoot.occured = false;
     while(true)
     {
+
+        player.lvl();
         mainmenu(player);
+
         
         if(!player.homeLessManBoot.occured && player.bankBalance > 0)
         {
