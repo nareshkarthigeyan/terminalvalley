@@ -459,7 +459,6 @@ class Events
     }
 };
 
-
 class Gamble
 {
     private:
@@ -1240,46 +1239,86 @@ class Bank
 void gamble(Player &player);
 void mine(Player &player);
 
+class menu
+{
+    public:
+
+    string name;
+    char command;
+
+    void trigger(Player &player) // add all menu items here!
+    {
+        switch (command)
+        {
+        case 'g':
+            gamble(player);
+            break;
+
+        case 'm':
+            mine(player);
+            break;
+
+        case 'i':
+            player.displayInventory();
+            break;
+
+        case 's':
+        {
+            Market market;
+            market.menu(player);
+            break;
+        }
+        case 'b':
+        {
+            Bank bank;
+            bank.enter(player);
+            break;
+        }
+        case 'c':
+            Guild guild;
+            guild.enter(player);
+        
+        default:
+            break;
+        }
+    }
+};
+
 void mainmenu(Player &player)
 {
     // cout << "Player: " << player.name << "\nBank Balance: $" << moneyAsString(player.bankBalance) << endl << endl;
-    cout << "GAME ACTIONS" << "\nm) mine\ng) gamble\ni) view inventory\ns) Market\nb) bank\nw) check weather\nc) guild\n>> ";
+    vector<menu> menu;
+    if(player.firstBoot.occured)
+    {
+        menu.push_back({"m) mine", 'm'});
+    
+    }
+    if (player.inventoryUnlock.occured)
+    {
+        menu.push_back({"i) inventory", 'i'});
+    }
+    if (player.sellerMarketBoot.occured || player.bankBoot.occured)
+    {
+        menu.push_back({"b) bank", 'b'});
+        menu.push_back({"s) market", 's'});
+    }
+    //To add: gamble, guild, weather, railway station.
+    cout << "GAME ACTIONS:" << endl; // "\nm) mine\ng) gamble\ni) view inventory\ns) Market\nb) bank\nw) check weather\nc) guild\n>> ";
+    for(int i = 0; i < menu.size(); i++)
+    {
+        cout << menu[i].name << endl;
+    }
+    cout << ">> ";
     char response[2] = {'a', '\0'};
     cin >> response[0];
-
-    switch (response[0])
+    for(int i = 0; i < menu.size(); i++)
     {
-    case 'g':
-        gamble(player);
-        break;
-
-    case 'm':
-        mine(player);
-        break;
-
-    case 'i':
-        player.displayInventory();
-        break;
-
-    case 's':
-    {
-        Market market;
-        market.menu(player);
-        break;
+        if(response[0] == menu[i].command)
+        {
+            menu[i].trigger(player);
+        }
     }
-    case 'b':
-    {
-        Bank bank;
-        bank.enter(player);
-        break;
-    }
-    case 'c':
-        Guild guild;
-        guild.enter(player);
-    
-    default:
-        break;
-    }
+
 
 }
 
@@ -1336,7 +1375,7 @@ void triggerHomelessMan(Player &player)
 {
     int random = randInt(1, 100);
 
-    if (random <= 6) // change to 6;
+    if (random <= 12) // change to 6;
     {
         showMessage(getDialogue(HomelessMan), "", 1, HomelessMan.name) ;
         char res;
