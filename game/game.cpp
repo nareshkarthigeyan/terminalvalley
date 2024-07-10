@@ -53,10 +53,10 @@ void achievementMessage(string s1)
     return;
 }
 
-string moneyAsString(long double money, int precision = 2) 
+string moneyAsString(long double money, int precision = 2, string dollarSign = "") 
 {
     ostringstream numStr;
-    numStr << fixed << setprecision(precision) << money;
+    numStr << dollarSign << fixed << setprecision(precision) << money;
     string numStrStr = numStr.str();
 
     int n = numStrStr.find('.');
@@ -91,7 +91,7 @@ struct tool
     string name;
     int level {0};
     float health {100};
-    int waitTimeByLevel[5] = {6, 5, 4, 3, 2}; //to change
+    int waitTimeByLevel[5] = {0, 5, 4, 3, 2}; //to change
     item required[5][2];
     int requiredCount[5][2];
     long double upgradeCost[5] = {250, 1200, 2800, 8500, 17999};
@@ -101,7 +101,7 @@ struct tool
 
 struct event
 {
-    bool occured{false}; //change to false before game
+    bool occured{true}; //change to false before game
     int timesOccured {0};
 };
 
@@ -114,6 +114,17 @@ class NPC
     vector<string> dialogues;
 
 };
+
+struct city
+{
+    string name;
+    bool atCity;
+};
+
+//City init:
+city Terminille {"Terminille", true};
+city SyntaxCity {"Syntax City", false};
+city Codeopolis {"Codeopolis", false};
 
 class Inventory
 {
@@ -259,6 +270,9 @@ class PlayerEvents
 
     //guild events:
     event guildUnlocked;
+
+    //railway Station:
+    event railwayStaionvisited;
 };
 
 
@@ -272,6 +286,7 @@ class Player : public Inventory, public PlayerEvents
     long double xp;
     int level {1};
     int xpToLvl[7] = {300, 1500, 4750, 8900, 15000, 25000, 50000};
+    city currentCity = Terminille;
 
 
     bool firstTime = true;
@@ -283,6 +298,7 @@ class Player : public Inventory, public PlayerEvents
         bankBalance = 0;
         timesMined = 0;
         xp = 0;
+        currentCity = Terminille;
     }
 
 
@@ -1309,6 +1325,158 @@ class Bank
     }
 };
 
+class RailwayStation
+{
+    public:
+
+    struct train
+    {
+        string name;
+        bool isExpress {false};
+        float ticketPrice;
+        city home;
+        city destination;
+        int platform;
+        int waitTime;
+        int travelTime;
+        string code;
+    };
+
+    struct ticket
+    {
+        train Train;
+    };
+
+    // class Platform{};
+    train bitlinerTo;
+    train bitlinerFrom;
+    train syntaxCityExpress;
+    train terminilleExpress;
+
+    void init()
+    {
+        // cout << "initializing.." << endl;
+
+    bitlinerTo = {"Bit-liner", false, 5.00, Terminille, SyntaxCity, randInt(1, 3), randInt(7, 20), 20, "BTLNR008"};
+
+    bitlinerFrom = {"Bit-liner", false, 5.00, SyntaxCity, Terminille, randInt(1, 3), randInt(7, 20), 20, "BTLNR673"};
+
+    syntaxCityExpress = {"SyntaxCity Express", true, 25.00, Terminille, SyntaxCity, randInt(1, 3), randInt(7, 20), 6, "SCEXP042"};
+    terminilleExpress = {"Terminille Express", true, 25.00, SyntaxCity, Terminille, randInt(1, 3), randInt(7, 20), 6, "TRMLEXP135"};
+
+    }
+
+    vector<train> getAvailableTrains(Player &player)
+    {
+        init();
+
+        vector<train> trains = {bitlinerTo, bitlinerFrom, syntaxCityExpress, terminilleExpress};
+        vector<train> availableTrains;
+
+        //losing my lamda function virginity with this one boys...
+        sort(trains.begin(), trains.end(), [](train a, train b) -> bool { return a.waitTime < b.waitTime; });
+
+        cout << "TRAIN SCHEDULE: " << endl;
+
+        cout << left << setw(8) << "Sn No."
+             << setw(14) << "Train No."
+             << setw(22) << "Train Name:"
+             << setw(16) << "From:"
+             << setw(16) << "Destination:"
+             << setw(16) << "Arrival in"
+             << setw(16) << "Platform no."
+             << setw(16) << "Ticket Price:" << endl;
+             
+        for (int i = 0, j = 0; i < trains.size(); i++) {
+            if (trains[i].home.name == player.currentCity.name) {
+                cout << left << setw(8) << j + 1
+                     << setw(14) << trains[i].code
+                     << setw(22) << trains[i].name
+                     << setw(16) << trains[i].home.name
+                     << setw(16) << trains[i].destination.name
+                     << setw(16) << trains[i].waitTime
+                     << setw(16) << trains[i].platform
+                     << setw(16) << moneyAsString(trains[i].ticketPrice, 2, "$") << endl;
+                
+                availableTrains.push_back(trains[i]);                
+                j++;
+            }
+        }
+        sleep(1);
+        return availableTrains;
+    }
+
+    void printTicket(ticket tx)
+    {
+        cout << "-----------------------------------------------------------" << endl;
+        cout << "Ticket Number: " <<  tx.Train.code << "00" << randInt(1, 9) << endl
+             << "Train Name: " <<  tx.Train.name << endl
+             << "From: " <<  tx.Train.home.name << endl
+             << "To: " <<  tx.Train.destination.name << endl
+             << "Arrival in: " <<  tx.Train.waitTime << " seconds" << endl
+             << "Platform no: " <<  tx.Train.platform << endl;
+        cout << "-----------------------------------------------------------" << endl;
+    }
+
+    void ticketCounter(Player &player)
+    {
+        cout << "Welcome to " << player.currentCity.name << " Railway Station!" << endl;
+
+        int random = randInt(1,100);
+        if(random < 15)
+        {
+            cout << "No trains at this moment." << endl;
+            return;
+        }
+
+        vector<train> trains = getAvailableTrains(player);
+
+            int response {0};
+            while(true)
+            {
+                cout << trains.size();
+                
+                cout << "Choose train by index >> ";
+                cin >> response;
+
+                if(response <= trains.size() && response > -1)
+                {
+                    break;
+                }
+            }
+
+            
+            cout << "outside while" << endl;
+
+            ticket tx {trains[response - 1]};
+            cout << "Ticket created!" << endl;
+
+            if(player.bankBalance < tx.Train.ticketPrice)
+            {
+                achievementMessage("Insufficinet balance! Purchase unsucessful");
+                return;
+            }
+
+            player.bankBalance -= tx.Train.ticketPrice;
+            achievementMessage("Ticket Purchase Success!");
+            sleep(1);
+            
+            printTicket(tx);
+        sleep(5);
+
+    }
+
+    void enter(Player &player)
+    {
+        ticketCounter(player);
+
+    }
+
+
+
+
+};
+
 void gamble(Player &player);
 void mine(Player &player);
 
@@ -1356,7 +1524,12 @@ class menu
             player.display();
             sleep(1);
             break;
-        
+
+        case 'r':
+        {
+            RailwayStation rs;
+            rs.enter(player);
+        }
         default:
             break;
         }
@@ -1367,6 +1540,8 @@ void mainmenu(Player &player)
 {
     // cout << "Player: " << player.name << "\nBank Balance: $" << moneyAsString(player.bankBalance) << endl << endl;
     vector<menu> menu;
+
+    menu.push_back({"r) Railway Station", 'r'});
 
     if(player.firstBoot.occured)
     {
@@ -1538,6 +1713,7 @@ int main(void){
     // player.name = "Naresh";
     // player.bankBoot.occured = false;
     // player.sellerMarketBoot.occured = false;
+    player.bankBalance = 500;
     while(true)
     {
 
