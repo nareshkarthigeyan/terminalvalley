@@ -119,12 +119,16 @@ struct city
 {
     string name;
     bool atCity;
+    string code;
+    int platformCount;
 };
 
 //City init:
-city Terminille {"Terminille", true};
-city SyntaxCity {"Syntax City", false};
-city Codeopolis {"Codeopolis", false};
+city Terminille {"Terminille", true, "TRML", 4};
+city SyntaxCity {"Syntax City", false, "SXCY", 5};
+city Codeopolis {"Codeopolis", false, "CPLS", 6};
+
+vector<city> ALL_CITIES = {Terminille, SyntaxCity, Codeopolis};
 
 class Inventory
 {
@@ -1342,50 +1346,112 @@ class RailwayStation
         string code;
     };
 
+    struct platform
+    {
+        int platformNo;
+        int nextTrainArrivalTime;
+    };
+
     struct ticket
     {
         train Train;
     };
 
+    bool reached = false;
+
     // class Platform{};
-    train bitlinerTo;
-    train bitlinerFrom;
-    train syntaxCityExpress;
-    train terminilleExpress;
-    train terminilleExpress2;
-    train codeopolisExpress;
-    train bulletcoder1;
-    train bulletcoder2;
-    train bulletcoder3;
-    train bulletcoder4;
+    vector<train> allTrains;
+
+    platform p1{1}, p2{2}, p3{3}, p4{4}, p5{5}, p6{6};
+
+    vector<platform> platforms = {p1, p2, p3, p4, p5, p6};
 
     //User's Ticket:
     bool ticketPurchased;
     ticket UserTicket;
 
+    // Currently there is a bug where when travelling between cities back to back in a triangle, regardless of what, on the third city, once you reach it's impossible to come back to railway station and can't buy ticket.
+    // solve it #TODO
+
     void init()
     {
-        // cout << "initializing.." << endl;
+        //vector<city> ALL_CITIES = {Terminille, SyntaxCity, Codeopolis};
 
-        bitlinerTo = {"Bit-liner", "Passenger" , (float)randInt(4, 7), Terminille, SyntaxCity, randInt(1, 3), randInt(7, 20), randInt(15, 21), "BTLNR008"};
-        bitlinerFrom = {"Bit-liner", "Passenger", (float)randInt(4, 7), SyntaxCity, Terminille, randInt(1, 3), randInt(7, 20), randInt(15, 21), "BTLNR673"};
-    
-        syntaxCityExpress = {"Syntax City Express", "Non-Stop Express", (float)randInt(23, 35), Terminille, SyntaxCity, randInt(1, 3), randInt(7, 20), randInt(6, 12), "SCEXP042"};
-        terminilleExpress = {"Terminille Express", "Non-Stop Express", (float)randInt(23, 35), SyntaxCity, Terminille, randInt(1, 3), randInt(7, 20), randInt(6, 12), "TRMLEXP135"};
-        codeopolisExpress = {"Codeopolis Express", "Non-Stop Express", (float)randInt(23, 35), Terminille, Codeopolis, randInt(1, 4), randInt(7, 21), randInt(6, 12), "CDPLSEXP98"};
-        terminilleExpress2 = {"Terminille Superfast", "Non-Stop Express", (float)randInt(23, 35), Terminille, Codeopolis, randInt(1, 4), randInt(7, 21), randInt(6, 12), "CDPLSEXP99"};
-    
-        bulletcoder1 = {"BulletCoder", "Bullet", (float)randInt(190, 250), Terminille, SyntaxCity, randInt(1, 3), randInt(2, 4), randInt(2, 5), "BLTCDR7111" };
-        bulletcoder2 = {"BulletCoder", "Bullet", (float)randInt(190, 250), SyntaxCity, Terminille, randInt(1, 3), randInt(2, 4), randInt(2, 5), "BLTCDR7112" };
-        bulletcoder3 = {"BulletCoder", "Bullet", (float)randInt(190, 250), Terminille, Codeopolis, randInt(1, 3), randInt(2, 4), randInt(2, 5), "BLTCDR7113" };
-        bulletcoder4 = {"BulletCoder", "Bullet", (float)randInt(190, 250), Codeopolis, Terminille, randInt(1, 3), randInt(2, 4), randInt(2, 5), "BLTCDR7114" };
+        vector<string> trainTypes = {"Passenger", "Express", "Bullet"};
+        // vector<string> cityCodes = {"TRL", "SYC", "CPS"};
+
+        for (int i = 0; i < ALL_CITIES.size(); i++)
+        {
+            for(int j = 0; j < ALL_CITIES.size(); j++)
+            {
+                if (i != j)
+                {
+
+                    for (int k = 0; k < trainTypes.size(); k++)
+                    {
+
+                        int waitTime;
+                        int TravelTime;
+                        waitTime = randInt(2, 22);
+                        string trainNo;
+                        int price;
+                        string trainName;
+
+                        vector<string> trnnm;
+                        vector<string> cd;
+
+                        if(trainTypes[k] == "Passenger")
+                        {
+                            trnnm = {"Bitliner", "Looper"};
+                            cd = {"BTL", "LPR"};
+                            int rnd = randInt(0, trnnm.size() - 1);
+                            trainName = trnnm[rnd];
+                            TravelTime = randInt(14, 37);
+                            trainNo = (randInt(0, 100) % 2 == 0) ? ALL_CITIES[j].code + cd[rnd] : cd[rnd] + ALL_CITIES[j].code;
+                            price = randInt(4, 8);
+                        } else if (trainTypes[k] == "Express")
+                        {
+                            trnnm = {"Express", "Superfast", "Non-stop"};
+                            cd = {"EXP", "SPF", "NSX"};
+                            int rnd = randInt(0, trnnm.size() - 1);
+                            trainName = (randInt(0, 100) % 2 == 0) ? trnnm[rnd] + " " + ALL_CITIES[j].name: ALL_CITIES[j].name + " " + trnnm[rnd];
+                            TravelTime = randInt(11, 25);
+                            trainNo = (randInt(0, 100) % 2 == 0) ? ALL_CITIES[j].code + cd[rnd] : cd[rnd] + ALL_CITIES[j].code;
+                            price = randInt(22, 38);
+                        } else if (trainTypes[k] == "Bullet")
+                        {
+                            trnnm = {"BulletX", "Swifter"};
+                            cd = {"CDB", "SWF", "BLT"};
+                            int rnd = randInt(0, trnnm.size() - 1);
+                            trainName = (randInt(0, 100) % 2 == 0) ? trnnm[rnd] + " " + ALL_CITIES[j].name: ALL_CITIES[j].name + " " + trnnm[rnd];
+                            TravelTime = randInt(3, 9);
+                            trainNo = (randInt(0, 100) % 2 == 0) ? ALL_CITIES[j].code + cd[rnd] : cd[rnd] + ALL_CITIES[j].code;
+                            price = randInt(179, 300);
+                        }
+
+                        int platformNo;
+                        platform bufferplatform;
+                        do {
+                        platformNo = randInt(1, ALL_CITIES[i].platformCount);
+                        bufferplatform.platformNo = platformNo;
+                        bufferplatform.nextTrainArrivalTime = waitTime;
+                        } while (platforms[platformNo - 1].nextTrainArrivalTime == bufferplatform.nextTrainArrivalTime);
+                        platforms[platformNo - 1].nextTrainArrivalTime = waitTime;
+                        // cout << "creating " << trainName << endl;
+                            // bulletcoder4 = {"BulletCoder", "Bullet", (float)randInt(190, 250), Codeopolis, Terminille, randInt(1, 3), randInt(2, 4), randInt(2, 5), "BLTCDR7114" };
+                        train train = {trainName, trainTypes[k],  (float)price, ALL_CITIES[i], ALL_CITIES[j], platforms[platformNo - 1].platformNo, waitTime, TravelTime, trainNo};
+                        allTrains.push_back(train);
+                    }
+                }
+            }
+        }
     }
 
 
     vector<train> getAvailableTrains(Player &player)
     {
 
-        vector<train> trains = {bitlinerTo, bitlinerFrom, syntaxCityExpress, terminilleExpress, bulletcoder1, bulletcoder2, bulletcoder3, bulletcoder4, codeopolisExpress, terminilleExpress2};
+        vector<train> trains = allTrains;
         vector<train> availableTrains;
 
         //losing my lamda function virginity with this one boys...
@@ -1395,25 +1461,26 @@ class RailwayStation
 
         cout << left << setw(8) << "Sn No."
              << setw(14) << "Train No."
-             << setw(22) << "Train Name:"
+             << setw(24) << "Train Name:"
              << setw(20) << "Train Type:"
              << setw(16) << "From:"
              << setw(16) << "Destination:"
              << setw(16) << "Arrival in"
-             << setw(16) << "Travel Duration"
+             << setw(18) << "Travel Duration"
              << setw(16) << "Platform no."
              << setw(16) << "Ticket Price:" << endl;
 
-        for (int i = 0, j = 0; i < trains.size(); i++) {
+        int noOfTrains = trains.size();
+        for (int i = 0, j = 0; i < noOfTrains; i++) {
             if (trains[i].home.name == player.currentCity.name) {
                 cout << left << setw(8) << j + 1
                      << setw(14) << trains[i].code
-                     << setw(22) << trains[i].name
+                     << setw(24) << trains[i].name
                      << setw(20) << trains[i].trainType
                      << setw(16) << trains[i].home.name
                      << setw(16) << trains[i].destination.name
                      << setw(16) << trains[i].waitTime
-                     << setw(16) << trains[i].travelTime
+                     << setw(18) << trains[i].travelTime
                      << setw(16) << trains[i].platform
                      << setw(16) << moneyAsString(trains[i].ticketPrice, 2, "$") << endl;
 
@@ -1429,11 +1496,12 @@ class RailwayStation
     {
         cout << "-----------------------------------------------------------" << endl;
         cout << "Ticket Number: " <<  tx.Train.code << "_" << randInt(1, 150) << endl
+             << "Ticket cost: " << moneyAsString(tx.Train.ticketPrice, 2, "$") << " [PAID]" << endl
              << "Train Name: " <<  tx.Train.name << endl
              << "From: " <<  tx.Train.home.name << endl
              << "To: " <<  tx.Train.destination.name << endl
              << "Arrival in: " <<  tx.Train.waitTime << " seconds" << endl
-             << "Duration: " << tx.Train.travelTime << " seconds" << endl
+             << "Travel Duration: " << tx.Train.travelTime << " seconds" << endl
              << "Platform no: " <<  tx.Train.platform << endl;
         cout << "-----------------------------------------------------------" << endl;
     }
@@ -1517,6 +1585,7 @@ class RailwayStation
 
         // cout << "Welcome to " <<player.currentCity.name << "!" << endl;
         ticketPurchased = false;
+        reached = true;
         sleep(2);
 
     }
@@ -1556,7 +1625,11 @@ class RailwayStation
 
     void enter(Player &player)
     {
-        cout << "Welcome to " << player.currentCity.name << " Railway Station!" << endl;
+        reached = false;
+        string message = player.currentCity.name + " Railway Station";
+        transform(message.begin(), message.end(), message.begin(), ::toupper);
+        cout << message << endl;
+
         sleep(1);
         while(true)
         {
@@ -1584,8 +1657,17 @@ class RailwayStation
 
                 while(true)
                 {
-                    cout << "1) Platform 1\n2) platform 2\n3) Platform 3\n0) Quit\n>> ";
-                    cin >> platformNumber;
+                    // cout << "1) Platform 1\n2) platform 2\n3) Platform 3\n0) Quit\n>> ";
+
+                    for(int i = 0; i < player.currentCity.platformCount; i++)
+                    {
+                        cout << i+1 << ") Platform " << i + 1 << endl;
+                    }
+                    cout << "0) Quit\n";
+                    do{
+                        cout << ">> ";
+                        cin >> platformNumber;
+                    } while (platformNumber > player.currentCity.platformCount);
 
                     if(platformNumber == 0)
                     {
@@ -1613,14 +1695,11 @@ class RailwayStation
             {
                 cout << "quitting railway station..." << endl;
                 break;
+            } else if (reached)
+            {
+                cout << "Welcome to " << player.currentCity.name << "! Happy Journey!" << endl;
+                break;
             }
-
-            // if(player.currentCity.name != UserTicket.Train.home.name)
-            // {
-            //     return;
-            //     break;
-            // }
-
         }
 
 
