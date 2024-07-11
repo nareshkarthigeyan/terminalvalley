@@ -56,7 +56,7 @@ void achievementMessage(string s1)
 string moneyAsString(long double money, int precision = 2, string dollarSign = "")
 {
     ostringstream numStr;
-    numStr << dollarSign << fixed << setprecision(precision) << money;
+    numStr << fixed << setprecision(precision) << money;
     string numStrStr = numStr.str();
 
     int n = numStrStr.find('.');
@@ -69,7 +69,7 @@ string moneyAsString(long double money, int precision = 2, string dollarSign = "
         insertPosition -= 3;
     }
 
-    return integerPart + fractionalPart;
+    return dollarSign + integerPart + fractionalPart;
 }
 
 struct item
@@ -1352,6 +1352,12 @@ class RailwayStation
     train bitlinerFrom;
     train syntaxCityExpress;
     train terminilleExpress;
+    train terminilleExpress2;
+    train codeopolisExpress;
+    train bulletcoder1;
+    train bulletcoder2;
+    train bulletcoder3;
+    train bulletcoder4;
 
     //User's Ticket:
     bool ticketPurchased;
@@ -1361,20 +1367,25 @@ class RailwayStation
     {
         // cout << "initializing.." << endl;
 
-    bitlinerTo = {"Bit-liner", "Passenger" , 5.00, Terminille, SyntaxCity, randInt(1, 3), randInt(7, 20), randInt(15, 21), "BTLNR008"};
-
-    bitlinerFrom = {"Bit-liner", "Passenger", 5.00, SyntaxCity, Terminille, randInt(1, 3), randInt(7, 20), randInt(15, 21), "BTLNR673"};
-
-    syntaxCityExpress = {"Syntax City Express", "Non-Stop Express", 25.00, Terminille, SyntaxCity, randInt(1, 3), randInt(7, 20), randInt(6, 9), "SCEXP042"};
-    terminilleExpress = {"Terminille Express", "Non-Stop Express", 25.00, SyntaxCity, Terminille, randInt(1, 3), randInt(7, 20), randInt(6, 9), "TRMLEXP135"};
-
+        bitlinerTo = {"Bit-liner", "Passenger" , (float)randInt(4, 7), Terminille, SyntaxCity, randInt(1, 3), randInt(7, 20), randInt(15, 21), "BTLNR008"};
+        bitlinerFrom = {"Bit-liner", "Passenger", (float)randInt(4, 7), SyntaxCity, Terminille, randInt(1, 3), randInt(7, 20), randInt(15, 21), "BTLNR673"};
+    
+        syntaxCityExpress = {"Syntax City Express", "Non-Stop Express", (float)randInt(23, 35), Terminille, SyntaxCity, randInt(1, 3), randInt(7, 20), randInt(6, 12), "SCEXP042"};
+        terminilleExpress = {"Terminille Express", "Non-Stop Express", (float)randInt(23, 35), SyntaxCity, Terminille, randInt(1, 3), randInt(7, 20), randInt(6, 12), "TRMLEXP135"};
+        codeopolisExpress = {"Codeopolis Express", "Non-Stop Express", (float)randInt(23, 35), Terminille, Codeopolis, randInt(1, 4), randInt(7, 21), randInt(6, 12), "CDPLSEXP98"};
+        terminilleExpress2 = {"Terminille Superfast", "Non-Stop Express", (float)randInt(23, 35), Terminille, Codeopolis, randInt(1, 4), randInt(7, 21), randInt(6, 12), "CDPLSEXP99"};
+    
+        bulletcoder1 = {"BulletCoder", "Bullet", (float)randInt(190, 250), Terminille, SyntaxCity, randInt(1, 3), randInt(2, 4), randInt(2, 5), "BLTCDR7111" };
+        bulletcoder2 = {"BulletCoder", "Bullet", (float)randInt(190, 250), SyntaxCity, Terminille, randInt(1, 3), randInt(2, 4), randInt(2, 5), "BLTCDR7112" };
+        bulletcoder3 = {"BulletCoder", "Bullet", (float)randInt(190, 250), Terminille, Codeopolis, randInt(1, 3), randInt(2, 4), randInt(2, 5), "BLTCDR7113" };
+        bulletcoder4 = {"BulletCoder", "Bullet", (float)randInt(190, 250), Codeopolis, Terminille, randInt(1, 3), randInt(2, 4), randInt(2, 5), "BLTCDR7114" };
     }
 
 
     vector<train> getAvailableTrains(Player &player)
     {
 
-        vector<train> trains = {bitlinerTo, bitlinerFrom, syntaxCityExpress, terminilleExpress};
+        vector<train> trains = {bitlinerTo, bitlinerFrom, syntaxCityExpress, terminilleExpress, bulletcoder1, bulletcoder2, bulletcoder3, bulletcoder4, codeopolisExpress, terminilleExpress2};
         vector<train> availableTrains;
 
         //losing my lamda function virginity with this one boys...
@@ -1470,6 +1481,7 @@ class RailwayStation
             }
 
             player.bankBalance -= tx.Train.ticketPrice;
+            cout << "\t - " << moneyAsString(tx.Train.ticketPrice) << endl;
             achievementMessage("Ticket Purchase Successful!");
             ticketPurchased = true;
             sleep(1);
@@ -1681,7 +1693,7 @@ class menu
             }
         }
 
-        if (player.currentCity.name == SyntaxCity.name)
+        if (player.currentCity.name == SyntaxCity.name || player.currentCity.name == Codeopolis.name)
         {
             switch(command)
             {
