@@ -3,6 +3,8 @@
 #include <unistd.h>
 #include <random>
 #include "utiliteS.h"
+#include <algorithm>
+#include <cctype>
 
 using namespace std;
 

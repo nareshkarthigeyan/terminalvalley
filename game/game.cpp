@@ -16,6 +16,12 @@
 
 using namespace std;
 
+string toUpperCase(const string& str) {
+    string result = str;
+    transform(result.begin(), result.end(), result.begin(), ::toupper);
+    return result;
+}
+
 void showMessage(string s1 = "", string s2 = "", int timeOut = 0, string name = "")
 {
     if (name != "") {
@@ -1357,7 +1363,7 @@ class RailwayStation
         train Train;
     };
 
-    bool reached = false;
+    bool reached {false};
 
     // class Platform{};
     vector<train> allTrains;
@@ -1367,7 +1373,7 @@ class RailwayStation
     vector<platform> platforms = {p1, p2, p3, p4, p5, p6};
 
     //User's Ticket:
-    bool ticketPurchased;
+    bool ticketPurchased {false};
     ticket UserTicket;
 
     // Currently there is a bug where when travelling between cities back to back in a triangle, regardless of what, on the third city, once you reach it's impossible to come back to railway station and can't buy ticket.
@@ -1492,18 +1498,19 @@ class RailwayStation
         return availableTrains;
     }
 
-    void printTicket(ticket tx)
+    void printTicket(ticket tx, Player &player)
     {
-        cout << "-----------------------------------------------------------" << endl;
-        cout << "Ticket Number: " <<  tx.Train.code << "_" << randInt(1, 150) << endl
-             << "Ticket cost: " << moneyAsString(tx.Train.ticketPrice, 2, "$") << " [PAID]" << endl
-             << "Train Name: " <<  tx.Train.name << endl
-             << "From: " <<  tx.Train.home.name << endl
-             << "To: " <<  tx.Train.destination.name << endl
-             << "Arrival in: " <<  tx.Train.waitTime << " seconds" << endl
-             << "Travel Duration: " << tx.Train.travelTime << " seconds" << endl
-             << "Platform no: " <<  tx.Train.platform << endl;
-        cout << "-----------------------------------------------------------" << endl;
+        cout << "---------------------------------------" << endl;
+        cout << left << setw(25) << "TICKET NUMBER:" << toUpperCase(tx.Train.code) << "_" << randInt(1, 150) << endl;
+        cout << left << setw(25) << "TRAIN NAME:" << toUpperCase(tx.Train.name) << endl;
+        cout << left << setw(25) << "SOURCE:" << toUpperCase(tx.Train.home.name) << endl;
+        cout << left << setw(25) << "DESTINATION:" << toUpperCase(tx.Train.destination.name) << endl;
+        cout << left << setw(25) << "PASSENGER:" << toUpperCase(player.name) << endl;
+        cout << left << setw(25) << "TICKET PRICE:" << moneyAsString(tx.Train.ticketPrice, 2, "$") << " [PAID]" << endl;
+        cout << left << setw(25) << "DEPARTURE:" << tx.Train.waitTime << " seconds" << endl;
+        cout << left << setw(25) << "TRAVEL DURATION:" << tx.Train.travelTime << " seconds" << endl;
+        cout << left << setw(25) << "PLATFORM NO:" << tx.Train.platform << endl;
+        cout << "---------------------------------------" << endl;
     }
 
     void ticketCounter(Player &player)
@@ -1549,39 +1556,40 @@ class RailwayStation
             }
 
             player.bankBalance -= tx.Train.ticketPrice;
-            cout << "\t - " << moneyAsString(tx.Train.ticketPrice) << endl;
+            cout << "\t - " << moneyAsString(tx.Train.ticketPrice, 2, "$") << endl;
             achievementMessage("Ticket Purchase Successful!");
             ticketPurchased = true;
             sleep(1);
 
             UserTicket = tx;
 
-            printTicket(tx);
+            printTicket(tx, player);
         sleep(2);
     }
 
     void boardTrain(Player &player, ticket tx)
     {
         cout << "Boarding Train..." << endl;
+        sleep(2);
+        cout << "[Train departs]" << endl;
         sleep(1);
-        cout << "Sitting..." << endl;
-
         int seconds = tx.Train.travelTime;
 
-        vector<string> travelMessages = {"Breeze feeling good...", "Watching moving trees...", "Stretching legs...", "Leaning back the recliner...", "Listening to music...", "Looking out the window...", "Rolling down the AC..."};
+       // vector<string> travelMessages = {"Breeze feeling good...", "Watching moving trees...", "Stretching legs...", "Leaning back the recliner...", "Listening to music...", "Looking out the window...", "Rolling down the AC..."};
 
         while (seconds >= 1) {
-            int rnd = randInt(0, travelMessages.size() - 1);
-            cout << "\rReaching " << tx.Train.destination.name << " in " << seconds << " seconds" << "\t" << travelMessages[rnd] << std::flush;
+           // int rnd = randInt(0, travelMessages.size() - 1);
+            cout << "\rDestination: " << tx.Train.destination.name << " in " << seconds << " seconds...     " << std::flush;
             sleep(1);
             seconds--;
         }
         cout << "\n[train halts]" << endl;
         sleep(1);
-        cout << tx.Train.name << " arrived at " << tx.Train.destination.name << " on platform " << randInt(1, 3) << "\nDeboard train >> ";
+        cout << tx.Train.name << " arrived at platform " << randInt(1, tx.Train.destination.platformCount) << endl;
         player.currentCity = tx.Train.destination;
-        clearInputBuffer();
-        cin.get();
+        sleep(1);
+        cout << "De-boarding train..." << endl;
+        sleep(2);
 
         // cout << "Welcome to " <<player.currentCity.name << "!" << endl;
         ticketPurchased = false;
@@ -1611,13 +1619,12 @@ class RailwayStation
                 sleep(1);
                 countdown--;
             }
-            cout << endl << "\rPlease step Back!" << flush;
+            cout << endl << "[Train enters station]" << flush;
             sleep(1);
-            cout << endl << "\rStay clear off the line" << flush;
-
-            cout << endl << tx.Train.name << " arrived on platform " << tx.Train.platform << "\nBoard train >> ";
-            clearInputBuffer();
-            cin.get();
+            cout << endl << "[Train halts]" << flush;
+            sleep(1);
+            cout << endl << tx.Train.name << " has arrived on platform " << tx.Train.platform << "!" << endl;
+            sleep(2);
 
             boardTrain(player, tx);
             return true;
@@ -1650,7 +1657,7 @@ class RailwayStation
                 cout << "You already purchased a ticket! click 'v' to view it" << endl;
             } else if (ticketPurchased && res == 'v')
             {
-                printTicket(UserTicket);
+                printTicket(UserTicket, player);
             } else if (res == 'e')
             {
                 int platformNumber;
@@ -1695,7 +1702,9 @@ class RailwayStation
             {
                 cout << "quitting railway station..." << endl;
                 break;
-            } else if (reached)
+            }
+            
+            if (reached || player.currentCity.name == UserTicket.Train.destination.name)
             {
                 cout << "Welcome to " << player.currentCity.name << "! Happy Journey!" << endl;
                 break;
