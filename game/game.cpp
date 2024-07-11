@@ -53,7 +53,7 @@ void achievementMessage(string s1)
     return;
 }
 
-string moneyAsString(long double money, int precision = 2, string dollarSign = "") 
+string moneyAsString(long double money, int precision = 2, string dollarSign = "")
 {
     ostringstream numStr;
     numStr << dollarSign << fixed << setprecision(precision) << money;
@@ -83,7 +83,7 @@ struct item
     float luckFactor {1};
     float weight = WEIGHT / rareity;
     long double sellPrice;
-    
+
 };
 
 struct tool
@@ -228,7 +228,7 @@ class Inventory
 
     void incrementItemCount(string itemName, int byThis)
     {
-        vector<item*> items = getItemsByAddress(); 
+        vector<item*> items = getItemsByAddress();
         for (auto &item : items)
         {
             if (itemName == item->name)
@@ -240,7 +240,7 @@ class Inventory
         }
     }
 
-    
+
 };
 
 
@@ -352,7 +352,7 @@ void npcDialogueInit(Player &player)
                         "I'll go check out the restaurant across the road after dealing with you.", "If the universe started from big bang, what's before big bang? What's the something that made nothing into not-nothing?",
                         "I'm not it the mood to talk now, tell me what you want...", "The best way to ask me out on a date is offer me food.", "Sometimes I think I'm not good enough, but then I see other people who are worse than me, and then I feel better.",
                         "Am I married? Uh....", "...", "[picks nose]", "My last boyfriend was a jerk, but he was the best chef in town though...", "Why does imaginary use of numbers in economy hold so much power?", "Do you think the terminal universe also has inflation?",
-                        "It has been 3 hours not thinking about food.... oh... I just did.", "Nothing makes sense in life.", "Between you and me, the credit card system is rigged to make you poor, but that's just me though.", 
+                        "It has been 3 hours not thinking about food.... oh... I just did.", "Nothing makes sense in life.", "Between you and me, the credit card system is rigged to make you poor, but that's just me though.",
                         "You won't believe me, but when I walked into the bank manager while he was changing, I swear he wore panties!", "The Indian filter coffee has got to be the best coffee in the world!", "Uhm, why haven't I accepted your request on Instagram...? uh...",
                         "Hey, have you got any gossip?", "Do I manupilate tax papers? How rude...", "I could really do for a cake right now.", "A few years back, I use to like a guy named Oscar, too bad he was gay."};
 
@@ -365,7 +365,7 @@ void npcDialogueInit(Player &player)
                             "When people ask me why she left me, I still don't know what to say...", "Items use to cost way less when I was your age, stock market has ruined everything...", "Do I hate navy seals? Young soul, I don't hold anything against them.",
                             "Discount? I'm already offering you the best prices...", "News paper companies have really \"fell off\" now...", "I could do with one of the good ol' magazines right now...", "The older you grow, the more you realise life is meaningless",
                             "It never really gets better, we just get used to things being worse and shitty all the time."};
-    
+
     HomelessMan.dialogues = {"I say the world can go to hell, but I must have my tea", "How do you claim to be alive, and you have no story to tell", "Most things they claim to change life don't amuse me", "Morality? [laughs] what even is that? A fantasy?",
                             "It's better to be delusional and in a mental paradise than being wound up in reality and suffering", "The stars seem to align to tell me that I am insignificant.", "There is not much difference between me and you, we both are the same, yes",
                             "Being sincere can also mean being stupid at the same time.", "[puffs out smoke]... [does not give a damn]...", "love is suffering, there is no other meaning to it", "My god, a moment of bliss, isn't that enough for this lifetime?",
@@ -387,7 +387,7 @@ string getDialogue(NPC npc)
     return dialogue;
 }
 
-class Events 
+class Events
 {
     public:
     void FirstBoot(Player &player)
@@ -434,7 +434,7 @@ class Events
 
         sleep(1);
         showMessage("\ni̴̡̛̲͍̪̞̞̠̥̘͈̳̙̠̘͖̲̫̦̮̠͙̦̋̔̔̑̔̈̂͜͜b̸̡̧̖̯̹̗̜̫̻̫͇̖̩̲͕̗̼̎̍̑̅̒̌̒̀̕͜e̶̡̡͖̞̥̯͍͚̲̖̥̬̩͎͉͙̪̳͛͋̀̓̏̏͋̏̐̓̉͊͊͠͝͠a̴̠͓̓̀́̈̅̓̈́k̴̢͇̩̹͇̮̭̪̗̙̼̟̲͇̦̼͗͜į̶̼͙̺̥̗͓̙̜̙̭̬̙̇̓̆́͋̒͗̀͒͗̽̕͝͠͝b̸͎̰̠͓̪̤͕͈̙͊̔́͋͊͆͛͌̿͋́̎͆̋̏̐̆̚̚̕͘͠l̸̨̢̛̛̘͈͔̞͍̳̼͉̘̺͔̦̦͉̫͂̿̾̿̃̔̒͑̊̆̔̉͐̔̄̌̕̚͘͝į̷̨̛͈̥̼̹̂̊̈́̅͗̉̉̔̆́̋̀̋̅͑̈́̑͜ͅͅw̴̼̰̺̤̤͈̼̻͈̗̼͖̘̉̐̊̊͑̈̑͂̈́͗͐̊͂̍̀̍̃͠ḙ̴̡̢͇̭̤̲̘͙͑͒̊̄̔̂͆́̑̅̈̈́̆͂͛̈́͑͐̏̎̕̚̚͝ͅư̷͖̮̩͈͓͕̭̯̻̯̘̖̙̳̻̖̆̓̉͂̔̓́̒͑̅̓͊̂̕̚ą̴̧̻͖̘̰͙͙͂̂͐̑͐̈͂b̶̧̠̳͚̘̠̭̼̮͖͓̦̰̝̝͚̹͑̾͑̀͛̒̌͛́̇͒́̕͠i̵̤͙͈̫̠̥̟̱͙̮͎̋̑̋i̴̛͍̠̤̼͇̜̠͙̩͖̳̰̭̍̋̋̐͆̃̈́̏͒̈́̒͌̽̿͘̚̕w̸̟͛̈́͌̏͋́̍́͛̑͗́̕̚͝͝e̷̡̫͖̣͇̻̙͖̫̹͕͍̜̳̰̟̐̆͂̂͘͠͝b̸̨̢̠̺̩̺̭̮͉͍̥̮̺̳͈̳̑̿̌͋̎͑̿̇͊̕͜͠͝ͅͅͅl̸̡̢̯͚͖͍̮̹̱͓̬͚̩͎̮̃î̶̡͓̱͕̠̦̭͜q̶̿̿́̃͛͐̍̓̿̀̾̋̐̔̀͌̈͊̈́͆͝ͅą̵̪̥̹̞̥̠̺̥̟̰͙͓̤͔͚̪̲͚̅̃̊̎͂͌͊̂̃͊̃̒̚ͅȩ̵̬͍̩̱͖̮̪̔̌̉̇̊́̈́b̵̻̩̦̔́͆̒̆̓̃͐̚̕͝l̴͈̝̮͎͙̟̊̃͋̊̎͊̚ĭ̶̢̛͍̤͔͈̜͔̣̖͙̖͉͍̟̝͕̦͙̝̈̋̀͂̉̉̃̔̔͒͜ͅu̵̹̗̥͂͑͆̌̇̽̔̒̿̌̍̀̓̈̇̚͠͝v̶̛̛̼̗̦̖̲̹̩̫̩͎̠̖̪̥̻͓̼̠͖̺̓͗̐͆̿̽͌̎̅͋͗͋̃͌̌̓͐̊̚͠͝ḃ̷̨̛̖͈̜̥͚͓̳͙̫͔͉̩̹̫̀͋̔̓̆͛̕͠ͅͅq̵̣̟̲̎͊̀̆̿̒́̍̋̽̄̇̌͠w̶̧͔̯͉̺̅̂̑̎̑̉͒̎́v̷͚̀̀̓̏̍͆̃̀́̑͒͐̀̑̕͠e̵̱͐̌̔̂͌̋̃͑̄̒̒́̂̕̚͝͝į̷̧̢͚͈̟̙̻͓͕̙̘̙̘̮̼̘͔̙͉̯̐͜͜ͅu̵̡̢̧̫̗̳̲͇̜͚̤̠̲̞̟̟͌́̃͐̅̐͆̾̔͑̆̏̂́͋̀̒͋̆̕͝b̵̡̩͕̥̟̲̤̻̙͉̠͑̇̐̎̈̃̉̓̿̌̈́̊́͌̚v̷̨̮̤͙͓̣̭̫͓̞͔̰̼͍͖̭̲̈̉͊̒̓̒́͑̕͠ͅḭ̵͇̻̱̩̗̟͕̥̗͖͉̗̩̹̖̈̇̾̾̓̕u̸̢̹͊̿̓̂̀̈́̉b̷̨̖͚͖̬̰̪͕̻̞̮̠͙͕̻̫̖͓̹͉̟́͂́͛̽̄͊̇͆̚̚͠ͅḯ̷̢̢̡͓͚͕̖̠̳̖̓͜͜͠ȇ̵̢̢̞͕̰̻̫͎͎̦̖͍̈́̍̓̃̌͆̀̾͑͆̄̅̉̀͋̅̀̈́͂͝͝į̵͓̺̈́̒̅̆̾̾͘w̵̗̭̖̻̪̰̺̗̜̩̼̩̜͉̗̺͌̈́̏̒̆̌͌͂͋̑̊̀́̊̓̀̅̔̕͠͠c̴̯͈͚̓̂̈́̐̋̂̑͊̏͗̃̏͊̀̾͘͠͠d̶̢̢̗̯̬̳͇̜̬͍͔͎͇͚͔̭̃̎̄̋̾̂̑́͂̏̄͊͂̅̀́̾̇̃̕̚͜b̸̨̨̡͉̮̖̮͎̟͔̯̯̞͖̞̾̏̄͆̅́̾̍͗̒̊͂̏̈́̽̔͌̇̀̂̚w̴̺̬̦̺̦͙͖͊d̷̡̧̮̗͔̩͎̯̪̻̖̟̀͗̈́͗͋̕͝ĺ̶̛̺̯͕̦̣̭̥̠̭͎̩͎̼̹̝̲̭͉̤͔̿̏̆̾̿́̈́̑̌͘̕͝ç̸̧̢̧͔̙̦̩̭͙͖̺͍̦̭̱̟̍̍̏̓͊͆͑̕͜͜͝ͅȉ̷̢̛̺͎̹̟̗̹͙̼̜͖̈́̆̿̓̉́̏͂͌͐b̴̢͓̱̣̰̟̲͍̯͖̲̪̙͎̻̪͓̠̳͕̦̝̄̂̑̐̍́͒̚͠ͅͅi̷̛̯̗̰̺̟͓̰̟̤͈͊͆̍̈́̐̈́̍̋̀̈̇̆͂̀̈́́͛͘͜ͅb̵̧̬̘̦̺̦̙͕̦͉̙̩̲̗̖̤̅̎̉̈́̉͑́̏̈́̿̿͛̅͐̍͋̇̈́͘̚͜͝ͅͅv̸̡̢̧̧̞̣͓̱̣̖̪͈̖̲͇̠͍̠͎̱̙͇̑̍̈́̚͘͜q̸̧̨̩̮̜̣̲̠̺͍̌͌̑̀̏͌͒̕ḯ̶̧̳̳̳͉͒͗̀̑̕ư̸̡̧̧̮̗̠͓̬͚͈̪̻̦̻̙͔̦̖͕͔̈́́̃̉̊̎́̂̊̂̽̃̉͝͝͝b̶̤͕͉̤̰̼͕̼͉̻͚̮̲͕͉͂̃͛͜ͅͅķ̶̡̳͖̞̜̻͉͈͕̪̜̗̼̠̥̹̩̲̝͌̓̔͛͗̏̆̈͋̀̓̑̈́̚̚s̵̢̛͎̱̟̻͎̞̩̖̓̈́̂͌̀͛̉̀̀̚͝j̸̡͉̹̤̪̮̣̱͉͇͇͈̞̬̰͕̯́̊̄̔͂̚̚͘͜͝͝b̸̛͈̮͉̩͑̀̓̀̒̀́͑͒͂̋͋̈́̄͛̕͘͠͝͝͠à̶̢̼̜͆͐̀͆̔̃͒̐̃̾͌̕l̴̠̝̼̈͠͝k̸̡͙̗̠͖̞̝͙͈̩͎̹̮̣̹̠͐̽̈́̊̐̅̃͝ś̷̛̪͈͈̖͚̝̼͔̥̬͎̝̱͖̹̞̠̯̞́͌͒̊́b̵̘̯̫̜̌̍͗͊̒͊͑̽̌̒̾̔̈̂̒̐̀k̴̘͕̝̐́̈́͑̋͘͘s̸̡͔͚̥̯͕̯̤̳̈̆͌͋̈́̉͘d̵̡̧̢̞̟͉̞̟̩̘̝͍͎͔̮͍͎̝̞̠̻́̋̓̏͋̎̄̉͒͗̀̊́̀̕̚͜͠v̷̮̣̌̈́͆͗́̈́̕̕b̴̛͕̬̰͎̬̳̜̮̯͕͎͇͉̘͓̲̱͎̩̖͙̈́͌̓̈́̃̋͆̉́͜ķ̵̨̡̛͓̙̮͎̼̞͓̳̩̠̝͇̱̲̱͂͒͒̆̋̊̿̄̏̈̾͊̌̾̂̀̆̍͝w̵̢̧̨̛͕̦̹̹̦͉͍͓͕̜͙̺̬̻̐̓̂́̀̏̐̔̅̐͑̿̚ͅͅş̷̛͙͔̲̟̻̱̹̯̻̮͉̟̣͌͒̂̋̓̾͑̈́͋͠d̸̡͖̪̰̯̜̺̤͉̥̹̘̱͓̜̋̅̍̏͛̄̓̂̏͆̊͛͐̀͝͠͝v̶̨̭̩̯̘̜̝̬̩̲͍̰̱̮̔͐͐b̴̠̞̘̥̗̦̦͇̦̘̘̦̠̙̘̤̜̥͍̋̓͐̓͐͒́̈̍̂̽͊̕l̶̫̜̞̗̹̺̮̖̬̦͉̅̽̉̌̇̂̀̾͛̌̚̕͘͝͝k̵̛̛̛͉͈̝̳͉̻̝̜̼̥͎͍͙̫͚̺̊͌͆̈́̎̚̕̕͜s̵͚͕̅̀͐̑̚d̴͉̙̄͂̽͘͝b̶̛̻̭̮̣͈͗̎͐͋̃͆̒̍͆́̾̒͛ķ̵̨̧̡̗̥̬͈̱͔̦̤̬͚̲̫͉̠̪̰͔̠́ṡ̸̡̨̡̛̮̰̙̮̹͚̜̺͖̘̫̳̹̲̩̞͇͙̉͑̆̄̉̔̑̇̓͒̐̾̔͘͜͠͝ͅd̷̢̘̰̰̺̞̦̝̠͚̝̟̼͖̿̐̈́̈́͐́̃̍͌́̉̈́̌͋͌͘̚͜ͅḅ̵̛̰̝̰̫͙̬̠̺̩̺̺͛̄͒̍̍́̂̍͒̈́̀̀́̅̏̀́̚͠ͅļ̶̨̢̹̬̰̳͕͙͈̞͙̠̜̗̰͌̀̃̈͛͗͊̏̄́̄̆̊̒̋̍̓͆̈́̕͠͠͝s̷̞͖̣͖̝̐͒̇v̴̧̨̛̭͍̭̦̖͍͉̈́͊̋̆́͊̔͆͒̍̔̑̄́̀͛͑̿̉͘͝k̵̡̡̡̳̘̬̜͔̲͈̠̂̊̓̈́̀̊͋̿̈́̇͘̕͘͝j̸͕͇̲͚̜̟̤͈͕͕̠̦̹̬̲̫̪̩̮̫̿̒̒̓͌͊̐̏̑̊̀̃̃̒͝͝b̶̨͓̠͚̖͕̻̦̙̼̲̗͇̳͕̙̦̦͈̍͒͒̽́̐̏́̈́͂̇͛͒̓̓͆̆̆̕͘͝ṡ̵̡̨͔̝̱̖̰͖̦̹̰͍̯̦̟̬̭̏̅̄̓̍͌͜ͅl̷̝̠̗̻͖̰̱͎͔̹̠̣̤̱̣͚͍̞̪̲͓͆̒̔͐͛͜k̶̄̀͜d̷̢͙̬̞̅̈́̍͒͆̃̅̈́̀̀̉͗̋̋̈́͐̚͠͠j̷̪͙̳͓͙͇͖̥͙͉̼̩̪̩̖͗̽̈́b̴̤͉̥̩̾̉͂̔k̷̨͎͚̻̣̭͔̤͇̜̱̳̫͇̫̝̐̅̎̈́̍̅͠ͅͅs̴̛͚̜͓̻͙̦̞̏͗̐̆̆̇͊̏̇̄̿̆̊̆̃̑̇̀̿̍̏̚ͅb̵̨̛̜͍͉̆̄̍̉̐̿̀̇͐̔͘͠l̸̡͍̰͔̝̂͑̌̌̚v̷͙̦̥͓̙̫̲̥̘̖̯̰̬͇̓́̈́̉͜͠s̵̨̢̨̛̱̞̻͇̤͎͕͖̟̝͓̼̮̻̤̾̋̏͋̈̽̊̃̊́̈́̀͊̊̋̏̑̀̕̚k̷̢̢̘̳̮̰͍̘͙͔͕̘͍̯̣͐̃̾͗̎͗̌͂̀̔͋͒͑̌̇̾͒͌͘̚͜͜j̵̡͓̫͇̩̬̮͕̰͍̹̮̣̩̎̅̊̽̐̎̇͒̀̈́̄̀̕̚͜͜͝b̴̢̛͚͉̣̱̦̜̭̗͕̹́͊͛̍̌͂̈́͊̈́̾̈́͘͠͝l̷͚̰̳̭̜̩̇́̍̇͆̿͆͑̈́͘͘͘̕ṣ̶̢̢̣͚̗̭͖͚͌̈̾̓̽̆͐͌̿̾̃̃́̚͝͠k̸̛̖̻̼̰̭͍̘̭̳̞̭̤͔͚̲̦̄́̾͂͗́͐̆͂̑͊̀͌̈́͑͗̌̊̾͊̆͘͘͜ͅj̴̡̛̞͙̘̳͍͉͕̞̱̝̯̤̾͐̾͊̈́̌̃̋̽͌̎́̏̔̓͒͑̓̈͘͜͠͝b̴̨͎̞͈̳̥̝͕͈̙̝̼̥͎̖̟̪́̾̃̑̃̾̿̍̐̕͘͜͜͜ş̸̡͔̘̹̪̪̖͇̩͉͇͚͈̹͍̱̟͚̆̆l̸̨͔̱͖̟̭̯̠͖͍͚̼̭̙̐ͅd̵̛͚̯͙̦̓̄̈́͑̿̀͌͛̃͑͛͂͛̚͘͝ͅk̷̖͊͐͆̊̃̓͌͗́̍̈͐͒̈̌͑̋͐͊͝j̶̢̢̢̢͖̝͙̭͉̦͖̠̩̭͑͒̈́̔̆̐̄̈̀̀̀̽͗̊̃̇̆̓̆͂̂͘̕͘b̸̨̳̰̻̪̘̬̭͎̩̙̜̳̰̮̼͔̯̥̔̾̈́͂̅̔͝v̶̛̝͔̝͍͕̹͎̼̯̟̏͒͜͜͜s̷̡̛̠̦̠̤̘̤̙͙̯̙̿̾̌͑̊̉̇͗̉̀̓̋̎̎̉̔͛̚͜͝͝͝l̵̰͙̣̬͛̓̂̈́̀́́͑͗͒͊̉͋͑̒͊͠k̸̡̮̰̟̠̬̭̰͒́́͠ͅj̴̨̲͕̰̗̗͚̠̗̰͚̜̬̮̬͍̫̗̹̯͐̊͜͜s̵̨̨͔̥̣̯̜̻̪͖͕̥̬̓͑̔̃̌̔̀b̷̢̛̟͓̞̗̻̹͈͙̺̗̲̖̓͂͊͛̓͐̊͗̅̋̍̉̀̊̊̎̿̓́͘̕̕ļ̶̛͈̯̙͇̮̬̖̱͎̭͔̬̺͎̰̹͈̱̰̆̿̍̋͛̾̂̋̒̍̑͌̕͝k̷̨̨̧̰͉̖̪͚̳̩̱̘̜͔̮̽̉̀͋̿̈s̷̢͚̦̘͈̞̍͂̂̏̈́̇̂̓͗͛̑̃̅͂͒͂̍̈́̚͘͝͝d̶̨͚̙̟͇̩̜̪̯̞̩͓̝͎̩̞̩̗͓͙̀̊̌̀̓͛̆͐͂̄̿͑j̸̛͚̳̹̰̮̰̺̆̈́̄̅̂̉̀͊̾̏̕͘͝b̷̢͙͓̪̳͈̺̜̥̼͈̽͆͋͒̃̎̓̆͛̐́̓̓̽̆̈̚̚͘͝͠͝v̴̢̨̰̰̺̰̭̼̗̼̞͚̯̯̾͒͑̂͛͆̈́̌̿͂́́̃̎̑̑̾̚͜͝͝͝͝͝ͅl̴̮̮̠̞̟̥̰̫̹̝̹͓̠̣͔̟̠̯͔̾͆̀́̒̉͛̚k̷̛̯̓͌̋̀́̅̓͂͗͆́͂̆̌̀̈́̾̚v̴̛͔͎̘̦͌̑́̎͐̍͒͊͑̋̏́̔̓͝j̷̨̗̝̰̦̣̫̲͉̹͚͇͔͈͕̱͖̟̊̄͒́̓̓̆̎́͐̂̏͒̅̾́͐̂͜͝b̷̛͔̣̦̗̊͆͆̊̀̐̑̌̌̿͊͒͘͝ͅl̵̢̢̹̥̹̻͔̠͎̳̤͔̣̳̦̱̪͉̜̟̲͊̾̒́͂̀̿̈́͊́̀͐̀̊̃͛̂͝k̶̡̡̪̻̜͛̅̈́̅̈̐͛̈́͊͌̂̆̒̎͋̒͛̊͘͘͝s̸̢̨̨̧͓͔̖͖̻̜̞̼̱͇͕̣̪̪͙̠̟̖͎̈͋̌̃̓́̾͛̑͆̏̀̍̄̓͂̒͝ͅj̵̡̛̰̬̰͈̪̦̦̞̐̇̈́̌͗̏͠͝ͅb̶̜͚̀̈̍͐̐̊̋̔̍͆̈́͠ḽ̴̤̬̗͎̙͒̏͆̍͆́͆̈͝ȃ̴̡͕̩͔̤̮̘̮̱̻̺͓͚̭̟͚͕̰̹̦̠͜͠ͅk̸̛̟̪̈́s̸̛͓͕̤̻͎̺̼̪̗̝͈͖͂̈̅̕͜͜d̵̛̳͖̱̰͍̔̀́̋͗̆͋̽̅̂̍͆̔̀̚̚͜͝ͅj̶̢̧̟̤̤̳͇͍͍͙͍̫̥͆͒̆̏̓́̽̐̕͘͜b̶̮̪͖͚̠̝̠̬͖̩̻̈͑̇̒̇̈́͑͊̆̇̓̃͆̔̐͋̅͋̀̌͜͝͝͠͝ͅl̴͔͍̜̬͚̬͕̼͇͖̟͚̝̯̮͉̻̖̪̪̬͖̫͐̄̓́̓̇̚͝k̴̨̼̩͈̺̪̩̜̣̪͔̮̩̺̱̫̝̜̐ͅͅs̸̛͔̺͐͐̄͋͗̊̇̓͝͝j̵͉͔͈̫̯̔̃̑͊̀͑̋̌̚͘̚b̵̨͓̥̺͔͕͍̣͍̝̻̙̲̩̗̬̳͉̖̤̬̺̊̀̽̐͂͗̃̕͘͜͜v̷̛̛̩̪̄͛̃͆̓̈́̊͗͂͑̅͒̽͆̐̎̈͂͘͝͝l̶͈͎͂̓̎̔ķ̶̡̢̛̛̺̪̣͖̣̠͔̳̟͓͖͉͗̈́̈́͐̌̊̓̐͋̀̀̊̀̍̌͗̄̆͘͘͜͝s̶̡̧̡͔̠̲͈̲͎͖̺̥̯̺̬̻͍̠̦̞̳̖̭̀̇̓̂͊̄̅͝ͅa̶͙̱̥̜͓̖͇͔͚͓̲̙̻̟͈͙̙̞̟̜͚͘ͅj̸̫̰̯̬̮́̓̏̌̚b̸̡̡͇̹͉̦̘̩͉͚͎̠̩̪̥̱̬̘̳̓̆̏̍͊̾̽͜ͅȧ̴̛̼̜̥́̄̎̈́͂̅̂̓̿͘̚͝͝l̷͙̹͔̮͚͖̰͓͉͒̾̌̿̓̀̎̂̏̅͆̊̆̕͝͠ͅş̸̨̨̺̫̦̾͒͌̌̅̎͂̉͘͜k̸̨͈̠͕̞͈͔̺̦̳͑͑̊̆̍͛̿̉̀̀̃͆̑̚̕j̷̨̨͇̤͍͔̩̻̙͉̬̫͙̺̪̤̻̯͚̬͓̏͝ͅͅb̷͎͎͎̞͓͉̜͚̯̰͚͒̄̅͊̎̇́͐͋͆͐̅͑͆̀̚͜͝͝͠ạ̷̹̮̮̭͍̼͓̭̰̖̈̀̎̿͑̌͑͒̒̇͒̏̃̔͌͊̚ş̸̨̦̘̝̼͔͓͚̭̠̝̝̝̮̖̜̣͈̻͍̱̼͗͑̔͋̑͑̇̅̄͆̈͆̅̊͠v̶̢͍̺̆͜d̵̼̲̖̯̤̰̱́͗͒ķ̸͓̻̭̯͈̟̪̝̬̬̥̗̱͇̹̮̈̊̄̍͛̊̈́̄̕ͅj̶̢̧̢̢̩̫̗̦͕̝̩̩͎̹̭̏̇͒̎̾́̃̊̒͐̀̈́̒̉͋̾͗̽̈́̕͝͝͝͝b̸̨̢̛̠̳̣̮͚̦̯̯̬͖̈́̅͗͑͆̿̍̽̎͗͒̈́̈͂̑̈͋̓͘̚͜l̵̡̡̛͖̦̗̹͖̺̲͇͙͍̱͗̍̋̎̊͆̈́̀͐̇̓͐̽͛̌̓̋̔͑̿̊̔͝ͅͅs̶̢̡̰̰͇̺͍̹̞̝͖̙̟̩͖̼̟̺̥̿̍̕͝ͅd̴̨̨̼̪̞̻̞͇̰̻̠̗̣̼̦̮̑̾͂͜͝ͅa̴̧̧̢͕̤̙̬͙̞̻̜̙͓̥̗̽͂̈̃͒̐̔̾̊̂̅̃̊̐͌̓̕͘͝ǩ̸̮̼͈̠̩̱͖̳̜̝̞̥̞͈̺̬̹̠̗̎͐͆̒͌̂̉͒͆̕͝j̸̨̡͔̟͈̖̠̥͔̟͙̞̮͍̟͉̫̠͍̤̹̭̰̆͒̎̋͗́͗̆̔̈́̚͘͠͠͝ͅb̶̨̛̖͎͔̮̳͔͈̦͉̤̤̣̩̜̥͙̽̓̾̆̒̇̏͛̌̀̓̅̊̌̚̚͘͘͝ͅv̴̧̨͔̠͖̺̥̬͈̲͇̱̹̤͔̭͔͈̦̟̳̆̾͒̾̃̉͊̾͆͜͝ĺ̶̨̝͕͓̘͖͕̟̩̝͙̰̰̳͗͛̒͌̽͛̃͂͂̆̿̉͐͛́́͑̾̈́͘̚̚͝ḑ̵̯̗̜̮̞̼̱̜̜͚͓̱̯̺̯̪̲͕̳͚͔̌͌͆̀̓͒͂́̐̈́̈́̀͋̇̄̀̈́͝ŝ̶̹̳̦̝͉̩̠̄̔̊͂̂͆̂͑̓̽̊͂͠ͅķ̷̳̲̙̖̻̑͑͒̊͂̄̀͑̃̎͂̄̿́͆̔̽̎̅̒̾̿͘̚͜d̶͚̬͔̳̖͙͇͉̜͙͗̉̇̏͌̽͜j̵̧̖̟͉͚̮͑́̓̇̿̍͂̀̋̈̅̆̾̈́̀̾̓̆͒͝͠b̷̦̫̲̻͈̪͍̩̳̱̋̾̑̊̄͗̓͐͐̄̊͋̊̾̈́̎̒͐̕͜͝͝͠͠v̷̢̧̛̞̬̘̭͈̹̣̱̮̽͛͊͊͆͌͛̽̽̏̉̽͌͛̚͜͝͝͝l̵͍̲̰̥̙̭̻͇͎̞̺̹̝͎͕͇͛̚͜͝k̶̨̤̪̜̻̣̰̜̤͙̼̼͔̓̇̈́̅͌͊̽s̷̪̝̠͚̣͈̤͔̙͒̐̆̈́͊̇̇̆̀́͋͆͂̽̏͆̇̒̚ã̴͔͓̯̤͉̹̘̱͉̤̝͋͊͗̿̆̾̕j̸̡̧̢̙̝͙͖̪̭̋̊́̏́b̶̭̰̲͙̮͙̙͔͉̹͓̐͗̚͜͝ͅͅͅĺ̶̢̯͖̗̗̳͇̦͚̮̲͔̪̜̣͓͕̰̬̈̑̓̍̀̓́͛̅͗͐̕͘k̶̞̭͊̄̌̋̀̚s̶̛̛̼̹̗̙̩̈́͒͋͛̓́͋̏̑͊̍̔͒͋̽͐̈́̇̚͠͠͝j̵̭̥̱̙͕̋͌̓̒͐̒̅͆̒́b̴͚̋̽̀̍͐͛͂͊͐̆̈́́̈́̂̂̿̓̓̾̊̕̕͘s̴̠̼̰̺͇̩̞͖͓̰̤͔̹̟̹͇̣̫̲͖̫͖̖͓̉̂̆̃̄͗͛͗͂͐̿̓̓̈́a̸̻̙̖̰͎̰̲͊̾̀̋̍͋̿̎̿̀̂̍̒̀̎̚̕͠͝͝͠l̴̪̩̜͉̮̹͚̳̐̓͒̑̐̐̂̃͛̃̓̐͜͠k̵̡̛̛̠̭͈͔͍̰͎̟̱̥̟̑̏̉͛̏͗͗̊͑̌͊̀̉̅́͒̿̐̓̕͠͠j̶̡̨̧̧̛̛͓͍̱̟͈̘̳̱̦͍̝̜̰̣͈͉͔̫͈̿̃̈́͒͂̍̈s̶̡̛͙̪̟͇͍̲̘͇͚̅̎̾̆̿̾͐̀͒̇́̾̃̒̕͘͠͠b̸͕̻͎̦̻̻͓̬̗̦́̄̀͑̕͝ĺ̵̠̼̱̫͚̩͓͎͚̼̱̰̦̮̹͖͖̼̼̱̲̲̅̃̓̅͋͒̈́̓̔̏̀̿̉̃̃̉̈́̒͜͠k̸̢̨̡̛̦̩̗͖͚̹̯̠̟̮̣̬̬̬̯͈̺͔̊̋̂̓́̀̍͒̂̿̌̆̂̚͜ͅͅa̸͕̯̟͙̮̬̫̲͓̞̜͙̘͙̤̮̯̥̠͈̯͑̍̽̍̽̅͗̑̿̉̏̐̎́̀̈͜ṣ̶̺͈̮̠͕͎̜́̔̽̅̉̐̈́̄̋͌̀͊̓͗̀͗̓̎͝ͅd̴̨͚͎͓̿ͅṽ̶͙̺̭̊̉̈̎̃͐͑̂̈́̿͗̎̓̎̒̉̍͊͜b̷̤͓̭̲̑̅̃͂̅̂͘ḽ̸̡̡̛͖̘͚͚́̽̌͂̆̋̈̊̅̄̎̐͗̾̑̓k̴̛͇͍̤͇̙͎̼͔̗͙̮͕͙͈̯̼̹̱̘̣̑͊̒͋͂́̓͌͛̃̏̂̍́̽v̸͓͚̻̩̦̻͉͈̯̲̭̼̣̬͚͔̫̙̩̮̂̅́̅͒̈̊̉͆̍̇̆̐̌̈́̌ͅͅs̷̨̲̪̱͈̮͕̱͍͕͖̦̞̥̱̜̓͗̓ḑ̴̦̹̗͖̠̳̭͓̠͇͌͛̊̈̈̓̒̋̐͂̅̾̊͘̚̕͝͝ą̸̟̮̙͕͙̗̺͓̟̭̘͓͈̋͌̍̅͌͛̉̉̋̔̊͂̌̑̾̚͝b̸̰͇̞̗̹͉̳͉͎̙͍͎̪̮̟͔̮̼͒̈́͋̃͌̄̚ͅs̶̛͓̯̗̲̰̗̮͖̦̘͙̬͈͔͎̠͉̬̫̓̐̉̃̃͂͗̈́̇́̚̕͘̚̕l̴͉͚̩̎̈̈́̐͆̓̈́̏͘d̴͓̣͈͇̠̙̳̎͊͂͒̀̅̈́̎́͋k̶̙̘̆̈́͂͋͒̂͆̔͑̋͋̄͛͛̐̚͘̕̕͠͝b̸͕̗̳̫̲͒̉̈́͊̑́̉̑̌̈̓̾̌͒ś̵̢̡̢͕̜̰̥̥͎͖͎̺̺̠͉̆̅̓̐̌̅͝ͅļ̸̨̠̝̬͈̬̦͈̙̲̼͇͙̦̠̭̺͐̉̇̐̀̉̅͘͜͜ͅk̸̡̡͓̦̥̬̣͍͓̲̒̀̔̋̔̊̚̚s̵̡̖̤̙̝̠̺͚͎̼͈̝̗͈̞̲̮̈̅̈́̉͐̓̃̈́̎́͑̋̽̂̃̋̏̕͘͘͝͝a̴̧̨̛̮͇̟͕̣̹̙̖̥̜͇̱̦̗̫̠̘͔̩̅̆̓͊̎̿̅͌̾̋̿̓̌͋̂̈͗̄̓̕̚͜͠ͅb̵̢̰̞̝̥͉͙̟̜̘͕̜͆̈́̾͐̔̆͛̉̚̚ͅͅs̷̙͚͈͙̽̅̏̓̈́̊̊͂͑́͊̐̄̇̀̾̊͝͠a̵̛̛̲̜̟̜̻̺̠͖̣̤͖̲̍̆̐͋̋͐̃̆̔̅̊v̸͚̬̮̉̍́̀ķ̸͎̠̺͖̮̯̦̠̺͓͉̠̟̜͓̖̗̫͛̍̾̾̍̉͌́̌̾̽̊͘ḏ̴͙̎̈́̅̎́͛͊͒̀̄̍̿̈́͐̆͘͝j̷͔̠̥̩̗̩̍̿̽̇̐̃͂͌̚͝͠b̵͉̻̟̺͙͗̍̈́̆̋̀̆͋̐͋̈͗͑͊ͅḇ̸̛͈̟̮̺̙͈̹̘̬̭̥̻͈̲̻̓̿̌̊͂͐̎͐͊́͝b̸̡̧̖̯̹̗̜̫̻̫͇̖̩̲͕̗̼̎̍̑̅̒̌̒̀̕͜e̶̡̡͖̞̥̯͍͚̲̖̥̬̩͎͉͙̪̳͛͋̀̓̏̏͋̏̐̓̉͊͊͠͝͠a̴̠͓̓̀́̈̅̓̈́k̴̢͇̩̹͇̮̭̪̗̙̼̟̲͇̦̼͗͜į̶̼͙̺̥̗͓̙̜̙̭̬̙̇̓̆́͋̒͗̀͒͗̽̕͝͠͝b̸͎̰̠͓̪̤͕͈̙͊̔́͋͊͆͛͌̿͋́̎͆̋̏̐̆̚̚̕͘͠l̸̨̢̛̛̘͈͔̞͍̳̼͉̘̺͔̦̦͉̫͂̿̾̿̃̔̒͑̊̆̔̉͐̔̄̌̕̚͘͝į̷̨̛͈̥̼̹̂̊̈́̅͗̉̉̔̆́̋̀̋̅͑̈́̑͜ͅͅw̴̼̰̺̤̤͈̼̻͈̗̼͖̘̉̐̊̊͑̈̑͂̈́͗͐̊͂̍̀̍̃͠ḙ̴̡̢͇̭̤̲̘͙͑͒̊̄̔̂͆́̑̅̈̈́̆͂͛̈́͑͐̏̎̕̚̚͝ͅư̷͖̮̩͈͓͕̭̯̻̯̘̖̙̳̻̖̆̓̉͂̔̓́̒͑̅̓͊̂̕̚ą̴̧̻͖̘̰͙͙͂̂͐̑͐̈͂b̶̧̠̳͚̘̠̭̼̮͖͓̦̰̝̝͚̹͑̾͑̀͛̒̌͛́̇͒́̕͠i̵̤͙͈̫̠̥̟̱͙̮͎̋̑̋i̴̛͍̠̤̼͇̜̠͙̩͖̳̰̭̍̋̋̐͆̃̈́̏͒̈́̒͌̽̿͘̚̕w̸̟͛̈́͌̏͋́̍́͛̑͗́̕̚͝͝e̷̡̫͖̣͇̻̙͖̫̹͕͍̜̳̰̟̐̆͂̂͘͠͝b̸̨̢̠̺̩̺̭̮͉͍̥̮̺̳͈̳̑̿̌͋̎͑̿̇͊̕͜͠͝ͅͅͅl̸̡̢̯͚͖͍̮̹̱͓̬͚̩͎̮̃î̶̡͓̱͕̠̦̭͜q̶̿̿́̃͛͐̍̓̿̀̾̋̐̔̀͌̈͊̈́͆͝ͅą̵̪̥̹̞̥̠̺̥̟̰͙͓̤͔͚̪̲͚̅̃̊̎͂͌͊̂̃͊̃̒̚ͅȩ̵̬͍̩̱͖̮̪̔̌̉̇̊́̈́b̵̻̩̦̔́͆̒̆̓̃͐̚̕͝l̴͈̝̮͎͙̟̊̃͋̊̎͊̚ĭ̶̢̛͍̤͔͈̜͔̣̖͙̖͉͍̟̝͕̦͙̝̈̋̀͂̉̉̃̔̔͒͜ͅu̵̹̗̥͂͑͆̌̇̽̔̒̿̌̍̀̓̈̇̚͠͝v̶̛̛̼̗̦̖̲̹̩̫̩͎̠̖̪̥̻͓̼̠͖̺̓͗̐͆̿̽͌̎̅͋͗͋̃͌̌̓͐̊̚͠͝ḃ̷̨̛̖͈̜̥͚͓̳͙̫͔͉̩̹̫̀͋̔̓̆͛̕͠ͅͅq̵̣̟̲̎͊̀̆̿̒́̍̋̽̄̇̌͠w̶̧͔̯͉̺̅̂̑̎̑̉͒̎́v̷͚̀̀̓̏̍͆̃̀́̑͒͐̀̑̕͠e̵̱͐̌̔̂͌̋̃͑̄̒̒́̂̕̚͝͝į̷̧̢͚͈̟̙̻͓͕̙̘̙̘̮̼̘͔̙͉̯̐͜͜ͅu̵̡̢̧̫̗̳̲͇̜͚̤̠̲̞̟̟͌́̃͐̅̐͆̾̔͑̆̏̂́͋̀̒͋̆̕͝b̵̡̩͕̥̟̲̤̻̙͉̠͑̇̐̎̈̃̉̓̿̌̈́̊́͌̚v̷̨̮̤͙͓̣̭̫͓̞͔̰̼͍͖̭̲̈̉͊̒̓̒́͑̕͠ͅḭ̵͇̻̱̩̗̟͕̥̗͖͉̗̩̹̖̈̇̾̾̓̕u̸̢̹͊̿̓̂̀̈́̉b̷̨̖͚͖̬̰̪͕̻̞̮̠͙͕̻̫̖͓̹͉̟́͂́͛̽̄͊̇͆̚̚͠ͅḯ̷̢̢̡͓͚͕̖̠̳̖̓͜͜͠ȇ̵̢̢̞͕̰̻̫͎͎̦̖͍̈́̍̓̃̌͆̀̾͑͆̄̅̉̀͋̅̀̈́͂͝͝į̵͓̺̈́̒̅̆̾̾͘w̵̗̭̖̻̪̰̺̗̜̩̼̩̜͉̗̺͌̈́̏̒̆̌͌͂͋̑̊̀́̊̓̀̅̔̕͠͠c̴̯͈͚̓̂̈́̐̋̂̑͊̏͗̃̏͊̀̾͘͠͠d̶̢̢̗̯̬̳͇̜̬͍͔͎͇͚͔̭̃̎̄̋̾̂̑́͂̏̄͊͂̅̀́̾̇̃̕̚͜b̸̨̨̡͉̮̖̮͎̟͔̯̯̞͖̞̾̏̄͆̅́̾̍͗̒̊͂̏̈́̽̔͌̇̀̂̚w̴̺̬̦̺̦͙͖͊d̷̡̧̮̗͔̩͎̯̪̻̖̟̀͗̈́͗͋̕͝ĺ̶̛̺̯͕̦̣̭̥̠̭͎̩͎̼̹̝̲̭͉̤͔̿̏̆̾̿́̈́̑̌͘̕͝ç̸̧̢̧͔̙̦̩̭͙͖̺͍̦̭̱̟̍̍̏̓͊͆͑̕͜͜͝ͅȉ̷̢̛̺͎̹̟̗̹͙̼̜͖̈́̆̿̓̉́̏͂͌͐b̴̢͓̱̣̰̟̲͍̯͖̲̪̙͎̻̪͓̠̳͕̦̝̄̂̑̐̍́͒̚͠ͅͅi̷̛̯̗̰̺̟͓̰̟̤͈͊͆̍̈́̐̈́̍̋̀̈̇̆͂̀̈́́͛͘͜ͅb̵̧̬̘̦̺̦̙͕̦͉̙̩̲̗̖̤̅̎̉̈́̉͑́̏̈́̿̿͛̅͐̍͋̇̈́͘̚͜͝ͅͅv̸̡̢̧̧̞̣͓̱̣̖̪͈̖̲͇̠͍̠͎̱̙͇̑̍̈́̚͘͜q̸̧̨̩̮̜̣̲̠̺͍̌͌̑̀̏͌͒̕ḯ̶̧̳̳̳͉͒͗̀̑̕ư̸̡̧̧̮̗̠͓̬͚͈̪̻̦̻̙͔̦̖͕͔̈́́̃̉̊̎́̂̊̂̽̃̉͝͝͝b̶̤͕͉̤̰̼͕̼͉̻͚̮̲͕͉͂̃͛͜ͅͅķ̶̡̳͖̞̜̻͉͈͕̪̜̗̼̠̥̹̩̲̝͌̓̔͛͗̏̆̈͋̀̓̑̈́̚̚s̵̢̛͎̱̟̻͎̞̩̖̓̈́̂͌̀͛̉̀̀̚͝j̸̡͉̹̤̪̮̣̱͉͇͇͈̞̬̰͕̯́̊̄̔͂̚̚͘͜͝͝b̸̛͈̮͉̩͑̀̓̀̒̀́͑͒͂̋͋̈́̄͛̕͘͠͝͝͠à̶̢̼̜͆͐̀͆̔̃͒̐̃̾͌̕l̴̠̝̼̈͠͝k̸̡͙̗̠͖̞̝͙͈̩͎̹̮̣̹̠͐̽̈́̊̐̅̃͝ś̷̛̪͈͈̖͚̝̼͔̥̬͎̝̱͖̹̞̠̯̞́͌͒̊́b̵̘̯̫̜̌̍͗͊̒͊͑̽̌̒̾̔̈̂̒̐̀k̴̘͕̝̐́̈́͑̋͘͘s̸̡͔͚̥̯͕̯̤̳̈̆͌͋̈́̉͘d̵̡̧̢̞̟͉̞̟̩̘̝͍͎͔̮͍͎̝̞̠̻́̋̓̏͋̎̄̉͒͗̀̊́̀̕̚͜͠v̷̮̣̌̈́͆͗́̈́̕̕b̴̛͕̬̰͎̬̳̜̮̯͕͎͇͉̘͓̲̱͎̩̖͙̈́͌̓̈́̃̋͆̉́͜ķ̵̨̡̛͓̙̮͎̼̞͓̳̩̠̝͇̱̲̱͂͒͒̆̋̊̿̄̏̈̾͊̌̾̂̀̆̍͝w̵̢̧̨̛͕̦̹̹̦͉͍͓͕̜͙̺̬̻̐̓̂́̀̏̐̔̅̐͑̿̚ͅͅş̷̛͙͔̲̟̻̱̹̯̻̮͉̟̣͌͒̂̋̓̾͑̈́͋͠d̸̡͖̪̰̯̜̺̤͉̥̹̘̱͓̜̋̅̍̏͛̄̓̂̏͆̊͛͐̀͝͠͝v̶̨̭̩̯̘̜̝̬̩̲͍̰̱̮̔͐͐b̴̠̞̘̥̗̦̦͇̦̘̘̦̠̙̘̤̜̥͍̋̓͐̓͐͒́̈̍̂̽͊̕l̶̫̜̞̗̹̺̮̖̬̦͉̅̽̉̌̇̂̀̾͛̌̚̕͘͝͝k̵̛̛̛͉͈̝̳͉̻̝̜̼̥͎͍͙̫͚̺̊͌͆̈́̎̚̕̕͜s̵͚͕̅̀͐̑̚d̴͉̙̄͂̽͘͝b̶̛̻̭̮̣͈͗̎͐͋̃͆̒̍͆́̾̒͛ķ̵̨̧̡̗̥̬͈̱͔̦̤̬͚̲̫͉̠̪̰͔̠́ṡ̸̡̨̡̛̮̰̙̮̹͚̜̺͖̘̫̳̹̲̩̞͇͙̉͑̆̄̉̔̑̇̓͒̐̾̔͘͜͠͝ͅd̷̢̘̰̰̺̞̦̝̠͚̝̟̼͖̿̐̈́̈́͐́̃̍͌́̉̈́̌͋͌͘̚͜ͅḅ̵̛̰̝̰̫͙̬̠̺̩̺̺͛̄͒̍̍́̂̍͒̈́̀̀́̅̏̀́̚͠ͅļ̶̨̢̹̬̰̳͕͙͈̞͙̠̜̗̰͌̀̃̈͛͗͊̏̄́̄̆̊̒̋̍̓͆̈́̕͠͠͝s̷̞͖̣͖̝̐͒̇v̴̧̨̛̭͍̭̦̖͍͉̈́͊̋̆́͊̔͆͒̍̔̑̄́̀͛͑̿̉͘͝k̵̡̡̡̳̘̬̜͔̲͈̠̂̊̓̈́̀̊͋̿̈́̇͘̕͘͝j̸͕͇̲͚̜̟̤͈͕͕̠̦̹̬̲̫̪̩̮̫̿̒̒̓͌͊̐̏̑̊̀̃̃̒͝͝b̶̨͓̠͚̖͕̻̦̙̼̲̗͇̳͕̙̦̦͈̍͒͒̽́̐̏́̈́͂̇͛͒̓̓͆̆̆̕͘͝ṡ̵̡̨͔̝̱̖̰͖̦̹̰͍̯̦̟̬̭̏̅̄̓̍͌͜ͅl̷̝̠̗̻͖̰̱͎͔̹̠̣̤̱̣͚͍̞̪̲͓͆̒̔͐͛͜k̶̄̀͜d̷̢͙̬̞̅̈́̍͒͆̃̅̈́̀̀̉͗̋̋̈́͐̚͠͠j̷̪͙̳͓͙͇͖̥͙͉̼̩̪̩̖͗̽̈́b̴̤͉̥̩̾̉͂̔k̷̨͎͚̻̣̭͔̤͇̜̱̳̫͇̫̝̐̅̎̈́̍̅͠ͅͅs̴̛͚̜͓̻͙̦̞̏͗̐̆̆̇͊̏̇̄̿̆̊̆̃̑̇̀̿̍̏̚ͅb̵̨̛̜͍͉̆̄̍̉̐̿̀̇͐̔͘͠l̸̡͍̰͔̝̂͑̌̌̚v̷͙̦̥͓̙̫̲̥̘̖̯̰̬͇̓́̈́̉͜͠s̵̨̢̨̛̱̞̻͇̤͎͕͖̟̝͓̼̮̻̤̾̋̏͋̈̽̊̃̊́̈́̀͊̊̋̏̑̀̕̚k̷̢̢̘̳̮̰͍̘͙͔͕̘͍̯̣͐̃̾͗̎͗̌͂̀̔͋͒͑̌̇̾͒͌͘̚͜͜j̵̡͓̫͇̩̬̮͕̰͍̹̮̣̩̎̅̊̽̐̎̇͒̀̈́̄̀̕̚͜͜͝b̴̢̛͚͉̣̱̦̜̭̗͕̹́͊͛̍̌͂̈́͊̈́̾̈́͘͠͝l̷͚̰̳̭̜̩̇́̍̇͆̿͆͑̈́͘͘͘̕ṣ̶̢̢̣͚̗̭͖͚͌̈̾̓̽̆͐͌̿̾̃̃́̚͝͠k̸̛̖̻̼̰̭͍̘̭̳̞̭̤͔͚̲̦̄́̾͂͗́͐̆͂̑͊̀͌̈́͑͗̌̊̾͊̆͘͘͜ͅj̴̡̛̞͙̘̳͍͉͕̞̱̝̯̤̾͐̾͊̈́̌̃̋̽͌̎́̏̔̓͒͑̓̈͘͜͠͝b̴̨͎̞͈̳̥̝͕͈̙̝̼̥͎̖̟̪́̾̃̑̃̾̿̍̐̕͘͜͜͜ş̸̡͔̘̹̪̪̖͇̩͉͇͚͈̹͍̱̟͚̆̆l̸̨͔̱͖̟̭̯̠͖͍͚̼̭̙̐ͅd̵̛͚̯͙̦̓̄̈́͑̿̀͌͛̃͑͛͂͛̚͘͝ͅk̷̖͊͐͆̊̃̓͌͗́̍̈͐͒̈̌͑̋͐͊͝j̶̢̢̢̢͖̝͙̭͉̦͖̠̩̭͑͒̈́̔̆̐̄̈̀̀̀̽͗̊̃̇̆̓̆͂̂͘̕͘b̸̨̳̰̻̪̘̬̭͎̩̙̜̳̰̮̼͔̯̥̔̾̈́͂̅̔͝v̶̛̝͔̝͍͕̹͎̼̯̟̏͒͜͜͜s̷̡̛̠̦̠̤̘̤̙͙̯̙̿̾̌͑̊̉̇͗̉̀̓̋̎̎̉̔͛̚͜͝͝͝l̵̰͙̣̬͛̓̂̈́̀́́͑͗͒͊̉͋͑̒͊͠k̸̡̮̰̟̠̬̭̰͒́́͠ͅj̴̨̲͕̰̗̗͚̠̗̰͚̜̬̮̬͍̫̗̹̯͐̊͜͜s̵̨̨͔̥̣̯̜̻̪͖͕̥̬̓͑̔̃̌̔̀b̷̢̛̟͓̞̗̻̹͈͙̺̗̲̖̓͂͊͛̓͐̊͗̅̋̍̉̀̊̊̎̿̓́͘̕̕ļ̶̛͈̯̙͇̮̬̖̱͎̭͔̬̺͎̰̹͈̱̰̆̿̍̋͛̾̂̋̒̍̑͌̕͝k̷̨̨̧̰͉̖̪͚̳̩̱̘̜͔̮̽̉̀͋̿̈s̷̢͚̦̘͈̞̍͂̂̏̈́̇̂̓͗͛̑̃̅͂͒͂̍̈́̚͘͝͝d̶̨͚̙̟͇̩̜̪̯̞̩͓̝͎̩̞̩̗͓͙̀̊̌̀̓͛̆͐͂̄̿͑j̸̛͚̳̹̰̮̰̺̆̈́̄̅̂̉̀͊̾̏̕͘͝b̷̢͙͓̪̳͈̺̜̥̼͈̽͆͋͒̃̎̓̆͛̐́̓̓̽̆̈̚̚͘͝͠͝v̴̢̨̰̰̺̰̭̼̗̼̞͚̯̯̾͒͑̂͛͆̈́̌̿͂́́̃̎̑̑̾̚͜͝͝͝͝͝ͅl̴̮̮̠̞̟̥̰̫̹̝̹͓̠̣͔̟̠̯͔̾͆̀́̒̉͛̚k̷̛̯̓͌̋̀́̅̓͂͗͆́͂̆̌̀̈́̾̚v̴̛͔͎̘̦͌̑́̎͐̍͒͊͑̋̏́̔̓͝j̷̨̗̝̰̦̣̫̲͉̹͚͇͔͈͕̱͖̟̊̄͒́̓̓̆̎́͐̂̏͒̅̾́͐̂͜͝b̷̛͔̣̦̗̊͆͆̊̀̐̑̌̌̿͊͒͘͝ͅl̵̢̢̹̥̹̻͔̠͎̳̤͔̣̳̦̱̪͉̜̟̲͊̾̒́͂̀̿̈́͊́̀͐̀̊̃͛̂͝k̶̡̡̪̻̜͛̅̈́̅̈̐͛̈́͊͌̂̆̒̎͋̒͛̊͘͘͝s̸̢̨̨̧͓͔̖͖̻̜̞̼̱͇͕̣̪̪͙̠̟̖͎̈͋̌̃̓́̾͛̑͆̏̀̍̄̓͂̒͝ͅj̵̡̛̰̬̰͈̪̦̦̞̐̇̈́̌͗̏͠͝ͅb̶̜͚̀̈̍͐̐̊̋̔̍͆̈́͠ḽ̴̤̬̗͎̙͒̏͆̍͆́͆̈͝ȃ̴̡͕̩͔̤̮̘̮̱̻̺͓͚̭̟͚͕̰̹̦̠͜͠ͅk̸̛̟̪̈́s̸̛͓͕̤̻͎̺̼̪̗̝͈͖͂̈̅̕͜͜d̵̛̳͖̱̰͍̔̀́̋͗̆͋̽̅̂̍͆̔̀̚̚͜͝ͅj̶̢̧̟̤̤̳͇͍͍͙͍̫̥͆͒̆̏̓́̽̐̕͘͜b̶̮̪͖͚̠̝̠̬͖̩̻̈͑̇̒̇̈́͑͊̆̇̓̃͆̔̐͋̅͋̀̌͜͝͝͠͝ͅl̴͔͍̜̬͚̬͕̼͇͖̟͚̝̯̮͉̻̖̪̪̬͖̫͐̄̓́̓̇̚͝k̴̨̼̩͈̺̪̩̜̣̪͔̮̩̺̱̫̝̜̐ͅͅs̸̛͔̺͐͐̄͋͗̊̇̓͝͝j̵͉͔͈̫̯̔̃̑͊̀͑̋̌̚͘̚b̵̨͓̥̺͔͕͍̣͍̝̻̙̲̩̗̬̳͉̖̤̬̺̊̀̽̐͂͗̃̕͘͜͜v̷̛̛̩̪̄͛̃͆̓̈́̊͗͂͑̅͒̽͆̐̎̈͂͘͝͝l̶͈͎͂̓̎̔ķ̶̡̢̛̛̺̪̣͖̣̠͔̳̟͓͖͉͗̈́̈́͐̌̊̓̐͋̀̀̊̀̍̌͗̄̆͘͘͜͝s̶̡̧̡͔̠̲͈̲͎͖̺̥̯̺̬̻͍̠̦̞̳̖̭̀̇̓̂͊̄̅͝ͅa̶͙̱̥̜͓̖͇͔͚͓̲̙̻̟͈͙̙̞̟̜͚͘ͅj̸̫̰̯̬̮́̓̏̌̚b̸̡̡͇̹͉̦̘̩͉͚͎̠̩̪̥̱̬̘̳̓̆̏̍͊̾̽͜ͅȧ̴̛̼̜̥́̄̎̈́͂̅̂̓̿͘̚͝͝l̷͙̹͔̮͚͖̰͓͉͒̾̌̿̓̀̎̂̏̅͆̊̆̕͝͠ͅş̸̨̨̺̫̦̾͒͌̌̅̎͂̉͘͜k̸̨͈̠͕̞͈͔̺̦̳͑͑̊̆̍͛̿̉̀̀̃͆̑̚̕j̷̨̨͇̤͍͔̩̻̙͉̬̫͙̺̪̤̻̯͚̬͓̏͝ͅͅb̷͎͎͎̞͓͉̜͚̯̰͚͒̄̅͊̎̇́͐͋͆͐̅͑͆̀̚͜͝͝͠ạ̷̹̮̮̭͍̼͓̭̰̖̈̀̎̿͑̌͑͒̒̇͒̏̃̔͌͊̚ş̸̨̦̘̝̼͔͓͚̭̠̝̝̝̮̖̜̣͈̻͍̱̼͗͑̔͋̑͑̇̅̄͆̈͆̅̊͠v̶̢͍̺̆͜d̵̼̲̖̯̤̰̱́͗͒ķ̸͓̻̭̯͈̟̪̝̬̬̥̗̱͇̹̮̈̊̄̍͛̊̈́̄̕ͅj̶̢̧̢̢̩̫̗̦͕̝̩̩͎̹̭̏̇͒̎̾́̃̊̒͐̀̈́̒̉͋̾͗̽̈́̕͝͝͝͝b̸̨̢̛̠̳̣̮͚̦̯̯̬͖̈́̅͗͑͆̿̍̽̎͗͒̈́̈͂̑̈͋̓͘̚͜l̵̡̡̛͖̦̗̹͖̺̲͇͙͍̱͗̍̋̎̊͆̈́̀͐̇̓͐̽͛̌̓̋̔͑̿̊̔͝ͅͅs̶̢̡̰̰͇̺͍̹̞̝͖̙̟̩͖̼̟̺̥̿̍̕͝ͅd̴̨̨̼̪̞̻̞͇̰̻̠̗̣̼̦̮̑̾͂͜͝ͅa̴̧̧̢͕̤̙̬͙̞̻̜̙͓̥̗̽͂̈̃͒̐̔̾̊̂̅̃̊̐͌̓̕͘͝ǩ̸̮̼͈̠̩̱͖̳̜̝̞̥̞͈̺̬̹̠̗̎͐͆̒͌̂̉͒͆̕͝j̸̨̡͔̟͈̖̠̥͔̟͙̞̮͍̟͉̫̠͍̤̹̭̰̆͒̎̋͗́͗̆̔̈́̚͘͠͠͝ͅb̶̨̛̖͎͔̮̳͔͈̦͉̤̤̣̩̜̥͙̽̓̾̆̒̇̏͛̌̀̓̅̊̌̚̚͘͘͝ͅv̴̧̨͔̠͖̺̥̬͈̲͇̱̹̤͔̭͔͈̦̟̳̆̾͒̾̃̉͊̾͆͜͝ĺ̶̨̝͕͓̘͖͕̟̩̝͙̰̰̳͗͛̒͌̽͛̃͂͂̆̿̉͐͛́́͑̾̈́͘̚̚͝ḑ̵̯̗̜̮̞̼̱̜̜͚͓̱̯̺̯̪̲͕̳͚͔̌͌͆̀̓͒͂́̐̈́̈́̀͋̇̄̀̈́͝ŝ̶̹̳̦̝͉̩̠̄̔̊͂̂͆̂͑̓̽̊͂͠ͅķ̷̳̲̙̖̻̑͑͒̊͂̄̀͑̃̎͂̄̿́͆̔̽̎̅̒̾̿͘̚͜d̶͚̬͔̳̖͙͇͉̜͙͗̉̇̏͌̽͜j̵̧̖̟͉͚̮͑́̓̇̿̍͂̀̋̈̅̆̾̈́̀̾̓̆͒͝͠b̷̦̫̲̻͈̪͍̩̳̱̋̾̑̊̄͗̓͐͐̄̊͋̊̾̈́̎̒͐̕͜͝͝͠͠v̷̢̧̛̞̬̘̭͈̹̣̱̮̽͛͊͊͆͌͛̽̽̏̉̽͌͛̚͜͝͝͝l̵͍̲̰̥̙̭̻͇͎̞̺̹̝͎͕͇͛̚͜͝k̶̨̤̪̜̻̣̰̜̤͙̼̼͔̓̇̈́̅͌͊̽s̷̪̝̠͚̣͈̤͔̙͒̐̆̈́͊̇̇̆̀́͋͆͂̽̏͆̇̒̚ã̴͔͓̯̤͉̹̘̱͉̤̝͋͊͗̿̆̾̕j̸̡̧̢̙̝͙͖̪̭̋̊́̏́b̶̭̰̲͙̮͙̙͔͉̹͓̐͗̚͜͝ͅͅͅĺ̶̢̯͖̗̗̳͇̦͚̮̲͔̪̜̣͓͕̰̬̈̑̓̍̀̓́͛̅͗͐̕͘k̶̞̭͊̄̌̋̀̚s̶̛̛̼̹̗̙̩̈́͒͋͛̓́͋̏̑͊̍̔͒͋̽͐̈́̇̚͠͠͝j̵̭̥̱̙͕̋͌̓̒͐̒̅͆̒́b̴͚̋̽̀̍͐͛͂͊͐̆̈́́̈́̂̂̿̓̓̾̊̕̕͘s̴̠̼̰̺͇̩̞͖͓̰̤͔̹̟̹͇̣̫̲͖̫͖̖͓̉̂̆̃̄͗͛͗͂͐̿̓̓̈́a̸̻̙̖̰͎̰̲͊̾̀̋̍͋̿̎̿̀̂̍̒̀̎̚̕͠͝͝͠l̴̪̩̜͉̮̹͚̳̐̓͒̑̐̐̂̃͛̃̓̐͜͠k̵̡̛̛̠̭͈͔͍̰͎̟̱̥̟̑̏̉͛̏͗͗̊͑̌͊̀̉̅́͒̿̐̓̕͠͠j̶̡̨̧̧̛̛͓͍̱̟͈̘̳̱̦͍̝̜̰̣͈͉͔̫͈̿̃̈́͒͂̍̈s̶̡̛͙̪̟͇͍̲̘͇͚̅̎̾̆̿̾͐̀͒̇́̾̃̒̕͘͠͠b̸͕̻͎̦̻̻͓̬̗̦́̄̀͑̕͝ĺ̵̠̼̱̫͚̩͓͎͚̼̱̰̦̮̹͖͖̼̼̱̲̲̅̃̓̅͋͒̈́̓̔̏̀̿̉̃̃̉̈́̒͜͠k̸̢̨̡̛̦̩̗͖͚̹̯̠̟̮̣̬̬̬̯͈̺͔̊̋̂̓́̀̍͒̂̿̌̆̂̚͜ͅͅa̸͕̯̟͙̮̬̫̲͓̞̜͙̘͙̤̮̯̥̠͈̯͑̍̽̍̽̅͗̑̿̉̏̐̎́̀̈͜ṣ̶̺͈̮̠͕͎̜́̔̽̅̉̐̈́̄̋͌̀͊̓͗̀͗̓̎͝ͅd̴̨͚͎͓̿ͅṽ̶͙̺̭̊̉̈̎̃͐͑̂̈́̿͗̎̓̎̒̉̍͊͜b̷̤͓̭̲̑̅̃͂̅̂͘ḽ̸̡̡̛͖̘͚͚́̽̌͂̆̋̈̊̅̄̎̐͗̾̑̓k̴̛͇͍̤͇̙͎̼͔̗͙̮͕͙͈̯̼̹̱̘̣̑͊̒͋͂́̓͌͛̃̏̂̍́̽v̸͓͚̻̩̦̻͉͈̯̲̭̼̣̬͚͔̫̙̩̮̂̅́̅͒̈̊̉͆̍̇̆̐̌̈́̌ͅͅs̷̨̲̪̱͈̮͕̱͍͕͖̦̞̥̱̜̓͗̓ḑ̴̦̹̗͖̠̳̭͓̠͇͌͛̊̈̈̓̒̋̐͂̅̾̊͘̚̕͝͝ą̸̟̮̙͕͙̗̺͓̟̭̘͓͈̋͌̍̅͌͛̉̉̋̔̊͂̌̑̾̚͝b̸̰͇̞̗̹͉̳͉͎̙͍͎̪̮̟͔̮̼͒̈́͋̃͌̄̚ͅs̶̛͓̯̗̲̰̗̮͖̦̘͙̬͈͔͎̠͉̬̫̓̐̉̃̃͂͗̈́̇́̚̕͘̚̕l̴͉͚̩̎̈̈́̐͆̓̈́̏͘d̴͓̣͈͇̠̙̳̎͊͂͒̀̅̈́̎́͋k̶̙̘̆̈́͂͋͒̂͆̔͑̋͋̄͛͛̐̚͘̕̕͠͝b̸͕̗̳̫̲͒̉̈́͊̑́̉̑̌̈̓̾̌͒ś̵̢̡̢͕̜̰̥̥͎͖͎̺̺̠͉̆̅̓̐̌̅͝ͅļ̸̨̠̝̬͈̬̦͈̙̲̼͇͙̦̠̭̺͐̉̇̐̀̉̅͘͜͜ͅk̸̡̡͓̦̥̬̣͍͓̲̒̀̔̋̔̊̚̚s̵̡̖̤̙̝̠̺͚͎̼͈̝̗͈̞̲̮̈̅̈́̉͐̓̃̈́̎́͑̋̽̂̃̋̏̕͘͘͝͝a̴̧̨̛̮͇̟͕̣̹̙̖̥̜͇̱̦̗̫̠̘͔̩̅̆̓͊̎̿̅͌̾̋̿̓̌͋̂̈͗̄̓̕̚͜͠ͅb̵̢̰̞̝̥͉͙̟̜̘͕̜͆̈́̾͐̔̆͛̉̚̚ͅͅs̷̙͚͈͙̽̅̏̓̈́̊̊͂͑́͊̐̄̇̀̾̊͝͠a̵̛̛̲̜̟̜̻̺̠͖̣̤͖̲̍̆̐͋̋͐̃̆̔̅̊v̸͚̬̮̉̍́̀ķ̸͎̠̺͖̮̯̦̠̺͓͉̠̟̜͓̖̗̫͛̍̾̾̍̉͌́̌̾̽̊͘ḏ̴͙̎̈́̅̎́͛͊͒̀̄̍̿̈́͐̆͘͝j̷͔̠̥̩̗̩̍̿̽̇̐̃͂͌̚͝͠b̵͉̻̟̺͙͗̍̈́̆̋̀̆͋̐͋̈͗͑͊ͅḇ̸̛͈̟̮̺̙͈̹̘̬̭̥̻͈̲̻̓̿̌̊͂͐̎͐͊́͝b̸̡̧̖̯̹̗̜̫̻̫͇̖̩̲͕̗̼̎̍̑̅̒̌̒̀̕͜e̶̡̡͖̞̥̯͍͚̲̖̥̬̩͎͉͙̪̳͛͋̀̓̏̏͋̏̐̓̉͊͊͠͝͠a̴̠͓̓̀́̈̅̓̈́k̴̢͇̩̹͇̮̭̪̗̙̼̟̲͇̦̼͗͜į̶̼͙̺̥̗͓̙̜̙̭̬̙̇̓̆́͋̒͗̀͒͗̽̕͝͠͝b̸͎̰̠͓̪̤͕͈̙͊̔́͋͊͆͛͌̿͋́̎͆̋̏̐̆̚̚̕͘͠l̸̨̢̛̛̘͈͔̞͍̳̼͉̘̺͔̦̦͉̫͂̿̾̿̃̔̒͑̊̆̔̉͐̔̄̌̕̚͘͝į̷̨̛͈̥̼̹̂̊̈́̅͗̉̉̔̆́̋̀̋̅͑̈́̑͜ͅͅw̴̼̰̺̤̤͈̼̻͈̗̼͖̘̉̐̊̊͑̈̑͂̈́͗͐̊͂̍̀̍̃͠ḙ̴̡̢͇̭̤̲̘͙͑͒̊̄̔̂͆́̑̅̈̈́̆͂͛̈́͑͐̏̎̕̚̚͝ͅư̷͖̮̩͈͓͕̭̯̻̯̘̖̙̳̻̖̆̓̉͂̔̓́̒͑̅̓͊̂̕̚ą̴̧̻͖̘̰͙͙͂̂͐̑͐̈͂b̶̧̠̳͚̘̠̭̼̮͖͓̦̰̝̝͚̹͑̾͑̀͛̒̌͛́̇͒́̕͠i̵̤͙͈̫̠̥̟̱͙̮͎̋̑̋i̴̛͍̠̤̼͇̜̠͙̩͖̳̰̭̍̋̋̐͆̃̈́̏͒̈́̒͌̽̿͘̚̕w̸̟͛̈́͌̏͋́̍́͛̑͗́̕̚͝͝e̷̡̫͖̣͇̻̙͖̫̹͕͍̜̳̰̟̐̆͂̂͘͠͝b̸̨̢̠̺̩̺̭̮͉͍̥̮̺̳͈̳̑̿̌͋̎͑̿̇͊̕͜͠͝ͅͅͅl̸̡̢̯͚͖͍̮̹̱͓̬͚̩͎̮̃î̶̡͓̱͕̠̦̭͜q̶̿̿́̃͛͐̍̓̿̀̾̋̐̔̀͌̈͊̈́͆͝ͅą̵̪̥̹̞̥̠̺̥̟̰͙͓̤͔͚̪̲͚̅̃̊̎͂͌͊̂̃͊̃̒̚ͅȩ̵̬͍̩̱͖̮̪̔̌̉̇̊́̈́b̵̻̩̦̔́͆̒̆̓̃͐̚̕͝l̴͈̝̮͎͙̟̊̃͋̊̎͊̚ĭ̶̢̛͍̤͔͈̜͔̣̖͙̖͉͍̟̝͕̦͙̝̈̋̀͂̉̉̃̔̔͒͜ͅu̵̹̗̥͂͑͆̌̇̽̔̒̿̌̍̀̓̈̇̚͠͝v̶̛̛̼̗̦̖̲̹̩̫̩͎̠̖̪̥̻͓̼̠͖̺̓͗̐͆̿̽͌̎̅͋͗͋̃͌̌̓͐̊̚͠͝ḃ̷̨̛̖͈̜̥͚͓̳͙̫͔͉̩̹̫̀͋̔̓̆͛̕͠ͅͅq̵̣̟̲̎͊̀̆̿̒́̍̋̽̄̇̌͠w̶̧͔̯͉̺̅̂̑̎̑̉͒̎́v̷͚̀̀̓̏̍͆̃̀́̑͒͐̀̑̕͠e̵̱͐̌̔̂͌̋̃͑̄̒̒́̂̕̚͝͝į̷̧̢͚͈̟̙̻͓͕̙̘̙̘̮̼̘͔̙͉̯̐͜͜ͅu̵̡̢̧̫̗̳̲͇̜͚̤̠̲̞̟̟͌́̃͐̅̐͆̾̔͑̆̏̂́͋̀̒͋̆̕͝b̵̡̩͕̥̟̲̤̻̙͉̠͑̇̐̎̈̃̉̓̿̌̈́̊́͌̚v̷̨̮̤͙͓̣̭̫͓̞͔̰̼͍͖̭̲̈̉͊̒̓̒́͑̕͠ͅḭ̵͇̻̱̩̗̟͕̥̗͖͉̗̩̹̖̈̇̾̾̓̕u̸̢̹͊̿̓̂̀̈́̉b̷̨̖͚͖̬̰̪͕̻̞̮̠͙͕̻̫̖͓̹͉̟́͂́͛̽̄͊̇͆̚̚͠ͅḯ̷̢̢̡͓͚͕̖̠̳̖̓͜͜͠ȇ̵̢̢̞͕̰̻̫͎͎̦̖͍̈́̍̓̃̌͆̀̾͑͆̄̅̉̀͋̅̀̈́͂͝͝į̵͓̺̈́̒̅̆̾̾͘w̵̗̭̖̻̪̰̺̗̜̩̼̩̜͉̗̺͌̈́̏̒̆̌͌͂͋̑̊̀́̊̓̀̅̔̕͠͠c̴̯͈͚̓̂̈́̐̋̂̑͊̏͗̃̏͊̀̾͘͠͠d̶̢̢̗̯̬̳͇̜̬͍͔͎͇͚͔̭̃̎̄̋̾̂̑́͂̏̄͊͂̅̀́̾̇̃̕̚͜b̸̨̨̡͉̮̖̮͎̟͔̯̯̞͖̞̾̏̄͆̅́̾̍͗̒̊͂̏̈́̽̔͌̇̀̂̚w̴̺̬̦̺̦͙͖͊d̷̡̧̮̗͔̩͎̯̪̻̖̟̀͗̈́͗͋̕͝ĺ̶̛̺̯͕̦̣̭̥̠̭͎̩͎̼̹̝̲̭͉̤͔̿̏̆̾̿́̈́̑̌͘̕͝ç̸̧̢̧͔̙̦̩̭͙͖̺͍̦̭̱̟̍̍̏̓͊͆͑̕͜͜͝ͅȉ̷̢̛̺͎̹̟̗̹͙̼̜͖̈́̆̿̓̉́̏͂͌͐b̴̢͓̱̣̰̟̲͍̯͖̲̪̙͎̻̪͓̠̳͕̦̝̄̂̑̐̍́͒̚͠ͅͅi̷̛̯̗̰̺̟͓̰̟̤͈͊͆̍̈́̐̈́̍̋̀̈̇̆͂̀̈́́͛͘͜ͅb̵̧̬̘̦̺̦̙͕̦͉̙̩̲̗̖̤̅̎̉̈́̉͑́̏̈́̿̿͛̅͐̍͋̇̈́͘̚͜͝ͅͅv̸̡̢̧̧̞̣͓̱̣̖̪͈̖̲͇̠͍̠͎̱̙͇̑̍̈́̚͘͜q̸̧̨̩̮̜̣̲̠̺͍̌͌̑̀̏͌͒̕ḯ̶̧̳̳̳͉͒͗̀̑̕ư̸̡̧̧̮̗̠͓̬͚͈̪̻̦̻̙͔̦̖͕͔̈́́̃̉̊̎́̂̊̂̽̃̉͝͝͝b̶̤͕͉̤̰̼͕̼͉̻͚̮̲͕͉͂̃͛͜ͅͅķ̶̡̳͖̞̜̻͉͈͕̪̜̗̼̠̥̹̩̲̝͌̓̔͛͗̏̆̈͋̀̓̑̈́̚̚s̵̢̛͎̱̟̻͎̞̩̖̓̈́̂͌̀͛̉̀̀̚͝j̸̡͉̹̤̪̮̣̱͉͇͇͈̞̬̰͕̯́̊̄̔͂̚̚͘͜͝͝b̸̛͈̮͉̩͑̀̓̀̒̀́͑͒͂̋͋̈́̄͛̕͘͠͝͝͠à̶̢̼̜͆͐̀͆̔̃͒̐̃̾͌̕l̴̠̝̼̈͠͝k̸̡͙̗̠͖̞̝͙͈̩͎̹̮̣̹̠͐̽̈́̊̐̅̃͝ś̷̛̪͈͈̖͚̝̼͔̥̬͎̝̱͖̹̞̠̯̞́͌͒̊́b̵̘̯̫̜̌̍͗͊̒͊͑̽̌̒̾̔̈̂̒̐̀k̴̘͕̝̐́̈́͑̋͘͘s̸̡͔͚̥̯͕̯̤̳̈̆͌͋̈́̉͘d̵̡̧̢̞̟͉̞̟̩̘̝͍͎͔̮͍͎̝̞̠̻́̋̓̏͋̎̄̉͒͗̀̊́̀̕̚͜͠v̷̮̣̌̈́͆͗́̈́̕̕b̴̛͕̬̰͎̬̳̜̮̯͕͎͇͉̘͓̲̱͎̩̖͙̈́͌̓̈́̃̋͆̉́͜ķ̵̨̡̛͓̙̮͎̼̞͓̳̩̠̝͇̱̲̱͂͒͒̆̋̊̿̄̏̈̾͊̌̾̂̀̆̍͝w̵̢̧̨̛͕̦̹̹̦͉͍͓͕̜͙̺̬̻̐̓̂́̀̏̐̔̅̐͑̿̚ͅͅş̷̛͙͔̲̟̻̱̹̯̻̮͉̟̣͌͒̂̋̓̾͑̈́͋͠d̸̡͖̪̰̯̜̺̤͉̥̹̘̱͓̜̋̅̍̏͛̄̓̂̏͆̊͛͐̀͝͠͝v̶̨̭̩̯̘̜̝̬̩̲͍̰̱̮̔͐͐b̴̠̞̘̥̗̦̦͇̦̘̘̦̠̙̘̤̜̥͍̋̓͐̓͐͒́̈̍̂̽͊̕l̶̫̜̞̗̹̺̮̖̬̦͉̅̽̉̌̇̂̀̾͛̌̚̕͘͝͝k̵̛̛̛͉͈̝̳͉̻̝̜̼̥͎͍͙̫͚̺̊͌͆̈́̎̚̕̕͜s̵͚͕̅̀͐̑̚d̴͉̙̄͂̽͘͝b̶̛̻̭̮̣͈͗̎͐͋̃͆̒̍͆́̾̒͛ķ̵̨̧̡̗̥̬͈̱͔̦̤̬͚̲̫͉̠̪̰͔̠́ṡ̸̡̨̡̛̮̰̙̮̹͚̜̺͖̘̫̳̹̲̩̞͇͙̉͑̆̄̉̔̑̇̓͒̐̾̔͘͜͠͝ͅd̷̢̘̰̰̺̞̦̝̠͚̝̟̼͖̿̐̈́̈́͐́̃̍͌́̉̈́̌͋͌͘̚͜ͅḅ̵̛̰̝̰̫͙̬̠̺̩̺̺͛̄͒̍̍́̂̍͒̈́̀̀́̅̏̀́̚͠ͅļ̶̨̢̹̬̰̳͕͙͈̞͙̠̜̗̰͌̀̃̈͛͗͊̏̄́̄̆̊̒̋̍̓͆̈́̕͠͠͝s̷̞͖̣͖̝̐͒̇v̴̧̨̛̭͍̭̦̖͍͉̈́͊̋̆́͊̔͆͒̍̔̑̄́̀͛͑̿̉͘͝k̵̡̡̡̳̘̬̜͔̲͈̠̂̊̓̈́̀̊͋̿̈́̇͘̕͘͝j̸͕͇̲͚̜̟̤͈͕͕̠̦̹̬̲̫̪̩̮̫̿̒̒̓͌͊̐̏̑̊̀̃̃̒͝͝b̶̨͓̠͚̖͕̻̦̙̼̲̗͇̳͕̙̦̦͈̍͒͒̽́̐̏́̈́͂̇͛͒̓̓͆̆̆̕͘͝ṡ̵̡̨͔̝̱̖̰͖̦̹̰͍̯̦̟̬̭̏̅̄̓̍͌͜ͅl̷̝̠̗̻͖̰̱͎͔̹̠̣̤̱̣͚͍̞̪̲͓͆̒̔͐͛͜k̶̄̀͜d̷̢͙̬̞̅̈́̍͒͆̃̅̈́̀̀̉͗̋̋̈́͐̚͠͠j̷̪͙̳͓͙͇͖̥͙͉̼̩̪̩̖͗̽̈́b̴̤͉̥̩̾̉͂̔k̷̨͎͚̻̣̭͔̤͇̜̱̳̫͇̫̝̐̅̎̈́̍̅͠ͅͅs̴̛͚̜͓̻͙̦̞̏͗̐̆̆̇͊̏̇̄̿̆̊̆̃̑̇̀̿̍̏̚ͅb̵̨̛̜͍͉̆̄̍̉̐̿̀̇͐̔͘͠l̸̡͍̰͔̝̂͑̌̌̚v̷͙̦̥͓̙̫̲̥̘̖̯̰̬͇̓́̈́̉͜͠s̵̨̢̨̛̱̞̻͇̤͎͕͖̟̝͓̼̮̻̤̾̋̏͋̈̽̊̃̊́̈́̀͊̊̋̏̑̀̕̚k̷̢̢̘̳̮̰͍̘͙͔͕̘͍̯̣͐̃̾͗̎͗̌͂̀̔͋͒͑̌̇̾͒͌͘̚͜͜j̵̡͓̫͇̩̬̮͕̰͍̹̮̣̩̎̅̊̽̐̎̇͒̀̈́̄̀̕̚͜͜͝b̴̢̛͚͉̣̱̦̜̭̗͕̹́͊͛̍̌͂̈́͊̈́̾̈́͘͠͝l̷͚̰̳̭̜̩̇́̍̇͆̿͆͑̈́͘͘͘̕ṣ̶̢̢̣͚̗̭͖͚͌̈̾̓̽̆͐͌̿̾̃̃́̚͝͠k̸̛̖̻̼̰̭͍̘̭̳̞̭̤͔͚̲̦̄́̾͂͗́͐̆͂̑͊̀͌̈́͑͗̌̊̾͊̆͘͘͜ͅj̴̡̛̞͙̘̳͍͉͕̞̱̝̯̤̾͐̾͊̈́̌̃̋̽͌̎́̏̔̓͒͑̓̈͘͜͠͝b̴̨͎̞͈̳̥̝͕͈̙̝̼̥͎̖̟̪́̾̃̑̃̾̿̍̐̕͘͜͜͜ş̸̡͔̘̹̪̪̖͇̩͉͇͚͈̹͍̱̟͚̆̆l̸̨͔̱͖̟̭̯̠͖͍͚̼̭̙̐ͅd̵̛͚̯͙̦̓̄̈́͑̿̀͌͛̃͑͛͂͛̚͘͝ͅk̷̖͊͐͆̊̃̓͌͗́̍̈͐͒̈̌͑̋͐͊͝j̶̢̢̢̢͖̝͙̭͉̦͖̠̩̭͑͒̈́̔̆̐̄̈̀̀̀̽͗̊̃̇̆̓̆͂̂͘̕͘b̸̨̳̰̻̪̘̬̭͎̩̙̜̳̰̮̼͔̯̥̔̾̈́͂̅̔͝v̶̛̝͔̝͍͕̹͎̼̯̟̏͒͜͜͜s̷̡̛̠̦̠̤̘̤̙͙̯̙̿̾̌͑̊̉̇͗̉̀̓̋̎̎̉̔͛̚͜͝͝͝l̵̰͙̣̬͛̓̂̈́̀́́͑͗͒͊̉͋͑̒͊͠k̸̡̮̰̟̠̬̭̰͒́́͠ͅj̴̨̲͕̰̗̗͚̠̗̰͚̜̬̮̬͍̫̗̹̯͐̊͜͜s̵̨̨͔̥̣̯̜̻̪͖͕̥̬̓͑̔̃̌̔̀b̷̢̛̟͓̞̗̻̹͈͙̺̗̲̖̓͂͊͛̓͐̊͗̅̋̍̉̀̊̊̎̿̓́͘̕̕ļ̶̛͈̯̙͇̮̬̖̱͎̭͔̬̺͎̰̹͈̱̰̆̿̍̋͛̾̂̋̒̍̑͌̕͝k̷̨̨̧̰͉̖̪͚̳̩̱̘̜͔̮̽̉̀͋̿̈s̷̢͚̦̘͈̞̍͂̂̏̈́̇̂̓͗͛̑̃̅͂͒͂̍̈́̚͘͝͝d̶̨͚̙̟͇̩̜̪̯̞̩͓̝͎̩̞̩̗͓͙̀̊̌̀̓͛̆͐͂̄̿͑j̸̛͚̳̹̰̮̰̺̆̈́̄̅̂̉̀͊̾̏̕͘͝b̷̢͙͓̪̳͈̺̜̥̼͈̽͆͋͒̃̎̓̆͛̐́̓̓̽̆̈̚̚͘͝͠͝v̴̢̨̰̰̺̰̭̼̗̼̞͚̯̯̾͒͑̂͛͆̈́̌̿͂́́̃̎̑̑̾̚͜͝͝͝͝͝ͅl̴̮̮̠̞̟̥̰̫̹̝̹͓̠̣͔̟̠̯͔̾͆̀́̒̉͛̚k̷̛̯̓͌̋̀́̅̓͂͗͆́͂̆̌̀̈́̾̚v̴̛͔͎̘̦͌̑́̎͐̍͒͊͑̋̏́̔̓͝j̷̨̗̝̰̦̣̫̲͉̹͚͇͔͈͕̱͖̟̊̄͒́̓̓̆̎́͐̂̏͒̅̾́͐̂͜͝b̷̛͔̣̦̗̊͆͆̊̀̐̑̌̌̿͊͒͘͝ͅl̵̢̢̹̥̹̻͔̠͎̳̤͔̣̳̦̱̪͉̜̟̲͊̾̒́͂̀̿̈́͊́̀͐̀̊̃͛̂͝k̶̡̡̪̻̜͛̅̈́̅̈̐͛̈́͊͌̂̆̒̎͋̒͛̊͘͘͝s̸̢̨̨̧͓͔̖͖̻̜̞̼̱͇͕̣̪̪͙̠̟̖͎̈͋̌̃̓́̾͛̑͆̏̀̍̄̓͂̒͝ͅj̵̡̛̰̬̰͈̪̦̦̞̐̇̈́̌͗̏͠͝ͅb̶̜͚̀̈̍͐̐̊̋̔̍͆̈́͠ḽ̴̤̬̗͎̙͒̏͆̍͆́͆̈͝ȃ̴̡͕̩͔̤̮̘̮̱̻̺͓͚̭̟͚͕̰̹̦̠͜͠ͅk̸̛̟̪̈́s̸̛͓͕̤̻͎̺̼̪̗̝͈͖͂̈̅̕͜͜d̵̛̳͖̱̰͍̔̀́̋͗̆͋̽̅̂̍͆̔̀̚̚͜͝ͅj̶̢̧̟̤̤̳͇͍͍͙͍̫̥͆͒̆̏̓́̽̐̕͘͜b̶̮̪͖͚̠̝̠̬͖̩̻̈͑̇̒̇̈́͑͊̆̇̓̃͆̔̐͋̅͋̀̌͜͝͝͠͝ͅl̴͔͍̜̬͚̬͕̼͇͖̟͚̝̯̮͉̻̖̪̪̬͖̫͐̄̓́̓̇̚͝k̴̨̼̩͈̺̪̩̜̣̪͔̮̩̺̱̫̝̜̐ͅͅs̸̛͔̺͐͐̄͋͗̊̇̓͝͝j̵͉͔͈̫̯̔̃̑͊̀͑̋̌̚͘̚b̵̨͓̥̺͔͕͍̣͍̝̻̙̲̩̗̬̳͉̖̤̬̺̊̀̽̐͂͗̃̕͘͜͜v̷̛̛̩̪̄͛̃͆̓̈́̊͗͂͑̅͒̽͆̐̎̈͂͘͝͝l̶͈͎͂̓̎̔ķ̶̡̢̛̛̺̪̣͖̣̠͔̳̟͓͖͉͗̈́̈́͐̌̊̓̐͋̀̀̊̀̍̌͗̄̆͘͘͜͝s̶̡̧̡͔̠̲͈̲͎͖̺̥̯̺̬̻͍̠̦̞̳̖̭̀̇̓̂͊̄̅͝ͅa̶͙̱̥̜͓̖͇͔͚͓̲̙̻̟͈͙̙̞̟̜͚͘ͅj̸̫̰̯̬̮́̓̏̌̚b̸̡̡͇̹͉̦̘̩͉͚͎̠̩̪̥̱̬̘̳̓̆̏̍͊̾̽͜ͅȧ̴̛̼̜̥́̄̎̈́͂̅̂̓̿͘̚͝͝l̷͙̹͔̮͚͖̰͓͉͒̾̌̿̓̀̎̂̏̅͆̊̆̕͝͠ͅş̸̨̨̺̫̦̾͒͌̌̅̎͂̉͘͜k̸̨͈̠͕̞͈͔̺̦̳͑͑̊̆̍͛̿̉̀̀̃͆̑̚̕j̷̨̨͇̤͍͔̩̻̙͉̬̫͙̺̪̤̻̯͚̬͓̏͝ͅͅb̷͎͎͎̞͓͉̜͚̯̰͚͒̄̅͊̎̇́͐͋͆͐̅͑͆̀̚͜͝͝͠ạ̷̹̮̮̭͍̼͓̭̰̖̈̀̎̿͑̌͑͒̒̇͒̏̃̔͌͊̚ş̸̨̦̘̝̼͔͓͚̭̠̝̝̝̮̖̜̣͈̻͍̱̼͗͑̔͋̑͑̇̅̄͆̈͆̅̊͠v̶̢͍̺̆͜d̵̼̲̖̯̤̰̱́͗͒ķ̸͓̻̭̯͈̟̪̝̬̬̥̗̱͇̹̮̈̊̄̍͛̊̈́̄̕ͅj̶̢̧̢̢̩̫̗̦͕̝̩̩͎̹̭̏̇͒̎̾́̃̊̒͐̀̈́̒̉͋̾͗̽̈́̕͝͝͝͝b̸̨̢̛̠̳̣̮͚̦̯̯̬͖̈́̅͗͑͆̿̍̽̎͗͒̈́̈͂̑̈͋̓͘̚͜l̵̡̡̛͖̦̗̹͖̺̲͇͙͍̱͗̍̋̎̊͆̈́̀͐̇̓͐̽͛̌̓̋̔͑̿̊̔͝ͅͅs̶̢̡̰̰͇̺͍̹̞̝͖̙̟̩͖̼̟̺̥̿̍̕͝ͅd̴̨̨̼̪̞̻̞͇̰̻̠̗̣̼̦̮̑̾͂͜͝ͅa̴̧̧̢͕̤̙̬͙̞̻̜̙͓̥̗̽͂̈̃͒̐̔̾̊̂̅̃̊̐͌̓̕͘͝ǩ̸̮̼͈̠̩̱͖̳̜̝̞̥̞͈̺̬̹̠̗̎͐͆̒͌̂̉͒͆̕͝j̸̨̡͔̟͈̖̠̥͔̟͙̞̮͍̟͉̫̠͍̤̹̭̰̆͒̎̋͗́͗̆̔̈́̚͘͠͠͝ͅb̶̨̛̖͎͔̮̳͔͈̦͉̤̤̣̩̜̥͙̽̓̾̆̒̇̏͛̌̀̓̅̊̌̚̚͘͘͝ͅv̴̧̨͔̠͖̺̥̬͈̲͇̱̹̤͔̭͔͈̦̟̳̆̾͒̾̃̉͊̾͆͜͝ĺ̶̨̝͕͓̘͖͕̟̩̝͙̰̰̳͗͛̒͌̽͛̃͂͂̆̿̉͐͛́́͑̾̈́͘̚̚͝ḑ̵̯̗̜̮̞̼̱̜̜͚͓̱̯̺̯̪̲͕̳͚͔̌͌͆̀̓͒͂́̐̈́̈́̀͋̇̄̀̈́͝ŝ̶̹̳̦̝͉̩̠̄̔̊͂̂͆̂͑̓̽̊͂͠ͅķ̷̳̲̙̖̻̑͑͒̊͂̄̀͑̃̎͂̄̿́͆̔̽̎̅̒̾̿͘̚͜d̶͚̬͔̳̖͙͇͉̜͙͗̉̇̏͌̽͜j̵̧̖̟͉͚̮͑́̓̇̿̍͂̀̋̈̅̆̾̈́̀̾̓̆͒͝͠b̷̦̫̲̻͈̪͍̩̳̱̋̾̑̊̄͗̓͐͐̄̊͋̊̾̈́̎̒͐̕͜͝͝͠͠v̷̢̧̛̞̬̘̭͈̹̣̱̮̽͛͊͊͆͌͛̽̽̏̉̽͌͛̚͜͝͝͝l̵͍̲̰̥̙̭̻͇͎̞̺̹̝͎͕͇͛̚͜͝k̶̨̤̪̜̻̣̰̜̤͙̼̼͔̓̇̈́̅͌͊̽s̷̪̝̠͚̣͈̤͔̙͒̐̆̈́͊̇̇̆̀́͋͆͂̽̏͆̇̒̚ã̴͔͓̯̤͉̹̘̱͉̤̝͋͊͗̿̆̾̕j̸̡̧̢̙̝͙͖̪̭̋̊́̏́b̶̭̰̲͙̮͙̙͔͉̹͓̐͗̚͜͝ͅͅͅĺ̶̢̯͖̗̗̳͇̦͚̮̲͔̪̜̣͓͕̰̬̈̑̓̍̀̓́͛̅͗͐̕͘k̶̞̭͊̄̌̋̀̚s̶̛̛̼̹̗̙̩̈́͒͋͛̓́͋̏̑͊̍̔͒͋̽͐̈́̇̚͠͠͝j̵̭̥̱̙͕̋͌̓̒͐̒̅͆̒́b̴͚̋̽̀̍͐͛͂͊͐̆̈́́̈́̂̂̿̓̓̾̊̕̕͘s̴̠̼̰̺͇̩̞͖͓̰̤͔̹̟̹͇̣̫̲͖̫͖̖͓̉̂̆̃̄͗͛͗͂͐̿̓̓̈́a̸̻̙̖̰͎̰̲͊̾̀̋̍͋̿̎̿̀̂̍̒̀̎̚̕͠͝͝͠l̴̪̩̜͉̮̹͚̳̐̓͒̑̐̐̂̃͛̃̓̐͜͠k̵̡̛̛̠̭͈͔͍̰͎̟̱̥̟̑̏̉͛̏͗͗̊͑̌͊̀̉̅́͒̿̐̓̕͠͠j̶̡̨̧̧̛̛͓͍̱̟͈̘̳̱̦͍̝̜̰̣͈͉͔̫͈̿̃̈́͒͂̍̈s̶̡̛͙̪̟͇͍̲̘͇͚̅̎̾̆̿̾͐̀͒̇́̾̃̒̕͘͠͠b̸͕̻͎̦̻̻͓̬̗̦́̄̀͑̕͝ĺ̵̠̼̱̫͚̩͓͎͚̼̱̰̦̮̹͖͖̼̼̱̲̲̅̃̓̅͋͒̈́̓̔̏̀̿̉̃̃̉̈́̒͜͠k̸̢̨̡̛̦̩̗͖͚̹̯̠̟̮̣̬̬̬̯͈̺͔̊̋̂̓́̀̍͒̂̿̌̆̂̚͜ͅͅa̸͕̯̟͙̮̬̫̲͓̞̜͙̘͙̤̮̯̥̠͈̯͑̍̽̍̽̅͗̑̿̉̏̐̎́̀̈͜ṣ̶̺͈̮̠͕͎̜́̔̽̅̉̐̈́̄̋͌̀͊̓͗̀͗̓̎͝ͅd̴̨͚͎͓̿ͅṽ̶͙̺̭̊̉̈̎̃͐͑̂̈́̿͗̎̓̎̒̉̍͊͜b̷̤͓̭̲̑̅̃͂̅̂͘ḽ̸̡̡̛͖̘͚͚́̽̌͂̆̋̈̊̅̄̎̐͗̾̑̓k̴̛͇͍̤͇̙͎̼͔̗͙̮͕͙͈̯̼̹̱̘̣̑͊̒͋͂́̓͌͛̃̏̂̍́̽v̸͓͚̻̩̦̻͉͈̯̲̭̼̣̬͚͔̫̙̩̮̂̅́̅͒̈̊̉͆̍̇̆̐̌̈́̌ͅͅs̷̨̲̪̱͈̮͕̱͍͕͖̦̞̥̱̜̓͗̓ḑ̴̦̹̗͖̠̳̭͓̠͇͌͛̊̈̈̓̒̋̐͂̅̾̊͘̚̕͝͝ą̸̟̮̙͕͙̗̺͓̟̭̘͓͈̋͌̍̅͌͛̉̉̋̔̊͂̌̑̾̚͝b̸̰͇̞̗̹͉̳͉͎̙͍͎̪̮̟͔̮̼͒̈́͋̃͌̄̚ͅs̶̛͓̯̗̲̰̗̮͖̦̘͙̬͈͔͎̠͉̬̫̓̐̉̃̃͂͗̈́̇́̚̕͘̚̕l̴͉͚̩̎̈̈́̐͆̓̈́̏͘d̴͓̣͈͇̠̙̳̎͊͂͒̀̅̈́̎́͋k̶̙̘̆̈́͂͋͒̂͆̔͑̋͋̄͛͛̐̚͘̕̕͠͝b̸͕̗̳̫̲͒̉̈́͊̑́̉̑̌̈̓̾̌͒ś̵̢̡̢͕̜̰̥̥͎͖͎̺̺̠͉̆̅̓̐̌̅͝ͅļ̸̨̠̝̬͈̬̦͈̙̲̼͇͙̦̠̭̺͐̉̇̐̀̉̅͘͜͜ͅk̸̡̡͓̦̥̬̣͍͓̲̒̀̔̋̔̊̚̚s̵̡̖̤̙̝̠̺͚͎̼͈̝̗͈̞̲̮̈̅̈́̉͐̓̃̈́̎́͑̋̽̂̃̋̏̕͘͘͝͝a̴̧̨̛̮͇̟͕̣̹̙̖̥̜͇̱̦̗̫̠̘͔̩̅̆̓͊̎̿̅͌̾̋̿̓̌͋̂̈͗̄̓̕̚͜͠ͅb̵̢̰̞̝̥͉͙̟̜̘͕̜͆̈́̾͐̔̆͛̉̚̚ͅͅs̷̙͚͈͙̽̅̏̓̈́̊̊͂͑́͊̐̄̇̀̾̊͝͠a̵̛̛̍̆̐͋̋͐̃̆̔̅̊");
-        
+
 
 
         sleep(2);
@@ -479,7 +479,7 @@ class Events
         sleep(3);
         cout << endl;
 
-        
+
     }
 
     void sellerMarketBoot(Player &player)
@@ -627,7 +627,7 @@ class Mine
             }
             //seller's market cutscene
             break;
-            
+
 
         }
     }
@@ -783,7 +783,7 @@ class Mine
             }
             int itemCountByLevel = 7;
             int count = (randInt(1, itemCountByLevel) * selecteditem->rareity) + 1;
-            
+
             cout << count  << " pieces of " << selecteditem->name << endl;
             player.incrementItemCount(selecteditem->name, count);
             player.addXP(selecteditem->xp);
@@ -833,7 +833,7 @@ class Mine
             }
             if (res == 'q' && player.quitMineUnlock.occured)
             {
-                break;     
+                break;
             }
             if (res != 'm')
             {
@@ -860,7 +860,7 @@ class Guild
     {
         // item pickaxe = player.pickaxe;
         int pickLevel = player.pickaxe.level;
-        // item requiredForUpGrade[5][2] = 
+        // item requiredForUpGrade[5][2] =
 
         switch (pickLevel)
         {
@@ -939,11 +939,11 @@ class Guild
                 {
                     if(player.bankBalance < player.pickaxe.upgradeCost[level])
                     {
-                        achievementMessage("Insufficient Funds!");                        
+                        achievementMessage("Insufficient Funds!");
                     }
                     if(player.pickaxe.requiredCount[level][i] > player.pickaxe.required[level][i].count)
                     {
-                        achievementMessage("Insufficient Materials please come back when you have enough resources!");                        
+                        achievementMessage("Insufficient Materials please come back when you have enough resources!");
                         cout << "Required: " << player.pickaxe.requiredCount[level][i] - player.pickaxe.required[level][i].count << " more units of " << player.pickaxe.required[level][i].name << ". Get collecting!" << endl;
                         sleep(2);
 
@@ -958,7 +958,7 @@ class Guild
 
                 for (int i = 0; i < 2; i++)
                 {
-                   
+
                     player.pickaxe.required[level][i].count -= player.pickaxe.requiredCount[level][i];
                 }
 
@@ -981,7 +981,7 @@ class Guild
         char res;
         while(true)
         {
-            
+
             res = getPlayerResponse("p) Pickaxe\nq) Quit Guild");
             if (res == 'p')
             {
@@ -1064,7 +1064,7 @@ class Market
                 }
 
             }
-            
+
         }
         else if (res == 'b')
         {
@@ -1102,7 +1102,7 @@ class Market
             cout << "Sell Item by index >> ";
             cin >> res;
             } while (res - 1 > items.size() || res < 0);
-            
+
             res--;
 
             if(res == -1)
@@ -1162,7 +1162,7 @@ class Market
             // resetPrices(items);
             return;
 
-            
+
         } else {
             achievementMessage("You have nothing to sell. Try mining for resources.");
             // resetPrices(items);
@@ -1198,7 +1198,7 @@ class Market
             cout << "Buy Item by index >> ";
             cin >> res;
             } while (res > mineable.size() || res < 0);
-            
+
             res--;
 
             if(res == -1)
@@ -1210,7 +1210,7 @@ class Market
             {
                 if(mineable[i] == mineable[res])
                 {
-                    cout << "Your bank balance: $" << moneyAsString(player.bankBalance) << endl; 
+                    cout << "Your bank balance: $" << moneyAsString(player.bankBalance) << endl;
                     int countSelling;
                     do
                     {
@@ -1258,7 +1258,7 @@ class Bank
         }
         cout << "Welcome to the city bank!" << endl;
         bankBalance = player.bankBalance;
-        
+
         sleep(1);
         int x = randInt(0, 100);
 
@@ -1267,7 +1267,7 @@ class Bank
             player.bankOnLunchBreak.occured = true;
             player.bankOnLunchBreak.timesOccured++;
         }
-        
+
         if(player.bankOnLunchBreak.occured)
         {
             achievementMessage( "The bank is on a lunch break. Come back in a while!" );
@@ -1277,7 +1277,7 @@ class Bank
             showMessage(getDialogue(Vivian), "", 2, Vivian.name);
 
             while(true)
-            {    
+            {
             cout << "a) Check Balance\nb) Get a Loan\nq) Quit Bank\n>> ";
             char res;
             cin >> res;
@@ -1316,7 +1316,7 @@ class Bank
         cout << "q) Quit Bank\n>> ";
         char res;
         cin >> res;
-        
+
         quitBank:
         player.bankOnLunchBreak.occured = false;
         cout << "exiting bank..." << endl;
@@ -1332,7 +1332,7 @@ class RailwayStation
     struct train
     {
         string name;
-        bool isExpress {false};
+        string trainType;
         float ticketPrice;
         city home;
         city destination;
@@ -1353,22 +1353,26 @@ class RailwayStation
     train syntaxCityExpress;
     train terminilleExpress;
 
+    //User's Ticket:
+    bool ticketPurchased;
+    ticket UserTicket;
+
     void init()
     {
         // cout << "initializing.." << endl;
 
-    bitlinerTo = {"Bit-liner", false, 5.00, Terminille, SyntaxCity, randInt(1, 3), randInt(7, 20), 20, "BTLNR008"};
+    bitlinerTo = {"Bit-liner", "Passenger" , 5.00, Terminille, SyntaxCity, randInt(1, 3), randInt(7, 20), randInt(15, 21), "BTLNR008"};
 
-    bitlinerFrom = {"Bit-liner", false, 5.00, SyntaxCity, Terminille, randInt(1, 3), randInt(7, 20), 20, "BTLNR673"};
+    bitlinerFrom = {"Bit-liner", "Passenger", 5.00, SyntaxCity, Terminille, randInt(1, 3), randInt(7, 20), randInt(15, 21), "BTLNR673"};
 
-    syntaxCityExpress = {"SyntaxCity Express", true, 25.00, Terminille, SyntaxCity, randInt(1, 3), randInt(7, 20), 6, "SCEXP042"};
-    terminilleExpress = {"Terminille Express", true, 25.00, SyntaxCity, Terminille, randInt(1, 3), randInt(7, 20), 6, "TRMLEXP135"};
+    syntaxCityExpress = {"Syntax City Express", "Non-Stop Express", 25.00, Terminille, SyntaxCity, randInt(1, 3), randInt(7, 20), randInt(6, 9), "SCEXP042"};
+    terminilleExpress = {"Terminille Express", "Non-Stop Express", 25.00, SyntaxCity, Terminille, randInt(1, 3), randInt(7, 20), randInt(6, 9), "TRMLEXP135"};
 
     }
 
+
     vector<train> getAvailableTrains(Player &player)
     {
-        init();
 
         vector<train> trains = {bitlinerTo, bitlinerFrom, syntaxCityExpress, terminilleExpress};
         vector<train> availableTrains;
@@ -1381,24 +1385,28 @@ class RailwayStation
         cout << left << setw(8) << "Sn No."
              << setw(14) << "Train No."
              << setw(22) << "Train Name:"
+             << setw(20) << "Train Type:"
              << setw(16) << "From:"
              << setw(16) << "Destination:"
              << setw(16) << "Arrival in"
+             << setw(16) << "Travel Duration"
              << setw(16) << "Platform no."
              << setw(16) << "Ticket Price:" << endl;
-             
+
         for (int i = 0, j = 0; i < trains.size(); i++) {
             if (trains[i].home.name == player.currentCity.name) {
                 cout << left << setw(8) << j + 1
                      << setw(14) << trains[i].code
                      << setw(22) << trains[i].name
+                     << setw(20) << trains[i].trainType
                      << setw(16) << trains[i].home.name
                      << setw(16) << trains[i].destination.name
                      << setw(16) << trains[i].waitTime
+                     << setw(16) << trains[i].travelTime
                      << setw(16) << trains[i].platform
                      << setw(16) << moneyAsString(trains[i].ticketPrice, 2, "$") << endl;
-                
-                availableTrains.push_back(trains[i]);                
+
+                availableTrains.push_back(trains[i]);
                 j++;
             }
         }
@@ -1409,11 +1417,12 @@ class RailwayStation
     void printTicket(ticket tx)
     {
         cout << "-----------------------------------------------------------" << endl;
-        cout << "Ticket Number: " <<  tx.Train.code << "00" << randInt(1, 9) << endl
+        cout << "Ticket Number: " <<  tx.Train.code << "_" << randInt(1, 150) << endl
              << "Train Name: " <<  tx.Train.name << endl
              << "From: " <<  tx.Train.home.name << endl
              << "To: " <<  tx.Train.destination.name << endl
              << "Arrival in: " <<  tx.Train.waitTime << " seconds" << endl
+             << "Duration: " << tx.Train.travelTime << " seconds" << endl
              << "Platform no: " <<  tx.Train.platform << endl;
         cout << "-----------------------------------------------------------" << endl;
     }
@@ -1422,21 +1431,21 @@ class RailwayStation
     {
         cout << "Welcome to " << player.currentCity.name << " Railway Station!" << endl;
 
-        int random = randInt(1,100);
-        if(random < 15)
-        {
-            cout << "No trains at this moment." << endl;
-            return;
-        }
+        // int random = randInt(1,100);
+        // if(random < 15)
+        // {
+        //     cout << "No trains at this moment." << endl;
+        //     return;
+        // }
 
         vector<train> trains = getAvailableTrains(player);
 
             int response {0};
             while(true)
             {
-                cout << trains.size();
-                
-                cout << "Choose train by index >> ";
+                // cout << trains.size();
+
+                cout << "Purchase train ticket by index (0 to quit) >> ";
                 cin >> response;
 
                 if(response <= trains.size() && response > -1)
@@ -1445,30 +1454,163 @@ class RailwayStation
                 }
             }
 
-            
-            cout << "outside while" << endl;
+            if(response == 0)
+            {
+                ticketPurchased = false;
+                return;
+            }
 
             ticket tx {trains[response - 1]};
-            cout << "Ticket created!" << endl;
 
             if(player.bankBalance < tx.Train.ticketPrice)
             {
                 achievementMessage("Insufficinet balance! Purchase unsucessful");
+                ticketPurchased = false;
                 return;
             }
 
             player.bankBalance -= tx.Train.ticketPrice;
-            achievementMessage("Ticket Purchase Success!");
+            achievementMessage("Ticket Purchase Successful!");
+            ticketPurchased = true;
             sleep(1);
-            
-            printTicket(tx);
-        sleep(5);
 
+            UserTicket = tx;
+
+            printTicket(tx);
+        sleep(2);
+    }
+
+    void boardTrain(Player &player, ticket tx)
+    {
+        cout << "Boarding Train..." << endl;
+        sleep(1);
+        cout << "Sitting..." << endl;
+
+        int seconds = tx.Train.travelTime;
+
+        vector<string> travelMessages = {"Breeze feeling good...", "Watching moving trees...", "Stretching legs...", "Leaning back the recliner...", "Listening to music...", "Looking out the window...", "Rolling down the AC..."};
+
+        while (seconds >= 1) {
+            int rnd = randInt(0, travelMessages.size() - 1);
+            cout << "\rReaching " << tx.Train.destination.name << " in " << seconds << " seconds" << "\t" << travelMessages[rnd] << std::flush;
+            sleep(1);
+            seconds--;
+        }
+        cout << "\n[train halts]" << endl;
+        sleep(1);
+        cout << tx.Train.name << " arrived at " << tx.Train.destination.name << " on platform " << randInt(1, 3) << "\nDeboard train >> ";
+        player.currentCity = tx.Train.destination;
+        clearInputBuffer();
+        cin.get();
+
+        // cout << "Welcome to " <<player.currentCity.name << "!" << endl;
+        ticketPurchased = false;
+        sleep(2);
+
+    }
+
+    bool enterPlatform(Player &player, int platformNumber, ticket tx)
+    {
+        cout << "Entering platform " << platformNumber << "..." << endl;
+        sleep(1);
+        if(tx.Train.platform != platformNumber)
+        {
+            cout << "[you are on the wrong platform]" << endl;
+            sleep(1);
+            cout << ">> ";
+            clearInputBuffer();
+            cin.get();
+            return false;
+        }
+
+        int countdown = tx.Train.waitTime; // countdown starting value
+
+            while (countdown >= 3) {
+                cout << "\rTrain Arriving in: " << countdown << " seconds" << std::flush;
+                sleep(1);
+                countdown--;
+            }
+            cout << endl << "\rPlease step Back!" << flush;
+            sleep(1);
+            cout << endl << "\rStay clear off the line" << flush;
+
+            cout << endl << tx.Train.name << " arrived on platform " << tx.Train.platform << "\nBoard train >> ";
+            clearInputBuffer();
+            cin.get();
+
+            boardTrain(player, tx);
+            return true;
     }
 
     void enter(Player &player)
     {
-        ticketCounter(player);
+        cout << "Welcome to " << player.currentCity.name << " Railway Station!" << endl;
+        sleep(1);
+        while(true)
+        {
+            bool boarded = false;
+            char res;
+            if(ticketPurchased)
+            {
+            res = getPlayerResponse("t) ticket Counter\ne) Enter Platform\nv) View Ticket\nq) Quit station");
+            } else {
+                res = getPlayerResponse("t) ticket Counter\ne) Enter Platform\nq) Quit station");
+            }
+
+            if(!ticketPurchased && res == 't')
+            {
+                ticketCounter(player);
+            } else if (ticketPurchased && res == 't')
+            {
+                cout << "You already purchased a ticket! click 'v' to view it" << endl;
+            } else if (ticketPurchased && res == 'v')
+            {
+                printTicket(UserTicket);
+            } else if (res == 'e')
+            {
+                int platformNumber;
+
+                while(true)
+                {
+                    cout << "1) Platform 1\n2) platform 2\n3) Platform 3\n0) Quit\n>> ";
+                    cin >> platformNumber;
+
+                    if(platformNumber == 0)
+                    {
+                        break;
+                    }
+                    boarded = enterPlatform(player, platformNumber, UserTicket);
+                    if(boarded)
+                    {
+                        return;
+                        break;
+                    }
+                }
+                if (boarded)
+                {
+                    break;
+                }
+            } else if (ticketPurchased && res == 'q')
+            {
+                char res = getPlayerResponse("You have already purchased a ticket, quitting now will make your ticket invalid and you will have to buy it again. Continue? (y/n)");
+                if(res == 'y')
+                {
+                    break;
+                }
+            } else if (res == 'q')
+            {
+                cout << "quitting railway station..." << endl;
+                break;
+            }
+
+            // if(player.currentCity.name != UserTicket.Train.home.name)
+            // {
+            //     return;
+            //     break;
+            // }
+
+        }
+
 
     }
 
@@ -1489,49 +1631,76 @@ class menu
 
     void trigger(Player &player) // add all menu items here!
     {
-        switch (command)
+        if(player.currentCity.name == Terminille.name)
         {
-        case 'g':
-            gamble(player);
-            break;
 
-        case 'm':
-            mine(player);
-            break;
+            switch (command)
+            {
+            case 'g':
+                gamble(player);
+                break;
 
-        case 'i':
-            player.displayInventory();
-            break;
+            case 'm':
+                mine(player);
+                break;
 
-        case 's':
-        {
-            Market market;
-            market.menu(player);
-            break;
+            case 'i':
+                player.displayInventory();
+                break;
+
+            case 's':
+            {
+                Market market;
+                market.menu(player);
+                break;
+            }
+            case 'b':
+            {
+                Bank bank;
+                bank.enter(player);
+                break;
+            }
+            case 'c':
+                Guild guild;
+                guild.enter(player);
+                break;
+
+            case 'p':
+                player.display();
+                sleep(1);
+                break;
+
+            case 'r':
+            {
+                RailwayStation rs;
+                rs.init();
+                rs.enter(player);
+            }
+            default:
+                break;
+            }
         }
-        case 'b':
-        {
-            Bank bank;
-            bank.enter(player);
-            break;
-        }
-        case 'c':
-            Guild guild;
-            guild.enter(player);
-            break;
 
-        case 'p':
-            player.display();
-            sleep(1);
-            break;
-
-        case 'r':
+        if (player.currentCity.name == SyntaxCity.name)
         {
-            RailwayStation rs;
-            rs.enter(player);
-        }
-        default:
-            break;
+            switch(command)
+            {
+                case 'p':
+                    player.display();
+                    sleep(1);
+                    break;
+
+                case 'r':
+                {
+                    RailwayStation rs;
+                    rs.init();
+                    rs.enter(player);
+                }
+                    break;
+                case 'i':
+                    player.displayInventory();
+                    break;
+            }
         }
     }
 };
@@ -1541,29 +1710,42 @@ void mainmenu(Player &player)
     // cout << "Player: " << player.name << "\nBank Balance: $" << moneyAsString(player.bankBalance) << endl << endl;
     vector<menu> menu;
 
-    menu.push_back({"r) Railway Station", 'r'});
+    if(player.currentCity.name == Terminille.name)
+    {
+        if(player.firstBoot.occured)
+        {
+            menu.push_back({"m) mine", 'm'});
 
-    if(player.firstBoot.occured)
-    {
-        menu.push_back({"m) mine", 'm'});
-    
+        }
+        if (player.inventoryUnlock.occured)
+        {
+            menu.push_back({"i) inventory", 'i'});
+        }
+        if (player.sellerMarketBoot.occured || player.bankBoot.occured)
+        {
+            menu.push_back({"b) bank", 'b'});
+            menu.push_back({"s) market", 's'});
+        }
+        if(player.guildUnlocked.occured && player.level > 1)
+        {
+            menu.push_back({"c) guild", 'c'});
+        }
+
     }
-    if (player.inventoryUnlock.occured)
+
+    if(player.currentCity.name == SyntaxCity.name)
     {
-        menu.push_back({"i) inventory", 'i'});
+        if (player.inventoryUnlock.occured)
+        {
+            menu.push_back({"i) inventory", 'i'});
+        }
     }
-    if (player.sellerMarketBoot.occured || player.bankBoot.occured)
-    {
-        menu.push_back({"b) bank", 'b'});
-        menu.push_back({"s) market", 's'});
-    }
-    if(player.guildUnlocked.occured && player.level > 1)
-    {
-        menu.push_back({"c) guild", 'c'});
-    }
-    menu.push_back({"p) Player details", 'p'});
+        menu.push_back({"r) Railway Station", 'r'});
+        menu.push_back({"p) Player details", 'p'});
+
+
     //To add: gamble, guild, weather, railway station.
-    cout << "GAME ACTIONS:" << endl; // "\nm) mine\ng) gamble\ni) view inventory\ns) Market\nb) bank\nw) check weather\nc) guild\n>> ";
+    cout << player.currentCity.name << " actions:" << endl; // "\nm) mine\ng) gamble\ni) view inventory\ns) Market\nb) bank\nw) check weather\nc) guild\n>> ";
     for(int i = 0; i < menu.size(); i++)
     {
         cout << menu[i].name << endl;
@@ -1590,7 +1772,7 @@ void gamble(Player &player)
     while(true)
     {
         cout << "Current Bank balance: " << moneyAsString( player.bankBalance ) << endl;
-            do {    
+            do {
                 cout << "Enter gamble amount: ";
                 cin >> gambleAmount;
                 if (gambleAmount > player.bankBalance)
@@ -1639,7 +1821,7 @@ void triggerHomelessMan(Player &player)
     {
         showMessage(getDialogue(HomelessMan), "", 1, HomelessMan.name) ;
         char res;
-        
+
         while(true)
         {
             res = getPlayerResponse("a) Give him money\nb) Ignore");
@@ -1676,9 +1858,9 @@ void triggerHomelessMan(Player &player)
                     sleep(1);
                     break;
                 }
-                
+
             }
-            
+
             if (res == 'b')
             {
                 cout << "walking away..." << endl;
@@ -1691,7 +1873,7 @@ void triggerHomelessMan(Player &player)
                 sleep(2);
                 break;
             }
-        }   
+        }
     player.homeLessManBoot.timesOccured++;
     }
 }
@@ -1720,7 +1902,7 @@ int main(void){
         player.lvl();
         mainmenu(player);
 
-        
+
         if(!player.homeLessManBoot.occured && player.bankBalance > 0)
         {
             player.homeLessManBoot.occured = true;

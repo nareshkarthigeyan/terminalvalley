@@ -19,3 +19,6 @@ int randInt(int min, int max)
     uniform_int_distribution<> distr(min, max);
     return distr(gen);
 }
+void clearInputBuffer() {
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+}

@@ -3,5 +3,6 @@
 
 void clearScreen();
 int randInt(int, int);
+void clearInputBuffer();
 
 #endif // UTILITIES_H
