@@ -581,7 +581,7 @@ class Events
             // cout << "dialogue: " << content << endl;
             // cout << "author: " << author << endl;
 
-            content.replace(content.find("$player_name"), sizeof("$player_name") - 1, "Naresh");
+            content.replace(content.find("$player_name"), sizeof("$player_name") - 1, player.name);
 
             if(author == "Achievement")
             {
@@ -2222,7 +2222,7 @@ int main(void){
 
     npcDialogueInit(player);
 
-    // player.name = "Naresh";
+    player.name = "Naresh";
     // player.bankBoot.occured = false;
     // player.sellerMarketBoot.occured = false;
     player.bankBalance = 500;
