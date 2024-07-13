@@ -1,38 +1,25 @@
-,You get down from the train and are greeted with big bold letters on the board.,,,
-,TERMINILLE RAILWAY STATION,,,
-,The station is deserted.,,,
-,...,,,
-???,Sorry I’m late!,,,
-???,I must have overslept! Hello, your grandfather has told me about you...,,
-???,You are....?,,,
-,<get player name>,,,
-???,Ah! [PLAYER_NAME]! Nice to meet you...,,,
-???,As your grandather must have mentioned, my name is Bitwise,,
-Bitwise,I’m the mayor of Terminille, this town.,,
-Mayor Bitwise,Safe to say, this part of town is not that well known,,
-Mayor Bitwise,Terminille is far from the advancements of Syntax City, or Codeopolis, but it is still one of the ‘big three’, haha
-Mayor Bitwise,but all glory isn’t lost! There are still thriving things in this town,,,
-Mayor Bitwise,we all rely on the resources from mines... which reminds me, isn’t that why you are here?,,
-Mayor Bitwise,Don’t fret, mining is one of the biggest things you can do to live here!,,
-Mayor Bitwise,Sorry, I must be rambling!,,
-Mayor Bitwise,I do that a lot, haha, especially with this age thing catching up on me...,
-Mayor Bitwise,Anyways, why don’t we get you out of here!,,
-Mayor Bitwise,exiting Railway Station...,,,
-Mayor Bitwise,traversing through the city is very easy in Terminille,,,
-Mayor Bitwise,all you gotta do is go the main street, and then click the letter corresponing to the place you want to visit,,
-Mayor Bitwise,let’s try entering the mine now, click ‘m’,,
-,<get player input>,,,
-,entering mine...,,,
-Mayor Bitwise,Great! We are now *cough* *cough* inside the *cough*,,,
-Mayor Bitwise,....mine. I don’t do good with closed spaces.,,,
-Mayor Bitwise,You can mine by clicking ‘m’. Try it...,,,
-Mayor Bitwise,Well, mining by hands can take quite a bit of time!,,
-Mayor Bitwise,You can speed up mining by buying a pickaxe from the guild store, which, will open in a week!,
-Mayor Bitwise,This is usually a part of hospitality where I would give you an old run-of-the mill pickaxe and 500$ as a starting bonus,,,
-Mayor Bitwise,but I guess we both can agree that it’s a bit cliche, haha.,,
-Mayor Bitwise,let’s get that money with our own hardwork, shall we *cough*.,,
-Mayor Bitwise,Anyway, I gotta get going, I’ll leave you be in the mine, to get used to it...
-Mayor Bitwise,and if you need any other help, you can come by- well, it’s all self-explanatory, you won’t need me
-Mayor Bitwise,If that is all, I’ll get going then... happy thriving!,,
-,[Bitwise leaves the mine],,,
-,click ‘m’ to continue mining.,,,
+Vivian,...Oh! Hello!
+Vivian,Looks like you are just in time!
+Vivian,We were just about to go on a lunch break!
+Vivian,My name is Vivian! and I am the local bank handler.
+Vivian,The best one at that; you could say!
+Vivian,[Vivian chuckles to herself]
+Vivian,Oh; the lunch break? That happens once in a while; don't worry!
+Vivian,Anyways; you must be the new one in town!
+Vivian,$player_name... right? Welcome!
+Vivian,Mayor Bitwise had already briefed about you; and initiated your bank account!
+Vivian,So as per our protocols; your account will be open in....?
+Vivian,Well... I should do it now; [checks watch] will be done...
+Vivian,Savings account for... $player_name...
+Vivian,....and done!
+Achievement,[Bank account Created]
+Achievement,[Selling Unlocked]
+Vivian,I would recommend you take our credit card plans...
+Vivian,they are much more beneficial to us- I mean; you.
+Vivian,Or; you could take a loan; at very low interest rates starting at just 20.8%.
+Vivian,[Vivian checks her watch]
+Vivian,$player_name; I would love to tell you more about our plans...
+Vivian,But I need to have lunch now; so apologies; the bank must close!
+Vivian,You can always come back to the bank to check your balance.
+Vivian,And maybe when you are rich enough; you can take loans from us! Assuming we are open... of course... but [in a hurry] bye for now!
+Vivian,[waves]

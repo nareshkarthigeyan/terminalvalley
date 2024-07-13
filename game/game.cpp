@@ -1,3 +1,4 @@
+#include <cstddef>
 #include <cstdio>
 #include <iostream>
 #include <iomanip>
@@ -16,6 +17,10 @@
 #define WEIGHT 1
 
 using namespace std;
+
+//To replace text:
+// std::string s = "Hello  $player_name! Nice to meet you!!";
+// s.replace(s.find("$player_name"), sizeof("$player_name") - 1, "Naresh");
 
 string toUpperCase(const string& str) {
     string result = str;
@@ -398,6 +403,8 @@ class Player : public Inventory, public PlayerEvents
     int xpToLvl[7] = {300, 1500, 4750, 8900, 15000, 25000, 50000};
     city currentCity = Terminille;
 
+    int timesFished;
+
 
     bool firstTime = true;
 
@@ -574,6 +581,14 @@ class Events
             // cout << "dialogue: " << content << endl;
             // cout << "author: " << author << endl;
 
+            content.replace(content.find("$player_name"), sizeof("$player_name") - 1, "Naresh");
+
+            if(author == "Achievement")
+            {
+                achievementMessage(content);
+                sleep(1);
+                continue;
+            }
             showDialogue(author, content);
         }
 
@@ -581,34 +596,39 @@ class Events
 
     void bankBoot(Player &player)
     {
-        showMessage("Hello there, wanderer. Look's like you are just in time!", "We were just about to go on a lunch break!", 3, "Vivian");
-        sleep(3);
-        showMessage("My name is Vivian, and I am the local bank handler", "The best one at that, you could say!", 3, "Vivian");
-        sleep(2);
-        showMessage("[Vivian chuckles to herself]", "", 1);
-        sleep(2);
-        showMessage("Oh, the lunch break? That happens once a while, don't worry!", "Anyways, you must be the new one in town!", 3, "Vivian");
-        sleep(2);
-        ostringstream welcomeMessage;
-        welcomeMessage << player.name << "... right? Welcome!";
-        showMessage(welcomeMessage.str(), "So as per procedure, you will be given a default Savings Bank account. Should I proceed?", 2, "Vivian");
-        sleep(3);
-        showMessage("Savings acoount for... " + player.name + " ...aaand, done!", "", 0, "Vivian");
-        sleep(1);
-        achievementMessage("Bank account Created");
-        sleep(2);
-        achievementMessage("Selling Unlocked");
-        sleep(3);
-        showMessage("However, I would recommend you take our credit card plans they are much more benificial to us- I mean, you.", "Or, you could take a loan, at very low intrest rates starting at just 20.8%", 4, "Vivian");
-        sleep(3);
-        showMessage("[ Vivian checks her watch ]");
-        sleep(3);
-        ostringstream welcomeMessage2;
-        welcomeMessage2 << player.name << ", I would love to tell you more about our plans...";
-        showMessage(welcomeMessage2.str(), "But I need to have lunch now, so apologies, the bank must close!", 2, "Vivian");
-        sleep(2);
-        showMessage("You can always come back to the bank, to check your balance", "and maybe when you are rich enough, you can take loans from us! Assuming we are open, ofcourse, but, [in a hurry], bye for now!", 3, "Vivian");
-        sleep(6);
+        ifstream ip("assets/BankBoot.csv");
+
+        if(!ip.is_open()) cerr << "ERROR: files corrupted?" << endl;
+
+        vector<dialogue> firstBoot;
+        string content;
+        string author;
+        while(ip.good())
+        {
+            getline(ip, author, ',');
+            getline(ip, content, '\n');
+
+            size_t pos = content.find("$player_name"); //to replace playername;
+
+            if(pos != string::npos)
+            {
+                content.replace(content.find("$player_name"), sizeof("$player_name") - 1, "Naresh");
+            }
+            pos = content.find(";"); //to get commas
+            if(pos!=string::npos)
+            {
+                content.replace(content.find(";"), sizeof(";") - 1, ",");
+            }
+
+            if(author == "Achievement")
+            {
+                achievementMessage(content);
+                sleep(1);
+                continue;
+            }
+            showDialogue(author, content);
+        };
+
         cout << "exiting bank..." << endl;
         sleep(3);
         cout << endl;
@@ -1875,7 +1895,7 @@ class Pond
     void fish(Player &player)
     {
         cout << "fishing..." << endl;
-        cout << "You found [a fish]!" << endl;
+        cout << "You found [a fish]!";
     }
 
     void display(Player &player)
@@ -2207,7 +2227,8 @@ int main(void){
     // player.sellerMarketBoot.occured = false;
     player.bankBalance = 500;
     player.fishingRod.level = 1;
-    player.currentCity = SyntaxCity;
+    player.currentCity = Terminille;
+    player.bankBoot.occured = false;
     while(true)
     {
 
