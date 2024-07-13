@@ -6,11 +6,11 @@
 #include <fstream>
 #include <iomanip>
 #include <iostream>
-#include <random>
 #include <sstream>
 #include <string>
 #include <unistd.h>
 #include <vector>
+#include <cmath>
 
 #define MAX_MINE_LEVELS 12
 #define MAX_FISHIN_LEVELS 6
@@ -176,14 +176,11 @@ public:
   item magma = {"Magma", 0, 0.09, 7200.33, 790.55};
   item bedrock = {"Bedrock", 0, 0.08, 10000.11, 1590.78};
 
-  vector<string> rareityString = {
-      "Very Common", "Pretty Common",         "Common", "Rare", "Very Rare",
-      "Atlantis!",   "How did you find this?"};
+  vector<string> rareityString = {"Very Common", "Pretty Common", "Common", "Rare", "Very Rare", "Atlantis!", "How did you find this?"};
   // Fishing items:
   item soakedBoot = {"Soaked Boots", 0, 0.82, 0.79, 1.38, rareityString[0]};
   item seashell = {"Sea Shell", 0, 0.91, 2.25, 0.11, rareityString[1]};
-  item usedEarphones = {"Used earphones (white", 0, 0.87, 0.08, 1.68,
-                        rareityString[0]};
+  item usedEarphones = {"Used earphones (white", 0, 0.87, 0.08, 1.68,rareityString[0]};
   item usedCondom = {"Used condom (ew)", 0, 0.89, 0, 0.1, rareityString[0]};
   item salmon = {"Salmon", 0, 0.75, 4.50, 2.79, rareityString[1]};
   item clownfish = {"Clown Fish", 0, 0.74, 5.50, 2.95, rareityString[1]};
@@ -422,40 +419,30 @@ NPC bitwise = {"Mayor Bitwise", "Mayor of the town.", 0};
 void npcDialogueInit(Player &player) {
   Vivian.dialogues = {
       "Heyy... What's up!",
-      "You know, sometimes, the bank manager says I need to be more polite, ",
-      "but I don't understand - aren't I poilite enough?",
+      "You know, sometimes, the bank manager says I need to be more polite, but I don't understand - aren't I poilite enough?",
       "I wonder what's for lunch today... spheggati would be nice!",
       "Do you need a loan?",
       "Don't you think pinapple pizza is a crime?",
       "The best food is eaten when you're the most hungry!",
       "I have so much paperwork left...! It's making me so hungry!!",
       "I'm really looking forward to my lunch today!",
-      "I went to my best friend's marriage the other day, and the food was ",
-      "awful!",
-      "The bank manager is such as ass sometimes, he calls me to his cabin "
-      "for ",
-      "no reason...",
-      "I'll go check out the restaurant across the road after dealing with ",
-      "you.",
-      "If the universe started from big bang, what's before big bang? What's ",
-      "the something that made nothing into not-nothing?",
+      "I went to my best friend's marriage the other day, and the food was awful!",
+      "The bank manager is such as ass sometimes, he calls me to his cabin for no reason...",
+      "I'll go check out the restaurant across the road after dealing with you.",
+      "If the universe started from big bang, what's before big bang? What's the something that made nothing into not-nothing?",
       "I'm not it the mood to talk now, tell me what you want...",
       "The best way to ask me out on a date is offer me food.",
-      "Sometimes I think I'm not good enough, but then I see other people who ",
-      "are worse than me, and then I feel better.",
+      "Sometimes I think I'm not good enough, but then I see other people who are worse than me, and then I feel better.",
       "Am I married? Uh....",
       "...",
       "[picks nose]",
-      "My last boyfriend was a jerk, but he was the best chef in town ",
-      "though...",
+      "My last boyfriend was a jerk, but he was the best chef in town though...",
       "Why does imaginary use of numbers in economy hold so much power?",
       "Do you think the terminal universe also has inflation?",
       "It has been 3 hours not thinking about food.... oh... I just did.",
       "Nothing makes sense in life.",
-      "Between you and me, the credit card system is rigged to make you poor, ",
-      "but that's just me though.",
-      "You won't believe me, but when I walked into the bank manager while he ",
-      "was changing, I swear he wore panties!",
+      "Between you and me, the credit card system is rigged to make you poor, but that's just me though.",
+      "You won't believe me, but when I walked into the bank manager while he was changing, I swear he wore panties!",
       "The Indian filter coffee has got to be the best coffee in the world!",
       "Uhm, why haven't I accepted your request on Instagram...? uh...",
       "Hey, have you got any gossip?",
@@ -465,67 +452,49 @@ void npcDialogueInit(Player &player) {
 
   Manjunath.dialogues = {
       "Howdy! How's the business going?",
-      "Back in my days, we use to mine by hand, the current convinences like ",
-      "pickaxe never existed!",
+      "Back in my days, we use to mine by hand, the current convinences like pickaxe never existed!",
       "Sometimes I feel I pay too much to you...",
       "What makes a good miner? Well, just keep mining and you will know...",
-      "You know, when my wife left me for that seal navy, the only thing that ",
-      "kept me going was the smell of coal",
-      "I went to the bank the other day, that lady is a peculiar one, I must ",
-      "say...",
-      "In my army days, the war fleet use to have magazines with pictures of ",
-      "women, it was popular among the folks!",
-      "The only thing that kept me going in darkness was the light that it ",
-      "didn't show me.",
-      "Kid... don't tell me you are one of those new-age miners that "
-      "disregard ",
-      "the beauty of hand mining... ahh those days!",
+      "You know, when my wife left me for that seal navy, the only thing that kept me going was the smell of coal",
+      "I went to the bank the other day, that lady is a peculiar one, I must say...",
+      "In my army days, the war fleet use to have magazines with pictures of women, it was popular among the folks!",
+      "The only thing that kept me going in darkness was the light that it didn't show me.",
+      "Kid... don't tell me you are one of those new-age miners that disregard the beauty of hand mining... ahh those days!",
       "The business has been a bit rough recently",
       "New technologies confuse me sometimes...",
       "Have I ever been scammed? I don't know, you should ask me when I do.",
       "You ough to meet my son someday, he lives across the globe.",
-      "I wish my son would meet me some days, he works too hard for his own ",
-      "good...",
-      "My son called me the other day, he can't make it this weekend... I ",
-      "guess I'll have to wait for the next holiday season",
+      "I wish my son would meet me some days, he works too hard for his own good...",
+      "My son called me the other day, he can't make it this weekend... I guess I'll have to wait for the next holiday season",
       "When people ask me why she left me, I still don't know what to say...",
-      "Items use to cost way less when I was your age, stock market has "
-      "ruined ",
+      "Items use to cost way less when I was your age, stock market has ruined ",
       "everything...",
       "Do I hate navy seals? Young soul, I don't hold anything against them.",
       "Discount? I'm already offering you the best prices...",
       "News paper companies have really \"fell off\" now...",
       "I could do with one of the good ol' magazines right now...",
       "The older you grow, the more you realise life is meaningless",
-      "It never really gets better, we just get used to things being worse "
-      "and ",
-      "shitty all the time."};
+      "It never really gets better, we just get used to things being worse and shitty all the time."};
 
   HomelessMan.dialogues = {
       "I say the world can go to hell, but I must have my tea",
       "How do you claim to be alive, and you have no story to tell",
       "Most things they claim to change life don't amuse me",
       "Morality? [laughs] what even is that? A fantasy?",
-      "It's better to be delusional and in a mental paradise than being wound ",
-      "up in reality and suffering",
+      "It's better to be delusional and in a mental paradise than being wound up in reality and suffering",
       "The stars seem to align to tell me that I am insignificant.",
-      "There is not much difference between me and you, we both are the same, ",
-      "yes",
+      "There is not much difference between me and you, we both are the same, yes",
       "Being sincere can also mean being stupid at the same time.",
-      "[puffs out smoke]... [does not give a damn]...",
       "love is suffering, there is no other meaning to it",
       "My god, a moment of bliss, isn't that enough for this lifetime?",
       "The secure ones are the most insecure if you watch them closely...",
       "I have seen the things you can never imagine...",
-      "Nowadays all capable people are terribly afraid of being judged, hence ",
-      "turn into miserable pieces of shits.",
+      "Nowadays all capable people are terribly afraid of being judged, hence turn into miserable pieces of shits.",
       "I will never understand how a man of my thoughts can continue living...",
-      "Standing against injustice? Isn't is just showing off to the world how ",
-      "much justice you are... a good person.",
-      "Denial of death is the single most thing that drives us from being ",
-      "afraid to live.",
-      "Why bother not being rude when all your actions are rude enough?",
-      "[sings 'why this kolavery']"};
+      "Standing against injustice? Isn't is just showing off to the world how much justice you are... a good person.",
+      "Denial of death is the single most thing that drives us from being afraid to live.",
+      "Why bother not looking rude when all your actions are rude enough?",
+      "[sings 'why this kolaveri di']"};
 }
 
 string getDialogue(NPC npc) {
@@ -1181,7 +1150,8 @@ public:
     priceMultiplyer *= player.luck;
     cout << "You have entered the market... buckle up!" << endl;
     sleep(1);
-    showMessage(getDialogue(Manjunath), "", 2, Manjunath.name);
+    showDialogue(Manjunath.name, getDialogue(Manjunath));
+  //  showMessage(getDialogue(Manjunath), "", 2, Manjunath.name);
     cout << "s) SELL\nb) BUY\nq) Quit market";
     char res = getPlayerResponse();
 
@@ -1240,8 +1210,7 @@ public:
       if (res == items.size()) {
         char confirm;
         cout << "You are about to sell all your items, this cannot be undone. "
-                "Confirm? (y): "
-             << endl;
+                "Confirm? (y): ";
         confirm = getPlayerResponse();
 
         if (confirm == 'y') {
@@ -1393,7 +1362,8 @@ public:
 
     } else {
 
-      showMessage(getDialogue(Vivian), "", 2, Vivian.name);
+      //showMessage(getDialogue(Vivian), "", 2, Vivian.name);
+      showDialogue(Vivian.name, getDialogue(Vivian));
 
       while (true) {
         cout << "a) Check Balance\nb) Get a Loan\nq) Quit Bank\n>> ";
@@ -2104,7 +2074,7 @@ void triggerHomelessMan(Player &player) {
 
   if (random <= 6) // change to 6;
   {
-    showMessage(getDialogue(HomelessMan), "", 1, HomelessMan.name);
+    showDialogue(HomelessMan.name, getDialogue(HomelessMan));
     char res;
 
     while (true) {
@@ -2176,8 +2146,7 @@ int main(void) {
   // player.sellerMarketBoot.occured = false;
   player.bankBalance = 500;
   player.fishingRod.level = 1;
-  player.currentCity = SyntaxCity;
-  player.bankBoot.occured = false;
+  player.currentCity = Terminille;
   while (true) {
 
     // player.lvl();
