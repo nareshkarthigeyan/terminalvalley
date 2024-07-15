@@ -6,6 +6,7 @@
 #include <fstream>
 #include <iomanip>
 #include <iostream>
+#include <ostream>
 #include <sstream>
 #include <string>
 #include <unistd.h>
@@ -26,6 +27,43 @@ string toUpperCase(const string &str) {
   string result = str;
   transform(result.begin(), result.end(), result.begin(), ::toupper);
   return result;
+}
+
+char getSpecificPlayerResponse(string m= "", char o1 = '\0', char o2 = '\0')
+{
+    char res;
+    if(o1 != '\0')
+    {
+        if (o2 != '\0')
+        {
+            while(true)
+            {
+                cout << m << " >> ";
+                cin >> res;
+
+                if(res == o1 || res == o2)
+                {
+                    return res;
+                }
+            }
+        }
+
+        while(true)
+        {
+            cout << m << " >> ";
+            cin >> res;
+
+            if(res == o1)
+            {
+                return res;
+            }
+        }
+    }
+
+    cout << m << " >> ";
+    cin >> res;
+    return res;
+
 }
 
 void showMessage(string s1 = "", string s2 = "", int timeOut = 0,
@@ -55,14 +93,17 @@ void showDialogue(string author = "", string content = "", int timeout = 1) {
   }
   cout << content << endl;
 
-  if (content.size() / sizeof(char) > 10) {
-    timeout = 3;
-  } else if (content.size() / sizeof(char) > 25) {
-    timeout = 4;
-  } else if (content.size() / sizeof(char) > 40) {
-    timeout = 6;
+  if(timeout != 0)
+  {
+    if (content.size() / sizeof(char) > 10) {
+        timeout = 3;
+    } else if (content.size() / sizeof(char) > 25) {
+        timeout = 4;
+    } else if (content.size() / sizeof(char) > 40) {
+        timeout = 6;
+    }
+    sleep(timeout);
   }
-  sleep(timeout);
 }
 
 char getPlayerResponse(string s1 = "") {
@@ -343,6 +384,8 @@ public:
   event bankBoot;
   event bankOnLunchBreak;
   event loansUnlocked;
+  event playerCreditCardUnlock;
+  event playerWalletUpgrade;
 
   // market events
   event sellerMarketBoot;
@@ -358,6 +401,13 @@ class Player : public Inventory, public PlayerEvents {
 public:
   string name;
   long double bankBalance;
+  long double wallet;
+  float walletLimit {300.00};
+  struct creditCard {
+      bool has {false};
+      float convinienceCharge {0.05};
+      bool hasInsurance {false};
+  } creditcard;
   float luck{1};
   int timesMined;
   long double xp;
@@ -400,7 +450,83 @@ public:
   void display() {
     lvl();
     cout << "Name: " << name << "\nLevel: " << level << "\nXP: " << xp << " / "
-         << xpToLvl[level - 1] << "\nLuck: " << luck << endl;
+         << xpToLvl[level - 1] << "\nLuck: " << luck  << "\nWallet: " << moneyAsString(wallet, 2, "$") << " / $" << walletLimit << endl;
+  }
+
+  bool depositToWallet(float amount)
+  {
+      float walletSpaceLeft = walletLimit - wallet;
+      if(amount > walletSpaceLeft && !creditcard.has)
+      {
+          cout << "You do not have enough wallet space left. Deposit money in the bank or increase your wallet limit. Visit the bank." << endl;
+          return false;
+      } else if(amount > walletSpaceLeft && creditcard.has)
+      {
+          cout << "Insufficient balance in wallet. Use credit card to directly recieve? (" << creditcard.convinienceCharge*100 << "% convinience fee) (y/n)?";
+          char res;
+
+          while(true)
+          {
+              res = getPlayerResponse();
+              if (res == 'y' || res == 'n')
+              {
+                  break;
+              }
+          }
+          if(res == 'y')
+          {
+              bankBalance += amount - (amount * creditcard.convinienceCharge);
+              cout << "\t + " << moneyAsString(amount - (amount * creditcard.convinienceCharge) , 2, "$") <<  "\t Ka-Ching!" << endl;
+              cout << "Deposited to your bank account!" << endl;
+              cout << "Bank Balance: " << moneyAsString(bankBalance, 2, "$") << endl;
+              return true;
+          } else
+          {
+              cout << "Transaction aborted" << endl;
+              return false;
+          }
+      } else {
+          wallet += amount;
+          cout << "\t - " << moneyAsString(amount , 2, "$") << endl;
+      }
+      return true;
+  }
+
+  bool withdrawFromWallet(float amount)
+  {
+      if(amount <= wallet && amount >= 0 && !creditcard.has)
+      {
+          wallet -= wallet;
+          return true;
+      } else if (amount > wallet && creditcard.has)
+      {
+          cout << "Insufficient balance in wallet. Use credit card to directy pay? (" << creditcard.convinienceCharge*100 << "% convinience fee) (y/n)?";
+          char res;
+
+          while(true)
+          {
+              res = getPlayerResponse();
+              if (res == 'y' || res == 'n')
+              {
+                  break;
+              }
+          }
+          if(res == 'y')
+          {
+              bankBalance -= amount + (amount * creditcard.convinienceCharge);
+              cout << "\t - " << moneyAsString(amount + (amount * creditcard.convinienceCharge) , 2, "$") << endl;
+              cout << "Withdrawn from Bank Account" << endl;
+              cout << "Bank Balance: " << moneyAsString(bankBalance, 2, "$") << endl;
+              return true;
+          } else
+          {
+              cout << "Transaction aborted" << endl;
+              return false;
+          }
+      } else {
+          cout << "Insufficient balance in wallet! Withdraw money from bank or increase your wallet limit to accomodate more running cash. Visit the bank." << endl;
+      }
+      return false;
   }
 };
 
@@ -1048,7 +1174,7 @@ public:
       if (res == 'y') {
         bool insufficient = false;
         for (int i = 0; i < 2; i++) {
-          if (player.bankBalance < player.pickaxe.upgradeCost[level]) {
+          if (player.wallet < player.pickaxe.upgradeCost[level] && player.bankBalance < player.pickaxe.upgradeCost[level]) {
             achievementMessage("Insufficient Funds!");
           }
           if (player.pickaxe.requiredCount[level][i] >
@@ -1070,17 +1196,20 @@ public:
           return;
         }
 
-        for (int i = 0; i < 2; i++) {
 
-          player.pickaxe.required[level][i].count -=
-              player.pickaxe.requiredCount[level][i];
+        // player.wallet -= player.pickaxe.upgradeCost[level];
+        // cout << "\t - $" << moneyAsString(player.pickaxe.upgradeCost[level])
+
+        if(player.withdrawFromWallet(player.pickaxe.upgradeCost[level]))
+        {
+            for (int i = 0; i < 2; i++) {
+            player.pickaxe.required[level][i].count -=
+                player.pickaxe.requiredCount[level][i];
+            }
+            player.addXP(player.pickaxe.updgradeXP[player.pickaxe.level]);
+            player.pickaxe.level++;
         }
-
-        player.bankBalance -= player.pickaxe.upgradeCost[level];
-        cout << "\t - $" << moneyAsString(player.pickaxe.upgradeCost[level])
-             << "\t Successful! Keep mining!" << endl;
-        player.addXP(player.pickaxe.updgradeXP[player.pickaxe.level]);
-        player.pickaxe.level++;
+        cout <<  "\tPurchase Successful! Keep mining!" << endl;
         sleep(2);
         break;
       } else if (res == 'n') {
@@ -1150,7 +1279,7 @@ public:
     priceMultiplyer *= player.luck;
     cout << "You have entered the market... buckle up!" << endl;
     sleep(1);
-    showDialogue(Manjunath.name, getDialogue(Manjunath));
+    showDialogue(Manjunath.name, getDialogue(Manjunath), 1);
   //  showMessage(getDialogue(Manjunath), "", 2, Manjunath.name);
     cout << "s) SELL\nb) BUY\nq) Quit market";
     char res = getPlayerResponse();
@@ -1192,20 +1321,21 @@ public:
              << " per unit \t|\t You have: " << items[i]->count << "." << endl;
       }
       cout << i + 1 << ") " << "SELL ALL: $" << moneyAsString(totalCost)
-           << "\t\t|\t + 5% bonus." << endl;
+           << "\t\t|\t + 2% bonus." << endl;
 
       cout << "0) Quit" << endl;
       int res;
       do {
         cout << "Sell Item by index >> ";
         cin >> res;
+        if (res == 0) {
+            return;
+        }
       } while (res - 1 > items.size() || res < 0);
+
 
       res--;
 
-      if (res == -1) {
-        return;
-      }
 
       if (res == items.size()) {
         char confirm;
@@ -1217,15 +1347,16 @@ public:
           cout << "Selling all items..." << endl;
           sleep(1);
 
-          for (int i = 0; i < items.size(); i++) {
-            items[i]->count = 0;
+          if(player.depositToWallet(totalCost + (0.02 * totalCost)))
+          {
+            for (int i = 0; i < items.size(); i++) {
+                items[i]->count = 0;
+            }
+            // cout << "Business sucessful!\n\t+ "
+            //      << moneyAsString(totalCost + (0.05 * totalCost))
+            //      << "$.\tKa-ching!" << endl;
           }
 
-          player.bankBalance += totalCost + (0.05 * totalCost);
-
-          cout << "Business sucessful!\n\t+ "
-               << moneyAsString(totalCost + (0.05 * totalCost))
-               << "$.\tKa-ching!" << endl;
           sleep(1);
         }
       } else {
@@ -1246,13 +1377,14 @@ public:
 
             } while (countSelling < 0 || countSelling > items[res]->count);
 
-            player.bankBalance += items[res]->sellPrice * countSelling;
             cout << "selling..." << endl;
-            items[res]->count -= countSelling;
-            sleep(2);
-            cout << "Business sucessful!\n\t+ "
-                 << moneyAsString(items[res]->sellPrice * countSelling)
-                 << "$.\tKa-ching!" << endl;
+            if(player.depositToWallet( items[res]->sellPrice * countSelling ))
+            {
+                items[res]->count -= countSelling;
+                // cout << "Business sucessful!\n\t+ "
+                //     << moneyAsString(items[res]->sellPrice * countSelling)
+                //     << "$.\tKa-ching!" << endl;
+            }
             sleep(1);
           }
         }
@@ -1302,7 +1434,7 @@ public:
 
     for (int i = 0; i < mineable.size(); i++) {
       if (mineable[i] == mineable[res]) {
-        cout << "Your bank balance: $" << moneyAsString(player.bankBalance)
+        cout << "Your wallet balance: $" << moneyAsString(player.wallet)
              << endl;
         int countSelling;
         do {
@@ -1310,20 +1442,17 @@ public:
           cin >> countSelling;
 
         } while (countSelling < 0 ||
-                 countSelling * mineable[i]->sellPrice > player.bankBalance);
+                 countSelling * mineable[i]->sellPrice > player.wallet);
 
-        player.bankBalance -= mineable[res]->sellPrice * countSelling;
         cout << "Buying..." << endl;
-        mineable[res]->count += countSelling;
         sleep(2);
-        cout << "Purchase sucessful!\n\t- "
-             << moneyAsString(mineable[res]->sellPrice * countSelling)
-             << "$.\tWomp-Womp!" << endl;
+         if (player.withdrawFromWallet(mineable[res]->sellPrice * countSelling))
+         {
+            mineable[res]->count += countSelling;
+         }
         sleep(1);
       }
     }
-
-    // resetPrices(mine.getMineable(player), sellerInflation);
   }
 };
 
@@ -1338,7 +1467,148 @@ public:
     event.bankBoot(player);
   }
 
-  void enter(Player &player) {
+    void withdraw(Player &player)
+    {
+        float withdrawAmount;
+        string content = randInt(0, 100) % 2 == 0 ? "Ah! I see, $player_name, how much do you want to withdraw to your wallet?" : "Looks like someone needs cash! Tell me how much you want to transfer to your wallet, $player_name...";
+        showDialogue(Vivian.name, content.replace(content.find("$player_name"), sizeof("$player_name") - 1, player.name), 0);
+        cout << "Current bank balance: " << moneyAsString(player.bankBalance, 2, "$") << endl;
+        while(true)
+        {
+            cout << ">> ";
+            cin >> withdrawAmount;
+            if(withdrawAmount == 0)
+            {
+                return;
+            }
+            if (withdrawAmount <= player.bankBalance && withdrawAmount <= player.walletLimit)
+            {
+                cout << "Transferring funds..." << endl;
+                sleep(1);
+                player.bankBalance -= withdrawAmount;
+                player.wallet += withdrawAmount;
+                cout << moneyAsString(withdrawAmount, 2, "$") << " transferred to your personal wallet!" << endl;
+                sleep(2);
+                break;
+            }
+            if(withdrawAmount > player.bankBalance)
+            {
+                cout << "Insufficient balance. Try again! (Enter 0 to quit)" << endl;
+                continue;
+            }
+            if(withdrawAmount > player.walletLimit)
+            {
+                cout << "Wallet limit exceed." << " (Current limit: " << player.walletLimit << ") Upgrade wallet or buy credit card. Try again with different amount." << endl;
+            }
+        }
+    }
+
+    void deposit(Player &player)
+    {
+        float depositAmount;
+        string content = randInt(0, 100) % 2 == 0 ? "Ah! I see, $player_name, how much do you want to withdraw to your wallet?" : "Looks like someone needs cash! Tell me how much you want to transfer to your wallet, $player_name...";
+        showDialogue(Vivian.name, content.replace(content.find("$player_name"), sizeof("$player_name") - 1, player.name), 0);
+        cout << "Current wallet balance: " << moneyAsString(player.wallet, 2, "$") << endl;
+        while(true)
+        {
+            cout << ">> ";
+            cin >> depositAmount;
+            if(depositAmount == 0)
+            {
+                return;
+            }
+            if (depositAmount <= player.walletLimit)
+            {
+                cout << "Transferring funds..." << endl;
+                sleep(1);
+                player.bankBalance += depositAmount;
+                player.wallet -= depositAmount;
+                cout << moneyAsString(depositAmount, 2, "$") << " transferred to your bank account!" << endl;
+                sleep(2);
+                break;
+            }
+            if(depositAmount > player.wallet)
+            {
+                cout << "Insufficient balance in your wallet. Try again! (Enter 0 to quit)" << endl;
+                continue;
+            }
+        }
+    }
+
+    void display(Player &player)
+    {
+        cout << "Bank Holder Name: " << player.name << endl << "Bank Balance: "<< moneyAsString(player.bankBalance, 2, "$") << endl
+        << "Wallet: "  << moneyAsString(player.wallet, 2, "$") << endl << "Current Wallet Limit " << moneyAsString(player.walletLimit, 2, "$") << endl;
+
+        sleep(3);
+    }
+
+    void upgradeWallet(Player &player)
+    {
+        float currentLimit = player.walletLimit;
+        int limitLevel;
+
+        vector<int> upgrades = {300, 1000, 2000, 3000, 5000, 7500};
+        vector<int> upgradeCost = {0, 200, 750, 1250, 1750, 3500};
+
+        int i = 0;
+        for(auto t : upgrades)
+        {
+            if (t == currentLimit)
+            {
+                limitLevel = i;
+            }
+            i++;
+        }
+
+        cout << "WALLET UPGRADE" << endl;
+        cout << "Current limit: " << moneyAsString(player.walletLimit, 2, "$")  << endl;
+        cout << "Limit after upgrade: " << moneyAsString(upgrades[limitLevel + 1], 2, "$") << endl;
+        cout << "Cost of upgrade: " << moneyAsString(upgradeCost[limitLevel + 1], 2, "$") << endl;
+        sleep(1);
+        char res = getSpecificPlayerResponse("Upgrade wallet? (y/n)", 'y', 'n');
+        if(res == 'y')
+        {
+            res = getSpecificPlayerResponse("Pay using:\nb) Bank Balance\nw) Wallet Balance\n", 'b', 'w');
+            switch (res) {
+                case 'b':
+                payWithBank:
+                if(player.bankBalance >= upgradeCost[limitLevel + 1])
+                {
+                    player.bankBalance -= upgradeCost[limitLevel + 1];
+                    cout << "\t- " << moneyAsString(upgradeCost[limitLevel + 1], 2, "$") << "\t womp-womp!" << endl;
+                    player.walletLimit = upgrades[limitLevel + 1];
+                    sleep(1);
+                    cout << "Wallet upgrade succesful! Cheers!" << endl;
+                    sleep(2);
+                } else {
+                    cout << "Insufficient balance. Abort." << endl;
+                    sleep(2);
+                }
+                break;
+                case 'w':
+                if(player.wallet >= upgradeCost[limitLevel + 1])
+                {
+                    player.wallet -= upgradeCost[limitLevel + 1];
+                    player.walletLimit = upgrades[limitLevel + 1];
+                    cout << "\t- " << moneyAsString(upgradeCost[limitLevel + 1], 2, "$") << "\t womp-womp!" << endl;
+                    sleep(1);
+                    cout << "Wallet upgrade succesful! Cheers!" << endl;
+                    sleep(2);
+
+                } else {
+                    cout << "Insufficient balance. Try paying with bank or make some money!" << endl;
+                    sleep(1);
+                    cout << "paying with bank..." << endl;
+                    sleep(2);
+                    goto payWithBank;
+                }
+                break;
+            }
+        }
+    }
+
+    void enter(Player &player) {
     if (!player.bankBoot.occured) {
       bankBoot(player);
       player.bankBoot.occured = true;
@@ -1365,31 +1635,66 @@ public:
       //showMessage(getDialogue(Vivian), "", 2, Vivian.name);
       showDialogue(Vivian.name, getDialogue(Vivian));
 
-      while (true) {
-        cout << "a) Check Balance\nb) Get a Loan\nq) Quit Bank\n>> ";
-        char res;
-        cin >> res;
+      vector<string> menu = {"a) Withdraw Amount", "b) Deposit Amount", "c) Check Balance", "d) Upgrade Wallet Limit", "e) Credit Card Plans", "f) Insurance & Loans", "q) quit bank"};
 
-        if (res == 'a') {
-          cout << "Name: " << player.name << endl;
-          cout << "Bank Balance: $" << moneyAsString(player.bankBalance)
-               << endl;
+      while (true) {
+        for(int i = 0; i < menu.size(); i++)
+        {
+            cout << menu[i] << endl;
         }
-        if (res == 'b') {
-          if (!player.loansUnlocked.occured) {
-            achievementMessage("You are not eligible for bank loans as of now");
-          }
+
+        char res;
+        res = getPlayerResponse("Choose Bank Action");
+
+        switch (res) {
+            case 'a':
+            withdraw(player);
+            break;
+
+            case 'b':
+            deposit(player);
+            break;
+
+            case 'c':
+            display(player);
+            break;
+
+            case 'd':
+            upgradeWallet(player);
+            break;
+
+            // case 'e':
+            // initiateCreditCard(player);
+            // break;
+
+            // case 'f':
+            // insuranceInit();
+            // break;
+
+                case 'q':
+                goto quitBank;
         }
-        if (res == 'q') {
-          goto quitBank;
-        }
-        cout << "Back to main screen (b)\nQuit (q)\n>> ";
-        cin >> res;
-        if (res == 'q') {
-          goto quitBank;
-        } else if (res != 'b') {
-          break;
-        }
+
+        // if (res == 'a') {
+        //   cout << "Name: " << player.name << endl;
+        //   cout << "Bank Balance: $" << moneyAsString(player.bankBalance)
+        //        << endl;
+        // }
+        // if (res == 'b') {
+        //   if (!player.loansUnlocked.occured) {
+        //     achievementMessage("You are not eligible for bank loans as of now");
+        //   }
+        // }
+        // if (res == 'q') {
+        //   goto quitBank;
+        // }
+        // cout << "Back to main screen (b)\nQuit (q)\n>> ";
+        // cin >> res;
+        // if (res == 'q') {
+        //   goto quitBank;
+        // } else if (res != 'b') {
+        //   break;
+        // }
 
         // create debt scene later
       }
@@ -1397,6 +1702,8 @@ public:
     cout << "q) Quit Bank\n>> ";
     char res;
     cin >> res;
+
+
 
   quitBank:
     player.bankOnLunchBreak.occured = false;
@@ -1625,21 +1932,21 @@ public:
 
     ticket tx{trains[response - 1]};
 
-    if (player.bankBalance < tx.Train.ticketPrice) {
+    if (player.wallet < tx.Train.ticketPrice && player.bankBalance < tx.Train.ticketPrice) {
       achievementMessage("Insufficinet balance! Purchase unsucessful");
       ticketPurchased = false;
       return;
     }
 
-    player.bankBalance -= tx.Train.ticketPrice;
-    cout << "\t - " << moneyAsString(tx.Train.ticketPrice, 2, "$") << endl;
-    achievementMessage("Ticket Purchase Successful!");
-    ticketPurchased = true;
-    sleep(1);
+    if(player.withdrawFromWallet(tx.Train.ticketPrice)){
+        achievementMessage("Ticket Purchase Successful!");
+        ticketPurchased = true;
+        UserTicket = tx;
+        sleep(1);
+        printTicket(tx, player);
+    };
 
-    UserTicket = tx;
 
-    printTicket(tx, player);
     sleep(2);
   }
 
@@ -1952,15 +2259,19 @@ public:
         sleep(1);
         break;
 
-      case 'w': {
+      case 'w':
+      {
         Pond pond;
         pond.enter(player);
-      } break;
-      case 'r': {
+      }
+        break;
+      case 'r':
+      {
         RailwayStation rs;
         rs.init();
         rs.enter(player);
-      } break;
+      }
+        break;
       case 'i':
         player.displayInventory();
         break;
@@ -2082,15 +2393,15 @@ void triggerHomelessMan(Player &player) {
       if (res == 'a') {
         float amount;
         cout << "Enter amount ( You have: $"
-             << moneyAsString(player.bankBalance) << " ) >> ";
+             << moneyAsString(player.wallet) << " ) >> ";
         cin >> amount;
 
         if (amount <= 0) {
           // cout << "walking away..." << endl;
           // sleep(2);
           res = 'b';
-        } else if (amount > player.bankBalance) {
-          achievementMessage("Insufficient Funds in your bank account. Irony.");
+        } else if (amount > player.wallet) {
+          achievementMessage("Insufficient Funds with you. Irony.");
           achievementMessage("\t+ 0.01 luck for the good intent\t");
           player.luck += 0.01;
           sleep(1);
@@ -2098,7 +2409,7 @@ void triggerHomelessMan(Player &player) {
         } else {
           cout << "\t- $" << moneyAsString(amount)
                << "\t keep the good spirits up!" << endl;
-          player.bankBalance -= amount;
+          player.wallet -= amount;
           float luckUp =
               0.1 + ((float)(randInt(10, 90) * amount / randInt(50, 60)) / 100);
           player.luck += luckUp;
@@ -2147,16 +2458,16 @@ int main(void) {
   player.bankBalance = 500;
   player.fishingRod.level = 1;
   player.currentCity = Terminille;
+
+  player.creditcard.has = true;
+
+
   while (true) {
-
-    // player.lvl();
     mainmenu(player);
-
-    if (!player.homeLessManBoot.occured && player.bankBalance > 0) {
+    if (!player.homeLessManBoot.occured && player.wallet > 0 && player.currentCity.name == Terminille.name) {
       player.homeLessManBoot.occured = true;
     }
-
-    if (player.homeLessManBoot.occured) {
+    if ((player.homeLessManBoot.occured) && (player.currentCity.name == Terminille.name)) {
       triggerHomelessMan(player);
     }
   }
@@ -2165,20 +2476,33 @@ int main(void) {
 
 /*
 TO DO:
-- Make better monologue (maybe a guide talking to you and getting your name,
-uk.)
-- introduce market (to sell and buy)
-- introuce weather system (that determines luck, cannot be changed for next 7 -
-15 mines);
-- introduce bank (40% of the time there will be a lunch break)
-- introduce to buy pickaxe - level one, increases weight  of iron, granite by
-0.2, reduce wait time by 1 second. price: 750;
-- introduce missions (like side quests)
-- event based main menu... so fun!!!
+- Introduce wallet system, instead of bank account. Bank account to deposit money and take money from.. wallet, initial limit of 300, once you open bank account for 200, it increases to 1000. You can buy wallet upgrades as you level up.... nice!
+Adds to the storyline too!
 
-- introduce shop at 20 mines
-- in the shop, as soon as you sell, introduce banks
-SO MANY IDEAS
+- At one point, credit card system (to unlock: 10,000) where it links bank account and wallet, where once wallet is empty, money goes from crdit card, but it takes 5% of all transactions as charge!
+
+- Quest to buy vivian a cake in syntax city, on the way there, cutscnee where player runs into a retired navy seal who teaches him the art of fishing! He owns a fish shop where he will buy your fishes for money... once cake is given to vivian, she decreases the cost of wallet upgrade by a certain amount
+
+- a way to write player data into json file and retieve it to make the game saveable!!
+
+- design fishing mechanism + cake shop mechanism.
+
+- interact with homeless man.. can play rps, or fist bump him, etc.
+
+
+- confirmation while buying train tix.
+- insurance system in bank!! - can buy certain insurances, like travel insurance, etc.
+- 5% chance for train to be cancelled and money refunded... more refund if bank insurance purchased
+- 20% chance for train to arrive in a delay...
+- 15% chance to get pickpocketed and lose money when in a train, depends on how bad your luck is...coverable by insurance
+- missed train has no refund... if insurance then 65% refund...
+*/
+
+/*
+BUGS:
+- When prompted for number and letter is entered, it turns into an infinite while loop...
+- train late and platform miss isn't working
 */
 
 // this code snippet was written in vim
+// and this in zed
