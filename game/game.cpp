@@ -1,3 +1,4 @@
+#include "json.hpp"
 #include "utiliteS.h"
 #include <algorithm>
 #include <cstddef>
@@ -137,7 +138,8 @@ string moneyAsString(long double money, int precision = 2,
   return dollarSign + integerPart + fractionalPart;
 }
 
-struct item {
+class item {
+    public:
   string name;
   int count{0}; // change to 0
   float rareity{1};
@@ -148,22 +150,28 @@ struct item {
   float luckFactor{1};
   float weight = WEIGHT / rareity;
   long double sellPrice;
+
+  NLOHMANN_DEFINE_TYPE_INTRUSIVE(item, name, count, rareity, buyPrice, xp, rareityString, totalCount, luckFactor, sellPrice);
 };
 
 struct tool {
   string name;
   int level{0};
   float health{100};
-  int waitTimeByLevel[5] = {0, 5, 4, 3, 2}; // to change
-  item required[5][2];
-  int requiredCount[5][2];
-  long double upgradeCost[5] = {250, 1200, 2800, 8500, 17999};
-  long double updgradeXP[5] = {350, 450, 590, 999, 1300};
+  vector<int> waitTimeByLevel = {0, 5, 4, 3, 2}; // to change
+  array<array<item, 2>,5> required;
+  array<array<int, 2>,5> requiredCount;
+  vector<long double> upgradeCost = {250, 1200, 2800, 8500, 17999};
+  vector<long double> upgradeXP = {350, 450, 590, 999, 1300};
+
+  NLOHMANN_DEFINE_TYPE_INTRUSIVE(tool, name, health, waitTimeByLevel, required, requiredCount, upgradeCost, upgradeXP);
 };
 
 struct event {
   bool occured{true}; // change to false before game
   int timesOccured{0};
+
+  NLOHMANN_DEFINE_TYPE_INTRUSIVE(event, occured, timesOccured)
 };
 
 class NPC {
@@ -173,6 +181,8 @@ public:
   int interactionCount;
   vector<string> dialogues;
   int heartPoints{0};
+
+  NLOHMANN_DEFINE_TYPE_INTRUSIVE(NPC, name, description, interactionCount, dialogues, heartPoints)
 };
 
 struct city {
@@ -180,6 +190,8 @@ struct city {
   bool atCity;
   string code;
   int platformCount;
+
+  NLOHMANN_DEFINE_TYPE_INTRUSIVE(city, name, atCity, code, platformCount)
 };
 
 // City init:
@@ -364,6 +376,8 @@ public:
       }
     }
   }
+
+  NLOHMANN_DEFINE_TYPE_INTRUSIVE(Inventory, hasPickaxe, pickaxe, fishingRod, dirt, rock, wood, coal, granite, iron, copper, silver, tin, hardRock, gold, diamond, ruby, blackStone, magma, bedrock, soakedBoot, seashell, usedEarphones, usedCondom, salmon, clownfish, tuna, trout, squid, octopusLeg, jellyfish, lobser, pearl, whaleTooth);
 };
 
 class PlayerEvents {
@@ -395,6 +409,8 @@ public:
 
   // railway Station:
   event railwayStaionvisited;
+
+  NLOHMANN_DEFINE_TYPE_INTRUSIVE(PlayerEvents, firstBoot, homeLessManBoot, inventoryUnlock, mineDetailsUnlock, quitMineUnlock, dualItems, shopUnlock, bankBoot, bankOnLunchBreak, loansUnlocked, playerCreditCardUnlock, playerWalletUpgrade, sellerMarketBoot, guildUnlocked, railwayStaionvisited)
 };
 
 class Player : public Inventory, public PlayerEvents {
@@ -407,12 +423,13 @@ public:
       bool has {false};
       float convinienceCharge {0.05};
       bool hasInsurance {false};
+      NLOHMANN_DEFINE_TYPE_INTRUSIVE(creditCard, has, convinienceCharge, hasInsurance)
   } creditcard;
   float luck{1};
   int timesMined;
   long double xp;
   int level{1};
-  int xpToLvl[7] = {300, 1500, 4750, 8900, 15000, 25000, 50000};
+  array<int, 7> xpToLvl = {300, 1500, 4750, 8900, 15000, 25000, 50000};
   city currentCity = Terminille;
 
   int timesFished;
@@ -494,9 +511,12 @@ public:
 
   bool withdrawFromWallet(float amount)
   {
-      if(amount <= wallet && amount >= 0 && !creditcard.has)
+
+      if((amount >= 0) && (amount <= wallet))
       {
-          wallet -= wallet;
+          wallet -= amount;
+          cout << "\t - " << moneyAsString(amount, 2, "$") << endl;
+          sleep(2);
           return true;
       } else if (amount > wallet && creditcard.has)
       {
@@ -523,12 +543,44 @@ public:
               cout << "Transaction aborted" << endl;
               return false;
           }
+      } else if (wallet > amount ){
+          cout << "Insufficient balance in wallet! Withdraw money from bank or increase your wallet limit to accomodate more running cash. Visit the bank.." << endl;
       } else {
-          cout << "Insufficient balance in wallet! Withdraw money from bank or increase your wallet limit to accomodate more running cash. Visit the bank." << endl;
+          cout << "bruh." << endl;
       }
       return false;
   }
+
+  NLOHMANN_DEFINE_TYPE_INTRUSIVE(Player, name, bankBalance, wallet, walletLimit, creditcard, luck, timesMined, xp, level, xpToLvl, currentCity, timesFished, firstTime, hasPickaxe, pickaxe, fishingRod, dirt, rock, wood, coal, granite, iron, copper, silver, tin, hardRock, gold, diamond, ruby, blackStone, magma, bedrock, soakedBoot, seashell, usedEarphones, usedCondom, salmon, clownfish, tuna, trout, squid, octopusLeg, jellyfish, lobser, pearl, whaleTooth, firstBoot, homeLessManBoot, inventoryUnlock, mineDetailsUnlock, quitMineUnlock, dualItems, shopUnlock, bankBoot, bankOnLunchBreak, loansUnlocked, playerCreditCardUnlock, playerWalletUpgrade, sellerMarketBoot, guildUnlocked, railwayStaionvisited)
 };
+
+void saveGameState(const Player& player) {
+    nlohmann::json j = player;
+    std::ofstream file("savefile/game_state.json");
+    if (file.is_open()) {
+        file << j.dump(4); // Pretty print with an indent of 4 spaces
+        file.close();
+        std::cout << "Game state saved successfully." << std::endl;
+    } else {
+        std::cerr << "Failed to save game state." << std::endl;
+    }
+}
+
+// Load the game state from a JSON file
+Player loadGameState() {
+    Player player;
+    std::ifstream file("savefile/game_state.json");
+    if (file.is_open()) {
+        nlohmann::json j;
+        file >> j;
+        player = j.get<Player>();
+        file.close();
+        std::cout << "Game state loaded successfully." << std::endl;
+    } else {
+        std::cerr << "Failed to load game state." << std::endl;
+    }
+    return player;
+}
 
 // NPC INIT:
 NPC Vivian = {"Vivian", "Bank Handler", 0};
@@ -1111,30 +1163,30 @@ public:
     case 3:
     case 4:
     case 5:
-      player.pickaxe.required[0][0] = player.rock;
-      player.pickaxe.requiredCount[0][0] = 25;
-      player.pickaxe.required[0][1] = player.wood;
-      player.pickaxe.requiredCount[0][1] = 55;
-      /* code */
-      player.pickaxe.required[1][0] = player.granite;
-      player.pickaxe.requiredCount[1][0] = 35;
-      player.pickaxe.required[1][1] = player.wood;
-      player.pickaxe.requiredCount[1][1] = 175;
+    player.pickaxe.required[0][0] = player.rock;
+    player.pickaxe.requiredCount[0][0] = 25;
+    player.pickaxe.required[0][1] = player.wood;
+    player.pickaxe.requiredCount[0][1] = 55;
 
-      player.pickaxe.required[2][0] = player.copper;
-      player.pickaxe.requiredCount[2][0] = 85;
-      player.pickaxe.required[2][1] = player.tin;
-      player.pickaxe.requiredCount[2][1] = 85;
+    player.pickaxe.required[1][0] = player.granite;
+    player.pickaxe.requiredCount[1][0] = 35;
+    player.pickaxe.required[1][1] = player.wood;
+    player.pickaxe.requiredCount[1][1] = 175;
 
-      player.pickaxe.required[3][0] = player.silver;
-      player.pickaxe.requiredCount[3][0] = 125;
-      player.pickaxe.required[3][1] = player.gold;
-      player.pickaxe.requiredCount[3][1] = 100;
+    player.pickaxe.required[2][0] = player.copper;
+    player.pickaxe.requiredCount[2][0] = 85;
+    player.pickaxe.required[2][1] = player.tin;
+    player.pickaxe.requiredCount[2][1] = 85;
 
-      player.pickaxe.required[4][0] = player.diamond;
-      player.pickaxe.requiredCount[4][0] = 250;
-      player.pickaxe.required[4][1] = player.ruby;
-      player.pickaxe.requiredCount[4][1] = 20;
+    player.pickaxe.required[3][0] = player.silver;
+    player.pickaxe.requiredCount[3][0] = 125;
+    player.pickaxe.required[3][1] = player.gold;
+    player.pickaxe.requiredCount[3][1] = 100;
+
+    player.pickaxe.required[4][0] = player.diamond;
+    player.pickaxe.requiredCount[4][0] = 250;
+    player.pickaxe.required[4][1] = player.ruby;
+    player.pickaxe.requiredCount[4][1] = 20;
 
     default:
       break;
@@ -1206,7 +1258,7 @@ public:
             player.pickaxe.required[level][i].count -=
                 player.pickaxe.requiredCount[level][i];
             }
-            player.addXP(player.pickaxe.updgradeXP[player.pickaxe.level]);
+            player.addXP(player.pickaxe.upgradeXP[player.pickaxe.level]);
             player.pickaxe.level++;
         }
         cout <<  "\tPurchase Successful! Keep mining!" << endl;
@@ -2247,7 +2299,8 @@ public:
         rs.init();
         rs.enter(player);
       }
-      default:
+      case 'q':
+        saveGameState(player);
         break;
       }
     }
@@ -2275,6 +2328,9 @@ public:
       case 'i':
         player.displayInventory();
         break;
+        case 'q':
+          saveGameState(player);
+          break;
       }
     }
   }
@@ -2311,6 +2367,7 @@ void mainmenu(Player &player) {
   }
   menu.push_back({"r) Railway Station", 'r'});
   menu.push_back({"p) Player details", 'p'});
+  menu.push_back({"q) Save and Quit", 'q'});
 
   // To add: gamble, guild, weather, railway station.
   cout << player.currentCity.name << " actions:"
@@ -2440,7 +2497,7 @@ void triggerHomelessMan(Player &player) {
 }
 
 int main(void) {
-  Player player;
+  Player player = loadGameState();
 
   if (!player.firstBoot.occured) {
     Events event;
