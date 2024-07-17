@@ -33,9 +33,8 @@ string toUpperCase(const string &str) {
 
 char getSpecificPlayerResponse(string m = "", char o1 = '\0', char o2 = '\0') {
   char res;
-  if(m != "")
-  {
-      m = m + " ";
+  if (m != "") {
+    m = m + " ";
   }
 
   if (o1 != '\0') {
@@ -2308,37 +2307,39 @@ void mine(Player &player);
 
 class Savefile {
 public:
-  void help()
-  {
-    //Help thing here;
+  void help() {
+    // Help thing here;
   }
 
-  void mainScreen()
-  {
-      string balls =
-          " _____                   _             _  __     __    _ _            \n"
-          "|_   _|__ _ __ _ __ ___ (_)_ __   __ _| | \\ \\   / /_ _| | | ___ _   _ \n"
-          "  | |/ _ \\ '__| '_ ` _ \\| | '_ \\ / _` | |  \\ \\ / / _` | | |/ _ \\ | | |\n"
-          "  | |  __/ |  | | | | | | | | | | (_| | |   \\ V / (_| | | |  __/ |_| |\n"
-          "  |_|\\___|_|  |_| |_| |_|_|_| |_|\\__,_|_|    \\_/ \\__,_|_|_|\\___|_, |\n"
-          "                          a game by K V Naresh Karthigeyan      |___/ \n";
+  void mainScreen() {
+    string balls = " _____                   _             _  __     __    _ _ "
+                   "           \n"
+                   "|_   _|__ _ __ _ __ ___ (_)_ __   __ _| | \\ \\   / /_ _| "
+                   "| | ___ _   _ \n"
+                   "  | |/ _ \\ '__| '_ ` _ \\| | '_ \\ / _` | |  \\ \\ / / _` "
+                   "| | |/ _ \\ | | |\n"
+                   "  | |  __/ |  | | | | | | | | | | (_| | |   \\ V / (_| | | "
+                   "|  __/ |_| |\n"
+                   "  |_|\\___|_|  |_| |_| |_|_|_| |_|\\__,_|_|    \\_/ "
+                   "\\__,_|_|_|\\___|_, |\n"
+                   "                          a game by K V Naresh Karthigeyan "
+                   "     |___/ \n";
 
-      cout << balls << endl;
+    cout << balls << endl;
 
-      cout << "\t\t[play game - (p)]\t[help - (h)]" << endl;
-      char res = getSpecificPlayerResponse("", 'p', 'h');
-      switch (res) {
-          case 'p':
-          // case here;
-          return;
-          case 'b':
-          //case here;
-          help();
-          break;
-      }
-  return;
+    cout << "\t\t[play game - (p)]\t[help - (h)]" << endl;
+    char res = getSpecificPlayerResponse("", 'p', 'h');
+    switch (res) {
+    case 'p':
+      // case here;
+      return;
+    case 'b':
+      // case here;
+      help();
+      break;
+    }
+    return;
   }
-
 
   void saveGameState(const Player &player) {
     nlohmann::json j = player;
@@ -2355,7 +2356,7 @@ public:
   // Load the game state from a JSON file
   Player loadGameState() {
   tryagain:
-  mainScreen();
+    mainScreen();
     std::string path = "savefile/";
     vector<string> files;
     int i = 0;
@@ -2369,7 +2370,7 @@ public:
       files.push_back(path);
     }
     char res;
-    cout << "["<< ++i << "] New Game\n>> ";
+    cout << "[" << ++i << "] New Game\n>> ";
     cin >> res;
     int ress = res - '0';
     Player player;
@@ -2400,8 +2401,7 @@ public:
       sleep(1);
       clearScreen();
     } else {
-      std::cerr << "Created a new game!"
-                << std::endl;
+      std::cerr << "Created a new game!" << std::endl;
     }
     return player;
   }
@@ -2458,8 +2458,8 @@ public:
         Savefile save;
         save.saveGameState(player);
       }
-      exit(0);
-      break;
+        exit(0);
+        break;
       }
     }
 
