@@ -14,6 +14,8 @@
 #include <string>
 #include <unistd.h>
 #include <vector>
+#include <atomic>
+#include <thread>
 
 #define MAX_MINE_LEVELS 12
 #define MAX_FISHIN_LEVELS 6
@@ -31,7 +33,8 @@ string toUpperCase(const string &str) {
   return result;
 }
 
-char getSpecificPlayerResponse(string m = "", char o1 = '\0', char o2 = '\0') {
+char getSpecificPlayerResponse(string m = "", char o1 = 0, char o2 = 0) 
+{
   char res;
   if (m != "") {
     m = m + " ";
@@ -58,10 +61,33 @@ char getSpecificPlayerResponse(string m = "", char o1 = '\0', char o2 = '\0') {
       }
     }
   }
-
-  cout << m << " >> ";
-  cin >> res;
   return res;
+}
+
+
+int getSpecificPlayerResponse(string m = "", int o1 = '\0', int o2 = '\0') {
+  char res;
+  if (m != "") {
+    m = m + " ";
+  }
+  int x;
+  while(true)
+  {
+    cout << m << ">> ";
+    cin >> res;
+        
+        // Check if input is a digit
+    if (isdigit(res)) {
+        x = res - '0';
+        
+        // Check if the input is within the range
+    if (x >= o1 && x <= o2) {
+        break;
+    }
+  }
+
+}
+  return x;
 }
 
 void showMessage(string s1 = "", string s2 = "", int timeOut = 0,
@@ -156,7 +182,7 @@ struct tool {
   string name;
   int level{0};
   float health{100};
-  vector<int> waitTimeByLevel = {6, 5, 4, 3, 2}; // to change
+  vector<int> waitTimeByLevel = {0, 5, 4, 3, 2}; // to change
   array<array<item, 2>, 5> required;
   array<array<int, 2>, 5> requiredCount;
   vector<long double> upgradeCost = {250, 1200, 2800, 8500, 17999};
@@ -167,7 +193,7 @@ struct tool {
 };
 
 struct event {
-  bool occured{false}; // change to false before game
+  bool occured{true}; // change to false before game
   int timesOccured{0};
 
   NLOHMANN_DEFINE_TYPE_INTRUSIVE(event, occured, timesOccured)
@@ -200,7 +226,7 @@ city SyntaxCity{"Syntax City", false, "SXCY", 5};
 city Codeopolis{"Codeopolis", false, "CPLS", 6};
 // city Cipheria {"Cipheria", false, "CRI", 3};
 
-vector<city> ALL_CITIES = {Terminille, SyntaxCity, Codeopolis};
+vector<city> ALL_CITIES = {Terminille, SyntaxCity}; //codeopolis gone
 
 class Inventory {
 public:
@@ -502,7 +528,7 @@ public:
       char res;
 
       while (true) {
-        res = getPlayerResponse();
+        //res = getSpecificPlayerResponse("", 'y', 'n');
         if (res == 'y' || res == 'n') {
           break;
         }
@@ -522,7 +548,7 @@ public:
       }
     } else {
       wallet += amount;
-      cout << "\t - " << moneyAsString(amount, 2, "$") << endl;
+      cout << "\t + " << moneyAsString(amount, 2, "$") << "\tka-ching!" << endl;
     }
     return true;
   }
@@ -540,12 +566,12 @@ public:
           << creditcard.convinienceCharge * 100 << "% convinience fee) (y/n)?";
       char res;
 
-      while (true) {
-        res = getPlayerResponse();
-        if (res == 'y' || res == 'n') {
-          break;
-        }
-      }
+      // while (true) {
+        res = getSpecificPlayerResponse("", 'y', 'n');
+        // if (res == 'y' || res == 'n') {
+        //   break;
+        // }
+      // }
       if (res == 'y') {
         bankBalance -= amount + (amount * creditcard.convinienceCharge);
         cout << "\t - "
@@ -664,10 +690,9 @@ void npcDialogueInit(Player &player) {
       "My son called me the other day, he can't make it this weekend... I "
       "guess I'll have to wait for the next holiday season",
       "When people ask me why she left me, I still don't know what to say...",
-      "Items use to cost way less when I was your age, stock market has "
-      "ruined ",
+      "Items use to cost way less when I was your age, stock market has ruined "
       "everything...",
-      "Do I hate navy seals? Young soul, I don't hold anything against them.",
+      "Do I hate navy seals? Young soul, I hold nothing against them.",
       "Discount? I'm already offering you the best prices...",
       "News paper companies have really \"fell off\" now...",
       "I could do with one of the good ol' magazines right now...",
@@ -698,7 +723,10 @@ void npcDialogueInit(Player &player) {
       "Denial of death is the single most thing that drives us from being "
       "afraid to live.",
       "Why bother not looking rude when all your actions are rude enough?",
-      "[sings 'why this kolaveri di']"};
+      "[sings 'why this kolaveri']",
+      "Just remember, life is a box of chocolates.",
+      "Even after so much of a man's life force has been lost, his beard "
+      "continues to grow."};
 }
 
 string getDialogue(NPC npc) {
@@ -1413,6 +1441,7 @@ public:
       cout << "0) Quit" << endl;
       int res;
       do {
+        //res = getSpecificPlayerResponse("Sell Item by index", 0, items.size());
         cout << "Sell Item by index >> ";
         cin >> res;
         if (res == 0) {
@@ -1455,11 +1484,13 @@ public:
                  << "])" << endl;
 
             int countSelling;
-            do {
+           do {
               cout << "Enter Quantity >> ";
               cin >> countSelling;
 
-            } while (countSelling < 0 || countSelling > items[res]->count);
+              //countSelling = getSpecificPlayerResponse("Enter Quantity", 0, items[res]->count - 1);
+
+           } while (isdigit(res) && countSelling < 0 || countSelling > items[res]->count);
 
             cout << "selling..." << endl;
             if (player.depositToWallet(items[res]->sellPrice * countSelling)) {
@@ -1507,7 +1538,9 @@ public:
     do {
       cout << "Buy Item by index >> ";
       cin >> res;
-    } while (res > mineable.size() || res < 0);
+    } while (isdigit(res) && (res > mineable.size() || res < 0));
+
+    // res = getSpecificPlayerResponse("Buy item by index", 1, mineable.size() - 1);
 
     res--;
 
@@ -1524,8 +1557,9 @@ public:
           cout << "Enter Quantity >> ";
           cin >> countSelling;
 
-        } while (countSelling < 0 ||
-                 countSelling * mineable[i]->sellPrice > player.wallet);
+          //countSelling = getSpecificPlayerResponse("Enter Quantity", 1, 1000);
+
+        } while (isdigit(res) && countSelling * mineable[i]->sellPrice > player.wallet);
 
         cout << "Buying..." << endl;
         sleep(2);
@@ -1930,10 +1964,7 @@ public:
             } while (platforms[platformNo - 1].nextTrainArrivalTime ==
                      bufferplatform.nextTrainArrivalTime);
             platforms[platformNo - 1].nextTrainArrivalTime = waitTime;
-            // cout << "creating " << trainName << endl;
-            // bulletcoder4 = {"BulletCoder", "Bullet", (float)randInt(190,
-            // 250), Codeopolis, Terminille, randInt(1, 3), randInt(2, 4),
-            // randInt(2, 5), "BLTCDR7114" };
+            
             train train = {trainName,     trainTypes[k],
                            (float)price,  ALL_CITIES[i],
                            ALL_CITIES[j], platforms[platformNo - 1].platformNo,
@@ -2347,11 +2378,12 @@ public:
     if (file.is_open()) {
       file << j.dump(4); // Pretty print with an indent of 4 spaces
       file.close();
-      std::cout << "Game state saved successfully." << std::endl;
+      //std::cout << "Game state saved successfully." << std::endl;
     } else {
-      std::cerr << "Failed to save game state." << std::endl;
+      //std::cerr << "Failed to save game state." << std::endl;
     }
   }
+
 
   // Load the game state from a JSON file
   Player loadGameState() {
@@ -2652,16 +2684,32 @@ void triggerHomelessMan(Player &player) {
   }
 }
 
+void saveThread(atomic<bool> &running, Savefile &save, Player &player)
+{
+  while(running)
+  {
+    sleep(30);
+    save.saveGameState(player);
+  }
+}
+
 int main(void) {
   Savefile save;
   Player player = save.loadGameState();
   save.saveGameState(player);
+
+  atomic<bool> running = true;
+  thread saveThreading(saveThread, ref(running), ref(save), ref(player));
+  saveThreading.detach();
+
 
   if (!player.firstBoot.occured) {
     Events event;
     event.FirstBoot(player);
     mine(player);
   }
+
+
   player.firstBoot.occured = true;
   player.firstBoot.timesOccured++;
 
@@ -2678,6 +2726,8 @@ int main(void) {
       triggerHomelessMan(player);
     }
   }
+
+  running = false;
   return 0;
 }
 
