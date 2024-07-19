@@ -259,11 +259,11 @@ public:
       "Very Common", "Pretty Common",         "Common", "Rare", "Very Rare",
       "Atlantis!",   "How did you find this?"};
   // Fishing items:
-  item soakedBoot = {"Soaked Boots", 0, 0.82, 0.79, 1.38, rareityString[0]};
+  item soakedBoot = {"Soaked Boots", 0, 0.05, 0.79, 1.38, rareityString[0]};
   item seashell = {"Sea Shell", 0, 0.91, 2.25, 0.11, rareityString[1]};
-  item usedEarphones = {"Used earphones (white", 0, 0.87, 0.08, 1.68,
+  item usedEarphones = {"Used earphones", 0, 0.20, 0.08, 1.68,
                         rareityString[0]};
-  item usedCondom = {"Used condom (ew)", 0, 0.89, 0, 0.1, rareityString[0]};
+  item usedCondom = {"Used condom", 0, 0.01, 0, 0.1, rareityString[0]};
   item salmon = {"Salmon", 0, 0.75, 4.50, 2.79, rareityString[1]};
   item clownfish = {"Clown Fish", 0, 0.74, 5.50, 2.95, rareityString[1]};
   item tuna = {"Tuna", 0, 0.63, 4.99, 3.11, rareityString[2]};
@@ -363,7 +363,7 @@ public:
   }
 
   void displayInventory() {
-    vector<item> items = getMineItems();
+    vector<item> items = getAllItems();
     vector<tool> tools = getTools();
 
     if (tools.size() > 0) {
@@ -404,6 +404,16 @@ public:
         break;
       }
     }
+    
+    vector<item *> items2 = getFishItemsByAddress();
+    for (auto &fish : items2) {
+        if (itemName == fish->name) {
+            fish->count += byThis;
+            fish->totalCount += byThis;
+        break;
+      }
+    }
+
   }
 
   NLOHMANN_DEFINE_TYPE_INTRUSIVE(Inventory, hasPickaxe, pickaxe, fishingRod,
@@ -784,7 +794,7 @@ public:
     //
     cout << "First Boot Cutsence here..." << endl;
 
-    ifstream ip("assets/FirstBoot.csv");
+    ifstream ip("../assets/FirstBoot.csv");
 
     if (!ip.is_open())
       cerr << "ERROR: files corrupted?" << endl;
@@ -819,7 +829,7 @@ public:
   }
 
   void bankBoot(Player &player) {
-    ifstream ip("assets/BankBoot.csv");
+    ifstream ip("../assets/BankBoot.csv");
 
     if (!ip.is_open())
       cerr << "ERROR: files corrupted?" << endl;
@@ -1176,7 +1186,6 @@ public:
   void enter(Player &player) {
 
     cout << "entering mine..." << endl;
-    sleep(1);
     if (player.firstBoot.occured) {
       getMineLevel(player);
     } else {
@@ -1260,7 +1269,6 @@ public:
   void upgradePickaxe(Player &player) {
     initializePickaxe(player);
     cout << "Entering pickaxe store..." << endl;
-    sleep(1);
     cout << "\n\n";
     int level = player.pickaxe.level;
     string FinalMessage;
@@ -2131,7 +2139,6 @@ public:
 
   bool enterPlatform(Player &player, int platformNumber, ticket tx) {
     cout << "Entering platform " << platformNumber << "..." << endl;
-    sleep(1);
     if (tx.Train.platform != platformNumber) {
       platformEnterTime = time(0);
       if (maxTime == 0) {
@@ -2275,12 +2282,139 @@ public:
     return currentFishLevel;
   }
 
-  void fish(Player &player) {
-    cout << "fishing..." << endl;
-    cout << "You found [a fish]!";
-    cout << player.timesFished << endl;
+    void getFishableCount(Player player, int fishableCount[]) {
+    int fishLevel = getFishingLevelAsInt(player);
+    fishableCount[0] = 0;
+    switch (fishLevel) {
+    case 0:
+      fishableCount[0] = 0;
+      fishableCount[1] = 5;
+      break;
+    case 1:
+      fishableCount[0] = 1;
+      fishableCount[1] = 5;
+      break;
+    case 2:
+      fishableCount[0] = 3;
+      fishableCount[1] = 7;
+      break;
+    case 3:
+      fishableCount[0] = 0;
+      fishableCount[1] = 7;
+      break;
+    case 4:
+      fishableCount[0] = 0;
+      fishableCount[1] = 8;
+      break;
+    case 5:
+      fishableCount[0] = 0;
+      fishableCount[1] = 9;
+      break;
+    case 6:
+      fishableCount[0] = 0;
+      fishableCount[1] = 10;
+      break;
+    case 7:
+      fishableCount[0] = 0;
+      fishableCount[1] = 11;
+      break;
+    case 8:
+      fishableCount[0] = 0;
+      fishableCount[1] = 12;
+      break;
+    case 9:
+      fishableCount[0] = 0;
+      fishableCount[1] = 13;
+      break;
+    case 10:
+      fishableCount[0] = 0;
+      fishableCount[1] = 14;
+      break;
+    case 11:
+    case 12:
+      fishableCount[0] = 0;
+      fishableCount[1] = 14;
+      break;
+    default:
+      break;
+    }
+    return;
+  }
+
+   vector<item *> getFishable(Player &player) {
+    int mineLevel = getFishingLevelAsInt(player);
+    vector<item *> fishable;
+    int fishableCount[2] = {
+        0, 3}; //                         0    1      2    3      4       5 6 7
+               //                         8       9       10      11      12 13
+    vector<item *> items =
+        player
+            .getFishItemsByAddress(); // vector<item> items = {dirt, rock, wood,
+                                      // coal, granite, iron, copper, silver,
+                                      // tin,   hardRock, gold, diamond, ruby,
+                                      // blackStone, magma, bedrock};
+                                      // vector<item*> items = {&dirt, &rock,
+                                      // &wood, &coal, &granite, &iron, &copper,
+                                      // &silver, &tin, &hardRock, &gold,
+                                      // &diamond, &ruby, &blackStone, &magma,
+                                      // &bedrock};
+    player.caluclateWeights(items);
+    getFishableCount(player, fishableCount);
+
+    for (int i = 0, j = fishableCount[0]; i < fishableCount[1]; i++, j++) {
+      fishable.push_back(items[j]);
+    }
+
+    return fishable;
+  }
+
+void fish(Player &player) {
+    int fishableCount[2];
+     getFishableCount(player, fishableCount);
+
+    vector<item *> fishable =
+        getFishable(player); // and caluclate item weights;
+
+    float totalWeight = 0;
+    for (int i = 0; i < fishableCount[1]; i++) {
+      totalWeight += fishable[i]->weight;
+    }
+
+    int itemRepeatCount = 1;// player.dualItems.occured ? randInt(2, 3) : 1;
+    cout << "You got: " << endl;
+
+    for (int i = 0; i < itemRepeatCount; i++) {
+      float random = static_cast<float>(rand()) / static_cast<float>(RAND_MAX) *
+                     totalWeight;
+      item *selecteditem;
+
+      float accWeight = 0;
+      for (int i = 0; i < fishableCount[1]; i++) {
+        accWeight += fishable[i]->weight;
+        if (random < accWeight) {
+          selecteditem = fishable[i];
+          break;
+        }
+        random -= fishable[i]->weight;
+      }
+      int itemCountByLevel = 2;
+      int count = (randInt(1, itemCountByLevel) * selecteditem->rareity) == 0 ?  (randInt(1, itemCountByLevel) * selecteditem->rareity) + 1 : 1;
+
+      cout << count << " pieces of " << selecteditem->name << endl;
+      player.incrementItemCount(selecteditem->name, count);
+      player.addXP(selecteditem->xp);
+
+      auto it = find(fishable.begin(), fishable.end(), selecteditem);
+      if (it != fishable.end()) {
+        fishable.erase(it);
+        // Recalculate total weight after removal
+        totalWeight = 0;
+        for (auto &itemPtr : fishable) {
+          totalWeight += itemPtr->weight;
+        }
+      }
+    }
     player.timesFished++;
-    cout << player.timesFished;
   }
 
   void display(Player &player) {
@@ -2295,15 +2429,14 @@ public:
     cout << "Times Fished: " << player.timesFished << endl;
     cout << "Current Fishing Level: " << currentFishingLevel << endl;
     if (fishesLeft >= 0) {
-      cout << "Fishing attempts left to reach next mine level: " << fishesLeft;
+      cout << "Fishing attempts left to reach next fishing level: " << fishesLeft;
     } else {
-      cout << "Fishing attempts left to reach next mine level: " << "???";
+      cout << "Fishing attempts left to reach next fishing level: " << "???";
     }
   }
 
   void enter(Player &player) {
     cout << "entering pond..." << endl;
-    sleep(1);
     if (player.fishingRod.level < 1) {
       cout << "You do not have a fishing rod!" << endl;
       sleep(1);
@@ -2702,6 +2835,7 @@ int main(void) {
   thread saveThreading(saveThread, ref(running), ref(save), ref(player));
   saveThreading.detach();
 
+player.fishingRod.level = 1;
 
   if (!player.firstBoot.occured) {
     Events event;
