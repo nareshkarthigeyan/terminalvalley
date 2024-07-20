@@ -7,16 +7,27 @@ Vivian,[Vivian chuckles to herself]
 Vivian,Oh; the lunch break? That happens once in a while; don't worry!
 Vivian,Anyways; you must be the new one in town!
 Vivian,$player_name... right? Welcome!
-Vivian,Mayor Bitwise had already briefed about you; and initiated your bank account!
+Vivian,Banks are a way to store money!
+Vivian,By default; you will have a wallet balance of $300
+Vivian,Which; I suppose isn't enough...
+Vivian,But don't worry! When you have a bank account; you can deposit any extra cash to your account
+Vivian,And you can always come back to withdraw the money you need.
+Vivian,We also have wallet upgrades to extend your limit of wallet
+Vivian,or... you could take our generous credit card plans to access the money without visiting our bank
+Vivian,...
+Vivian,Okay; I've rambled a lot
+Vivian,You can start by opening a bank account, it can be done in a minte
+Vivian,There is a one time payment of $200 for opening the bank...
+Vivian,Do you want to do it?
+Vivian,$get_response
+Achievement,-$200
+Vivian,Alright! Thanks for joining us! $player_name; you are definetly in our good hands!
+Vivian,Okay; sooo....
 Vivian,So as per our protocols; your account will be open in....?
 Vivian,Well... I should do it now; [checks watch] will be done...
 Vivian,Savings account for... $player_name...
 Vivian,....and done!
 Achievement,[Bank account Created]
-Achievement,[Selling Unlocked]
-Vivian,I would recommend you take our credit card plans...
-Vivian,they are much more beneficial to us- I mean; you.
-Vivian,Or; you could take a loan; at very low interest rates starting at just 20.8%.
 Vivian,[Vivian checks her watch]
 Vivian,$player_name; I would love to tell you more about our plans...
 Vivian,But I need to have lunch now; so apologies; the bank must close!

@@ -2,10 +2,10 @@
     "bankBalance": 0.0,
     "bankBoot": {
         "occured": true,
-        "timesOccured": 0
+        "timesOccured": 1
     },
     "bankOnLunchBreak": {
-        "occured": true,
+        "occured": false,
         "timesOccured": 0
     },
     "bedrock": {
@@ -32,24 +32,24 @@
     },
     "clownfish": {
         "buyPrice": 5.5,
-        "count": 2014,
+        "count": 0,
         "luckFactor": 1.0,
         "name": "Clown Fish",
         "rareity": 0.7400000095367432,
         "rareityString": "Pretty Common",
         "sellPrice": 0.0,
-        "totalCount": 2014,
+        "totalCount": 0,
         "xp": 2.950000047683716
     },
     "coal": {
         "buyPrice": 5.6,
-        "count": 4,
+        "count": 0,
         "luckFactor": 1.0,
         "name": "Coal",
         "rareity": 0.7200000286102295,
         "rareityString": "",
-        "sellPrice": 2.6676448294108,
-        "totalCount": 67,
+        "sellPrice": 0.0,
+        "totalCount": 0,
         "xp": 4.110000133514404
     },
     "copper": {
@@ -69,10 +69,10 @@
         "hasInsurance": false
     },
     "currentCity": {
-        "atCity": false,
-        "code": "SXCY",
-        "name": "Syntax City",
-        "platformCount": 5
+        "atCity": true,
+        "code": "TRML",
+        "name": "Terminille",
+        "platformCount": 4
     },
     "diamond": {
         "buyPrice": 2800.53,
@@ -87,22 +87,22 @@
     },
     "dirt": {
         "buyPrice": 1.79,
-        "count": 105,
+        "count": 0,
         "luckFactor": 1.0,
         "name": "Dirt",
         "rareity": 0.8500000238418579,
         "rareityString": "",
-        "sellPrice": 0.6321105165171376,
-        "totalCount": 105,
+        "sellPrice": 0.7455841901850105,
+        "totalCount": 40,
         "xp": 1.3799999952316284
     },
     "dualItems": {
-        "occured": true,
+        "occured": false,
         "timesOccured": 0
     },
     "firstBoot": {
         "occured": true,
-        "timesOccured": 14
+        "timesOccured": 2
     },
     "firstTime": true,
     "fishingRod": {
@@ -297,7 +297,7 @@
         "xp": 5.179999828338623
     },
     "guildUnlocked": {
-        "occured": true,
+        "occured": false,
         "timesOccured": 0
     },
     "hardRock": {
@@ -314,7 +314,7 @@
     "hasPickaxe": false,
     "homeLessManBoot": {
         "occured": true,
-        "timesOccured": 0
+        "timesOccured": 1
     },
     "inventoryUnlock": {
         "occured": true,
@@ -342,9 +342,9 @@
         "totalCount": 0,
         "xp": 56.5
     },
-    "level": 7,
+    "level": 1,
     "loansUnlocked": {
-        "occured": true,
+        "occured": false,
         "timesOccured": 0
     },
     "lobser": {
@@ -358,7 +358,7 @@
         "totalCount": 0,
         "xp": 69.69000244140625
     },
-    "luck": 1.0,
+    "luck": 1.1543859243392944,
     "magma": {
         "buyPrice": 7200.33,
         "count": 0,
@@ -374,7 +374,7 @@
         "occured": true,
         "timesOccured": 0
     },
-    "name": "test",
+    "name": "lol",
     "octopusLeg": {
         "buyPrice": 37.48,
         "count": 0,
@@ -567,30 +567,30 @@
         ]
     },
     "playerCreditCardUnlock": {
-        "occured": true,
+        "occured": false,
         "timesOccured": 0
     },
     "playerWalletUpgrade": {
-        "occured": true,
+        "occured": false,
         "timesOccured": 0
     },
     "quitMineUnlock": {
         "occured": true,
         "timesOccured": 0
     },
-    "railwayStaionvisited": {
-        "occured": true,
+    "railwayStationUnlock": {
+        "occured": false,
         "timesOccured": 0
     },
     "rock": {
         "buyPrice": 2.75,
-        "count": 150,
+        "count": 0,
         "luckFactor": 1.0,
         "name": "Rock",
         "rareity": 0.75,
         "rareityString": "",
-        "sellPrice": 1.2225670944017595,
-        "totalCount": 150,
+        "sellPrice": 1.4628893588932523,
+        "totalCount": 94,
         "xp": 2.75
     },
     "ruby": {
@@ -606,32 +606,32 @@
     },
     "salmon": {
         "buyPrice": 4.5,
-        "count": 1907,
+        "count": 0,
         "luckFactor": 1.0,
         "name": "Salmon",
         "rareity": 0.75,
         "rareityString": "Pretty Common",
         "sellPrice": 0.0,
-        "totalCount": 1907,
+        "totalCount": 0,
         "xp": 2.7899999618530273
     },
     "seashell": {
         "buyPrice": 2.25,
-        "count": 4841,
+        "count": 0,
         "luckFactor": 1.0,
         "name": "Sea Shell",
         "rareity": 0.9100000262260437,
         "rareityString": "Pretty Common",
         "sellPrice": 0.0,
-        "totalCount": 4841,
+        "totalCount": 0,
         "xp": 0.10999999940395355
     },
     "sellerMarketBoot": {
         "occured": true,
-        "timesOccured": 0
+        "timesOccured": 1
     },
     "shopUnlock": {
-        "occured": true,
+        "occured": false,
         "timesOccured": 0
     },
     "silver": {
@@ -647,28 +647,28 @@
     },
     "soakedBoot": {
         "buyPrice": 0.79,
-        "count": 2522,
+        "count": 0,
         "luckFactor": 1.0,
         "name": "Soaked Boots",
-        "rareity": 0.8199999928474426,
+        "rareity": 0.05000000074505806,
         "rareityString": "Very Common",
         "sellPrice": 0.0,
-        "totalCount": 2522,
+        "totalCount": 0,
         "xp": 1.3799999952316284
     },
     "squid": {
         "buyPrice": 15.85,
-        "count": 37,
+        "count": 0,
         "luckFactor": 1.0,
         "name": "Squid",
         "rareity": 0.3499999940395355,
         "rareityString": "Rare",
         "sellPrice": 0.0,
-        "totalCount": 37,
+        "totalCount": 0,
         "xp": 11.180000305175781
     },
-    "timesFished": 11476,
-    "timesMined": 56,
+    "timesFished": 0,
+    "timesMined": 52,
     "tin": {
         "buyPrice": 71.42,
         "count": 0,
@@ -682,49 +682,49 @@
     },
     "trout": {
         "buyPrice": 7.85,
-        "count": 70,
+        "count": 0,
         "luckFactor": 1.0,
         "name": "Trout",
         "rareity": 0.4300000071525574,
         "rareityString": "Common",
         "sellPrice": 0.0,
-        "totalCount": 70,
+        "totalCount": 0,
         "xp": 5.320000171661377
     },
     "tuna": {
         "buyPrice": 4.99,
-        "count": 690,
+        "count": 0,
         "luckFactor": 1.0,
         "name": "Tuna",
         "rareity": 0.6299999952316284,
         "rareityString": "Common",
         "sellPrice": 0.0,
-        "totalCount": 690,
+        "totalCount": 0,
         "xp": 3.109999895095825
     },
     "usedCondom": {
         "buyPrice": 0.0,
-        "count": 2110,
+        "count": 0,
         "luckFactor": 1.0,
-        "name": "Used condom (ew)",
-        "rareity": 0.8899999856948853,
+        "name": "Used condom",
+        "rareity": 0.009999999776482582,
         "rareityString": "Very Common",
         "sellPrice": 0.0,
-        "totalCount": 2110,
+        "totalCount": 0,
         "xp": 0.10000000149011612
     },
     "usedEarphones": {
         "buyPrice": 0.08,
-        "count": 4801,
+        "count": 0,
         "luckFactor": 1.0,
-        "name": "Used earphones (white",
-        "rareity": 0.8700000047683716,
+        "name": "Used earphones",
+        "rareity": 0.20000000298023224,
         "rareityString": "Very Common",
         "sellPrice": 0.0,
-        "totalCount": 4801,
+        "totalCount": 0,
         "xp": 1.6799999475479126
     },
-    "wallet": 144.06163024902344,
+    "wallet": 56.92212152481079,
     "walletLimit": 300.0,
     "whaleTooth": {
         "buyPrice": 10000.0,
@@ -739,16 +739,16 @@
     },
     "wood": {
         "buyPrice": 3.25,
-        "count": 152,
+        "count": 0,
         "luckFactor": 1.0,
         "name": "Wood",
         "rareity": 0.6800000071525574,
         "rareityString": "",
-        "sellPrice": 1.6975530783612738,
-        "totalCount": 152,
+        "sellPrice": 2.0517607237410784,
+        "totalCount": 52,
         "xp": 3.2100000381469727
     },
-    "xp": 27285.119707107544,
+    "xp": 138.4900006055832,
     "xpToLvl": [
         300,
         1500,

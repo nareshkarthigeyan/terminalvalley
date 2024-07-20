@@ -87,13 +87,13 @@
     },
     "dirt": {
         "buyPrice": 1.79,
-        "count": 6,
+        "count": 0,
         "luckFactor": 1.0,
         "name": "Dirt",
         "rareity": 0.8500000238418579,
         "rareityString": "",
-        "sellPrice": 0.0,
-        "totalCount": 6,
+        "sellPrice": 0.6321105165171376,
+        "totalCount": 2,
         "xp": 1.3799999952316284
     },
     "dualItems": {
@@ -267,7 +267,7 @@
             1300.0
         ],
         "waitTimeByLevel": [
-            6,
+            0,
             5,
             4,
             3,
@@ -374,7 +374,7 @@
         "occured": true,
         "timesOccured": 0
     },
-    "name": "sockblaster234",
+    "name": "oni-chan",
     "octopusLeg": {
         "buyPrice": 37.48,
         "count": 0,
@@ -559,7 +559,7 @@
             1300.0
         ],
         "waitTimeByLevel": [
-            6,
+            0,
             5,
             4,
             3,
@@ -578,19 +578,19 @@
         "occured": true,
         "timesOccured": 0
     },
-    "railwayStaionvisited": {
+    "railwayStationUnlock": {
         "occured": false,
         "timesOccured": 0
     },
     "rock": {
         "buyPrice": 2.75,
-        "count": 16,
+        "count": 0,
         "luckFactor": 1.0,
         "name": "Rock",
         "rareity": 0.75,
         "rareityString": "",
-        "sellPrice": 0.0,
-        "totalCount": 16,
+        "sellPrice": 1.2225670944017595,
+        "totalCount": 22,
         "xp": 2.75
     },
     "ruby": {
@@ -627,8 +627,8 @@
         "xp": 0.10999999940395355
     },
     "sellerMarketBoot": {
-        "occured": false,
-        "timesOccured": 0
+        "occured": true,
+        "timesOccured": 1
     },
     "shopUnlock": {
         "occured": false,
@@ -650,7 +650,7 @@
         "count": 0,
         "luckFactor": 1.0,
         "name": "Soaked Boots",
-        "rareity": 0.8199999928474426,
+        "rareity": 0.05000000074505806,
         "rareityString": "Very Common",
         "sellPrice": 0.0,
         "totalCount": 0,
@@ -668,7 +668,7 @@
         "xp": 11.180000305175781
     },
     "timesFished": 0,
-    "timesMined": 10,
+    "timesMined": 15,
     "tin": {
         "buyPrice": 71.42,
         "count": 0,
@@ -706,8 +706,8 @@
         "buyPrice": 0.0,
         "count": 0,
         "luckFactor": 1.0,
-        "name": "Used condom (ew)",
-        "rareity": 0.8899999856948853,
+        "name": "Used condom",
+        "rareity": 0.009999999776482582,
         "rareityString": "Very Common",
         "sellPrice": 0.0,
         "totalCount": 0,
@@ -717,14 +717,14 @@
         "buyPrice": 0.08,
         "count": 0,
         "luckFactor": 1.0,
-        "name": "Used earphones (white",
-        "rareity": 0.8700000047683716,
+        "name": "Used earphones",
+        "rareity": 0.20000000298023224,
         "rareityString": "Very Common",
         "sellPrice": 0.0,
         "totalCount": 0,
         "xp": 1.6799999475479126
     },
-    "wallet": 0.0,
+    "wallet": -153.96104431152344,
     "walletLimit": 300.0,
     "whaleTooth": {
         "buyPrice": 10000.0,
@@ -739,16 +739,16 @@
     },
     "wood": {
         "buyPrice": 3.25,
-        "count": 13,
+        "count": 5,
         "luckFactor": 1.0,
         "name": "Wood",
         "rareity": 0.6800000071525574,
         "rareityString": "",
-        "sellPrice": 0.0,
-        "totalCount": 13,
+        "sellPrice": 1.6975530783612738,
+        "totalCount": 15,
         "xp": 3.2100000381469727
     },
-    "xp": 28.43000018596649,
+    "xp": 42.640000224113464,
     "xpToLvl": [
         300,
         1500,
