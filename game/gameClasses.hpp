@@ -320,6 +320,18 @@ public:
                                  railwayStationUnlock)
 };
 
+struct Objective
+{
+  string name;
+  string description;
+  bool unlocked;
+  bool completed;
+  float reward;
+  float xpReward;
+
+  NLOHMANN_DEFINE_TYPE_INTRUSIVE(Objective, name, description, unlocked, completed, reward, xpReward)
+};
+
 class Player : public Inventory, public PlayerEvents {
 public:
   string name;
@@ -343,6 +355,8 @@ public:
   int timesFished;
 
   bool firstTime = true;
+
+  vector<Objective> objectives;  
 
   void createPlayer(string namePrompt) {
     name = namePrompt;
@@ -378,6 +392,16 @@ public:
          << xpToLvl[level - 1] << "\nLuck: " << luck
          << "\nWallet: " << moneyAsString(wallet, 2, "$") << " / $"
          << walletLimit << endl;
+
+    cout << "Objectives: " << endl;
+    getObjectives();
+    for(auto &obj: objectives){
+    cout << "\t" << obj.name << ": " << obj.description << endl;
+      if(obj.reward)
+      {
+        cout << "\t" << "Reward: " << moneyAsString(obj.reward, 2, "$") << endl;
+      }
+    }
   }
 
   bool depositToWallet(float amount) {
@@ -451,7 +475,7 @@ public:
         cout << "Transaction aborted" << endl;
         return false;
       }
-    } else if (wallet > amount) {
+    } else if (wallet < amount) {
       cout << "Insufficient balance in wallet! Withdraw money from bank or "
               "increase your wallet limit to accomodate more running cash. "
               "Visit the bank.."
@@ -462,9 +486,40 @@ public:
     return false;
   }
 
+
+  void getObjectives()
+  {
+    vector<Objective> obj;
+
+    // Objective marketBootObjective = {"Unlock Market", "Mine atleast 15 times to unlock selling and seller's market, and meet manjunath!", sellerMarketBoot, 0, false, true};
+    // Objective bankBootObjective = {"Create a bank account", "Open a bank account", sellerMarketBoot, 0, false, true};
+
+    Objective marketBootObjective = {"Unlock Market", "Mine atleast 15 times to unlock selling and seller's market, and meet manjunath.", true, false, 0, 5.56 };
+    Objective bankBootObjective = {"Open a bank account", "Go to the bank with atleast $200 in your wallet and meet Vivian.", true, false, 0 , 8.53};
+    Objective walletUpgradeObjective1 = {"Upgrade your wallet to $1000", "Wallet limits are low! Upgrade your wallet limit.", true, false, 0 , 6.53};
+    Objective guildBootObjective = {"Buy a pickaxe", "Visit the guild with the right amount of resources and money and buy a pickaxe to speed up your mining!", true, false, 0 , 11.53};
+    if(!sellerMarketBoot.occured)
+    {
+      objectives.push_back(marketBootObjective);
+    }
+    if(!bankBoot.occured && marketBootObjective.completed);
+    {
+      objectives.push_back(bankBootObjective);
+    }
+    if(bankBootObjective.completed)
+    {
+      objectives.push_back(walletUpgradeObjective1);
+    }
+    if(guildUnlocked.occured)
+    {
+      objectives.push_back(guildBootObjective);
+    }
+    return;
+  };
+
   NLOHMANN_DEFINE_TYPE_INTRUSIVE(
       Player, name, bankBalance, wallet, walletLimit, creditcard, luck,
-      timesMined, xp, level, xpToLvl, currentCity, timesFished, firstTime,
+      timesMined, xp, level, xpToLvl, currentCity, timesFished, firstTime, objectives,
       hasPickaxe, pickaxe, fishingRod, dirt, rock, wood, coal, granite, iron,
       copper, silver, tin, hardRock, gold, diamond, ruby, blackStone, magma,
       bedrock, soakedBoot, seashell, usedEarphones, usedCondom, salmon,
@@ -1009,7 +1064,7 @@ public:
       int itemCountByLevel = 7;
       int count = (randInt(1, itemCountByLevel) * selecteditem->rareity) + 1;
 
-      cout << count << " pieces of " << selecteditem->name << endl;
+      cout << "\t" << count << " pieces of " << selecteditem->name << endl;
       player.incrementItemCount(selecteditem->name, count);
       player.addXP(selecteditem->xp);
 
@@ -2055,6 +2110,15 @@ public:
     ticketPurchased = false;
     reached = true;
     sleep(2);
+
+    int rand = randInt(0, 100);
+    if(player.luck < 1 && rand < 20)
+    {
+      cout << "You have been pickpocketed!" << endl;
+      float lost = player.wallet * (randInt(1, 45) / 100);
+      player.wallet -= lost;
+      cout << "You lost " << moneyAsString(lost, 2, "$") << "from your wallet! Stay safe!" << endl;  
+    }
     return;
   }
 
@@ -2321,7 +2385,7 @@ void fish(Player &player) {
       int itemCountByLevel = 2;
       int count = (randInt(1, itemCountByLevel) * selecteditem->rareity) == 0 ?  (randInt(1, itemCountByLevel) * selecteditem->rareity) + 1 : 1;
 
-      cout << count << " pieces of " << selecteditem->name << endl;
+      cout << "\t" << count << " pieces of " << selecteditem->name << endl;
       player.incrementItemCount(selecteditem->name, count);
       player.addXP(selecteditem->xp);
 
