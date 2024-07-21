@@ -1,12 +1,12 @@
 {
     "bankBalance": 0.0,
     "bankBoot": {
-        "occured": false,
-        "timesOccured": 0
+        "occured": true,
+        "timesOccured": 1
     },
     "bankOnLunchBreak": {
         "occured": false,
-        "timesOccured": 0
+        "timesOccured": 1
     },
     "bedrock": {
         "buyPrice": 10000.11,
@@ -43,13 +43,13 @@
     },
     "coal": {
         "buyPrice": 5.6,
-        "count": 6,
+        "count": 0,
         "luckFactor": 1.0,
         "name": "Coal",
         "rareity": 0.7200000286102295,
         "rareityString": "",
-        "sellPrice": 0.0,
-        "totalCount": 6,
+        "sellPrice": 2.6676448294108,
+        "totalCount": 36,
         "xp": 4.110000133514404
     },
     "copper": {
@@ -87,13 +87,13 @@
     },
     "dirt": {
         "buyPrice": 1.79,
-        "count": 25,
+        "count": 0,
         "luckFactor": 1.0,
         "name": "Dirt",
         "rareity": 0.8500000238418579,
         "rareityString": "",
         "sellPrice": 0.6321105165171376,
-        "totalCount": 27,
+        "totalCount": 65,
         "xp": 1.3799999952316284
     },
     "dualItems": {
@@ -102,7 +102,7 @@
     },
     "firstBoot": {
         "occured": true,
-        "timesOccured": 3
+        "timesOccured": 2
     },
     "firstTime": true,
     "fishingRod": {
@@ -292,8 +292,8 @@
         "name": "Granite",
         "rareity": 0.5799999833106995,
         "rareityString": "",
-        "sellPrice": 0.0,
-        "totalCount": 0,
+        "sellPrice": 5.050114738507639,
+        "totalCount": 4,
         "xp": 5.179999828338623
     },
     "guildUnlocked": {
@@ -313,7 +313,7 @@
     },
     "hasPickaxe": false,
     "homeLessManBoot": {
-        "occured": false,
+        "occured": true,
         "timesOccured": 0
     },
     "inventoryUnlock": {
@@ -342,7 +342,7 @@
         "totalCount": 0,
         "xp": 56.5
     },
-    "level": 1,
+    "level": 2,
     "loansUnlocked": {
         "occured": false,
         "timesOccured": 0
@@ -374,7 +374,7 @@
         "occured": true,
         "timesOccured": 0
     },
-    "name": "oni-chan",
+    "name": "Naresh",
     "octopusLeg": {
         "buyPrice": 37.48,
         "count": 0,
@@ -404,24 +404,24 @@
             [
                 {
                     "buyPrice": 2.75,
-                    "count": 89,
+                    "count": 0,
                     "luckFactor": 1.0,
                     "name": "Rock",
                     "rareity": 0.75,
                     "rareityString": "",
                     "sellPrice": 1.2225670944017595,
-                    "totalCount": 111,
+                    "totalCount": 76,
                     "xp": 2.75
                 },
                 {
                     "buyPrice": 3.25,
-                    "count": 62,
+                    "count": 0,
                     "luckFactor": 1.0,
                     "name": "Wood",
                     "rareity": 0.6800000071525574,
                     "rareityString": "",
                     "sellPrice": 1.6975530783612738,
-                    "totalCount": 72,
+                    "totalCount": 81,
                     "xp": 3.2100000381469727
                 }
             ],
@@ -439,13 +439,13 @@
                 },
                 {
                     "buyPrice": 3.25,
-                    "count": 62,
+                    "count": 0,
                     "luckFactor": 1.0,
                     "name": "Wood",
                     "rareity": 0.6800000071525574,
                     "rareityString": "",
                     "sellPrice": 1.6975530783612738,
-                    "totalCount": 72,
+                    "totalCount": 81,
                     "xp": 3.2100000381469727
                 }
             ],
@@ -584,13 +584,13 @@
     },
     "rock": {
         "buyPrice": 2.75,
-        "count": 89,
+        "count": 0,
         "luckFactor": 1.0,
         "name": "Rock",
         "rareity": 0.75,
         "rareityString": "",
         "sellPrice": 1.2225670944017595,
-        "totalCount": 111,
+        "totalCount": 173,
         "xp": 2.75
     },
     "ruby": {
@@ -668,7 +668,7 @@
         "xp": 11.180000305175781
     },
     "timesFished": 0,
-    "timesMined": 64,
+    "timesMined": 148,
     "tin": {
         "buyPrice": 71.42,
         "count": 0,
@@ -724,8 +724,8 @@
         "totalCount": 0,
         "xp": 1.6799999475479126
     },
-    "wallet": -153.96104431152344,
-    "walletLimit": 300.0,
+    "wallet": 310.87702560424805,
+    "walletLimit": 1000.0,
     "whaleTooth": {
         "buyPrice": 10000.0,
         "count": 0,
@@ -739,16 +739,16 @@
     },
     "wood": {
         "buyPrice": 3.25,
-        "count": 62,
+        "count": 0,
         "luckFactor": 1.0,
         "name": "Wood",
         "rareity": 0.6800000071525574,
         "rareityString": "",
         "sellPrice": 1.6975530783612738,
-        "totalCount": 72,
+        "totalCount": 196,
         "xp": 3.2100000381469727
     },
-    "xp": 176.0700010061264,
+    "xp": 434.4600032567978,
     "xpToLvl": [
         300,
         1500,
