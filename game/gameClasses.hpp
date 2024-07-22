@@ -48,11 +48,39 @@ struct tool {
                                  requiredCount, upgradeCost, upgradeXP);
 };
 
-struct event {
+struct Objective
+{
+  string name;
+  string description;
+  bool completed;
+  float reward;
+  float xpReward;
+  int messageShownTimes {0};
+  bool inPrgress {false};
+
+  NLOHMANN_DEFINE_TYPE_INTRUSIVE(Objective, name, description, completed, reward, xpReward, messageShownTimes);
+};
+
+class event {
+  public: 
   bool occured{false}; // change to false before game
   int timesOccured{0};
+  Objective objective;
+  bool ready = {false};
 
-  NLOHMANN_DEFINE_TYPE_INTRUSIVE(event, occured, timesOccured)
+  void trigger()
+  {
+    occured = true;
+    timesOccured++;
+    
+  }
+
+  void notifictation()
+  {
+    objective.messageShownTimes++;
+  }
+
+  NLOHMANN_DEFINE_TYPE_INTRUSIVE(event, occured, timesOccured, ready);
 };
 
 class NPC {
@@ -283,10 +311,13 @@ public:
 
 class PlayerEvents {
 public:
+
+
   // Event List
   // boot event:
   event firstBoot;
   event homeLessManBoot;
+  event donateToHomeLessMan;
 
   // mine events
   event inventoryUnlock;
@@ -301,6 +332,7 @@ public:
   event loansUnlocked;
   event playerCreditCardUnlock;
   event playerWalletUpgrade;
+  event vivianCake;
 
   // market events
   event sellerMarketBoot;
@@ -311,32 +343,39 @@ public:
   // railway Station:
   event railwayStationUnlock;
 
-  NLOHMANN_DEFINE_TYPE_INTRUSIVE(PlayerEvents, firstBoot, homeLessManBoot,
-                                 inventoryUnlock, mineDetailsUnlock,
-                                 quitMineUnlock, dualItems, shopUnlock,
-                                 bankBoot, bankOnLunchBreak, loansUnlocked,
-                                 playerCreditCardUnlock, playerWalletUpgrade,
-                                 sellerMarketBoot, guildUnlocked,
-                                 railwayStationUnlock)
+  void getObjectives(){
+
+    //objective strudture: name, description, unlocked, completed, reward, xpReward, inprgrss
+    if(homeLessManBoot.occured)
+    {
+      donateToHomeLessMan.objective = {"Homelessman", "Give him atleast $5. He may be your guardian angel!", false, 0, 1.75, false};
+    }
+    bankBoot.objective = {"Open a bank account!", "It's good to have a bank account. Open a bank account! Costs $200.", false, 0, 2.88, false};
+    playerWalletUpgrade.objective = {"Upgrade your wallet.", "Upgrade your wallet limit in the bank! More cash flow can't hurt!", false, 0, 2.95, false};
+    vivianCake.objective = {"Vivian's Hunger", "Buy a cake for vivian from Syntax City, you're in for a surprise!", false, 1000, 17.56, false};
+    guildUnlocked.objective = {"Visit the Guild", "Pickaxes are a thing now. Go to guild to buy them!", false, 0, 0.85, false};
+  }
+
+  vector <event*> getEvents()
+  {
+    vector <event*> playerEvents = {&firstBoot, &homeLessManBoot, &donateToHomeLessMan, &inventoryUnlock, &mineDetailsUnlock, &quitMineUnlock,
+                                    &dualItems, &shopUnlock, &bankBoot, &bankOnLunchBreak, &loansUnlocked,&playerCreditCardUnlock,&playerWalletUpgrade,
+                                    &vivianCake, &sellerMarketBoot,&guildUnlocked,&railwayStationUnlock};
+    return playerEvents;
+  }
+
+  NLOHMANN_DEFINE_TYPE_INTRUSIVE(PlayerEvents, firstBoot, homeLessManBoot, donateToHomeLessMan, inventoryUnlock, mineDetailsUnlock, quitMineUnlock,
+                                    dualItems, shopUnlock, bankBoot, bankOnLunchBreak, loansUnlocked,playerCreditCardUnlock,playerWalletUpgrade,
+                                    vivianCake, sellerMarketBoot,guildUnlocked,railwayStationUnlock)
 };
 
-struct Objective
-{
-  string name;
-  string description;
-  bool unlocked;
-  bool completed;
-  float reward;
-  float xpReward;
 
-  NLOHMANN_DEFINE_TYPE_INTRUSIVE(Objective, name, description, unlocked, completed, reward, xpReward)
-};
 
 class Player : public Inventory, public PlayerEvents {
 public:
   string name;
-  long double bankBalance;
-  long double wallet;
+  long double bankBalance {0};
+  long double wallet {0};
   float walletLimit{300.00};
   struct creditCard {
     bool has{false};
@@ -394,12 +433,15 @@ public:
          << walletLimit << endl;
 
     cout << "Objectives: " << endl;
-    getObjectives();
+
     for(auto &obj: objectives){
-    cout << "\t" << obj.name << ": " << obj.description << endl;
-      if(obj.reward)
+      if(obj.inPrgress)
       {
-        cout << "\t" << "Reward: " << moneyAsString(obj.reward, 2, "$") << endl;
+        cout << "\t" << obj.name << ": " << obj.description << endl;
+          if(obj.reward > 0);
+          {
+            cout << "\t" << "Reward: " << moneyAsString(obj.reward, 2, "$") << endl;
+          }
       }
     }
   }
@@ -487,35 +529,35 @@ public:
   }
 
 
-  void getObjectives()
-  {
-    vector<Objective> obj;
+  // void getObjectives()
+  // {
+  //   vector<Objective> obj;
 
-    // Objective marketBootObjective = {"Unlock Market", "Mine atleast 15 times to unlock selling and seller's market, and meet manjunath!", sellerMarketBoot, 0, false, true};
-    // Objective bankBootObjective = {"Create a bank account", "Open a bank account", sellerMarketBoot, 0, false, true};
+  //   // Objective marketBootObjective = {"Unlock Market", "Mine atleast 15 times to unlock selling and seller's market, and meet manjunath!", sellerMarketBoot, 0, false, true};
+  //   // Objective bankBootObjective = {"Create a bank account", "Open a bank account", sellerMarketBoot, 0, false, true};
 
-    Objective marketBootObjective = {"Unlock Market", "Mine atleast 15 times to unlock selling and seller's market, and meet manjunath.", true, false, 0, 5.56 };
-    Objective bankBootObjective = {"Open a bank account", "Go to the bank with atleast $200 in your wallet and meet Vivian.", true, false, 0 , 8.53};
-    Objective walletUpgradeObjective1 = {"Upgrade your wallet to $1000", "Wallet limits are low! Upgrade your wallet limit.", true, false, 0 , 6.53};
-    Objective guildBootObjective = {"Buy a pickaxe", "Visit the guild with the right amount of resources and money and buy a pickaxe to speed up your mining!", true, false, 0 , 11.53};
-    if(!sellerMarketBoot.occured)
-    {
-      objectives.push_back(marketBootObjective);
-    }
-    if(!bankBoot.occured && marketBootObjective.completed);
-    {
-      objectives.push_back(bankBootObjective);
-    }
-    if(bankBootObjective.completed)
-    {
-      objectives.push_back(walletUpgradeObjective1);
-    }
-    if(guildUnlocked.occured)
-    {
-      objectives.push_back(guildBootObjective);
-    }
-    return;
-  };
+  //   Objective marketBootObjective = {"Unlock Market", "Mine atleast 15 times to unlock selling and seller's market, and meet manjunath.", true, false, 0, 5.56 };
+  //   Objective bankBootObjective = {"Open a bank account", "Go to the bank with atleast $200 in your wallet and meet Vivian.", true, false, 0 , 8.53};
+  //   Objective walletUpgradeObjective1 = {"Upgrade your wallet to $1000", "Wallet limits are low! Upgrade your wallet limit.", true, false, 0 , 6.53};
+  //   Objective guildBootObjective = {"Buy a pickaxe", "Visit the guild with the right amount of resources and money and buy a pickaxe to speed up your mining!", true, false, 0 , 11.53};
+  //   if(!sellerMarketBoot.occured)
+  //   {
+  //     objectives.push_back(marketBootObjective);
+  //   }
+  //   if(!bankBoot.occured && marketBootObjective.completed);
+  //   {
+  //     objectives.push_back(bankBootObjective);
+  //   }
+  //   if(bankBootObjective.completed)
+  //   {
+  //     objectives.push_back(walletUpgradeObjective1);
+  //   }
+  //   if(guildUnlocked.occured)
+  //   {
+  //     objectives.push_back(guildBootObjective);
+  //   }
+  //   return;
+  // };
 
   NLOHMANN_DEFINE_TYPE_INTRUSIVE(
       Player, name, bankBalance, wallet, walletLimit, creditcard, luck,
