@@ -1,0 +1,11 @@
+Compilation:
+
+Windows:
+//g++ or gcc installed using mingw:
+go to root directory and paste this in the terminal:
+g++ -fdiagnostics-color=always -g -I./game/dependencies/nlohmann -o ./game/game.exe ./game/game.cpp ./game/utilitieS.cpp
+
+Playing the game:
+//once compiled, go to the game/ folder and execute this in powershell terminal:
+.\game
+NOTE: it is important to go to game\ folder for the savefiles to load!!!

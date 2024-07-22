@@ -13,7 +13,12 @@
 using namespace std;
 
 void clearScreen() {
+
+  #if OS_Windows
+    std::cout << "windows lol" << endl;
+  #else
     std::cout << "\033[2J\033[1;1H"; // ANSI escape code to clear screen and move cursor to home position
+  #endif
 }
 
 int randInt(int min, int max)

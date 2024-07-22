@@ -1,11 +1,13 @@
 {
     "bankBalance": 0.0,
     "bankBoot": {
-        "occured": false,
-        "timesOccured": 0
+        "occured": true,
+        "ready": true,
+        "timesOccured": 1
     },
     "bankOnLunchBreak": {
         "occured": false,
+        "ready": false,
         "timesOccured": 0
     },
     "bedrock": {
@@ -87,22 +89,24 @@
     },
     "dirt": {
         "buyPrice": 1.79,
-        "count": 1,
+        "count": 0,
         "luckFactor": 1.0,
         "name": "Dirt",
         "rareity": 0.8500000238418579,
         "rareityString": "",
-        "sellPrice": 0.0,
-        "totalCount": 1,
+        "sellPrice": 0.6321105165171376,
+        "totalCount": 50,
         "xp": 1.3799999952316284
     },
     "dualItems": {
         "occured": false,
+        "ready": false,
         "timesOccured": 0
     },
     "firstBoot": {
         "occured": true,
-        "timesOccured": 1
+        "ready": false,
+        "timesOccured": 2
     },
     "firstTime": true,
     "fishingRod": {
@@ -298,6 +302,7 @@
     },
     "guildUnlocked": {
         "occured": false,
+        "ready": false,
         "timesOccured": 0
     },
     "hardRock": {
@@ -313,11 +318,13 @@
     },
     "hasPickaxe": false,
     "homeLessManBoot": {
-        "occured": false,
+        "occured": true,
+        "ready": false,
         "timesOccured": 0
     },
     "inventoryUnlock": {
         "occured": true,
+        "ready": false,
         "timesOccured": 0
     },
     "iron": {
@@ -345,6 +352,7 @@
     "level": 1,
     "loansUnlocked": {
         "occured": false,
+        "ready": false,
         "timesOccured": 0
     },
     "lobser": {
@@ -372,25 +380,90 @@
     },
     "mineDetailsUnlock": {
         "occured": true,
+        "ready": false,
         "timesOccured": 0
     },
-    "name": "testNew",
+    "name": "test",
     "objectives": [
         {
             "completed": false,
-            "description": "Mine atleast 15 times to unlock selling and seller's market, and meet manjunath.",
-            "name": "Unlock Market",
+            "description": "Give him atleast $5. He may be your guardian angel!",
+            "messageShownTimes": 1,
+            "name": "Homelessman",
             "reward": 0.0,
-            "unlocked": true,
-            "xpReward": 5.559999942779541
+            "xpReward": 1.75
         },
         {
             "completed": false,
-            "description": "Go to the bank with atleast $200 in your wallet and meet Vivian.",
-            "name": "Open a bank account",
+            "description": "",
+            "messageShownTimes": 1,
+            "name": "",
             "reward": 0.0,
-            "unlocked": true,
-            "xpReward": 8.529999732971191
+            "xpReward": 0.0
+        },
+        {
+            "completed": false,
+            "description": "",
+            "messageShownTimes": 1,
+            "name": "",
+            "reward": 0.0,
+            "xpReward": 0.0
+        },
+        {
+            "completed": false,
+            "description": "",
+            "messageShownTimes": 1,
+            "name": "",
+            "reward": 0.0,
+            "xpReward": 0.0
+        },
+        {
+            "completed": false,
+            "description": "",
+            "messageShownTimes": 1,
+            "name": "",
+            "reward": 0.0,
+            "xpReward": 0.0
+        },
+        {
+            "completed": false,
+            "description": "",
+            "messageShownTimes": 1,
+            "name": "",
+            "reward": 0.0,
+            "xpReward": 0.0
+        },
+        {
+            "completed": false,
+            "description": "Upgrade your wallet limit in the bank! More cash flow can't hurt!",
+            "messageShownTimes": 1,
+            "name": "Upgrade your wallet.",
+            "reward": 0.0,
+            "xpReward": 2.950000047683716
+        },
+        {
+            "completed": false,
+            "description": "Buy a cake for vivian from Syntax City, you're in for a surprise!",
+            "messageShownTimes": 1,
+            "name": "Vivian's Hunger",
+            "reward": 1000.0,
+            "xpReward": 17.559999465942383
+        },
+        {
+            "completed": false,
+            "description": "Pickaxes are a thing now. Go to guild to buy them!",
+            "messageShownTimes": 1,
+            "name": "Visit the Guild",
+            "reward": 0.0,
+            "xpReward": 0.8500000238418579
+        },
+        {
+            "completed": false,
+            "description": "",
+            "messageShownTimes": 1,
+            "name": "",
+            "reward": 0.0,
+            "xpReward": 0.0
         }
     ],
     "octopusLeg": {
@@ -586,29 +659,33 @@
     },
     "playerCreditCardUnlock": {
         "occured": false,
+        "ready": false,
         "timesOccured": 0
     },
     "playerWalletUpgrade": {
         "occured": false,
+        "ready": true,
         "timesOccured": 0
     },
     "quitMineUnlock": {
         "occured": true,
+        "ready": false,
         "timesOccured": 0
     },
     "railwayStationUnlock": {
         "occured": false,
+        "ready": false,
         "timesOccured": 0
     },
     "rock": {
         "buyPrice": 2.75,
-        "count": 9,
+        "count": 0,
         "luckFactor": 1.0,
         "name": "Rock",
         "rareity": 0.75,
         "rareityString": "",
-        "sellPrice": 0.0,
-        "totalCount": 9,
+        "sellPrice": 1.2225670944017595,
+        "totalCount": 67,
         "xp": 2.75
     },
     "ruby": {
@@ -645,11 +722,13 @@
         "xp": 0.10999999940395355
     },
     "sellerMarketBoot": {
-        "occured": false,
-        "timesOccured": 0
+        "occured": true,
+        "ready": true,
+        "timesOccured": 1
     },
     "shopUnlock": {
         "occured": false,
+        "ready": false,
         "timesOccured": 0
     },
     "silver": {
@@ -685,8 +764,8 @@
         "totalCount": 0,
         "xp": 11.180000305175781
     },
-    "timesFished": 0,
-    "timesMined": 10,
+    "timesFished": -1927976352,
+    "timesMined": 56,
     "tin": {
         "buyPrice": 71.42,
         "count": 0,
@@ -742,7 +821,7 @@
         "totalCount": 0,
         "xp": 1.6799999475479126
     },
-    "wallet": 0.0,
+    "wallet": 9.289100646972656,
     "walletLimit": 300.0,
     "whaleTooth": {
         "buyPrice": 10000.0,
@@ -757,16 +836,16 @@
     },
     "wood": {
         "buyPrice": 3.25,
-        "count": 18,
+        "count": 0,
         "luckFactor": 1.0,
         "name": "Wood",
         "rareity": 0.6800000071525574,
         "rareityString": "",
-        "sellPrice": 0.0,
-        "totalCount": 18,
+        "sellPrice": 1.6975530783612738,
+        "totalCount": 54,
         "xp": 3.2100000381469727
     },
-    "xp": 28.43000018596649,
+    "xp": 143.56000065803528,
     "xpToLvl": [
         300,
         1500,
