@@ -1,0 +1,777 @@
+{
+    "bankBalance": 0.0,
+    "bankBoot": {
+        "occured": false,
+        "ready": false,
+        "timesOccured": 0
+    },
+    "bankOnLunchBreak": {
+        "occured": false,
+        "ready": false,
+        "timesOccured": 0
+    },
+    "bedrock": {
+        "buyPrice": 10000.11,
+        "count": 0,
+        "luckFactor": 1.0,
+        "name": "Bedrock",
+        "rareity": 0.07999999821186066,
+        "rareityString": "",
+        "sellPrice": 0.0,
+        "totalCount": 0,
+        "xp": 1590.780029296875
+    },
+    "blackStone": {
+        "buyPrice": 975.21,
+        "count": 0,
+        "luckFactor": 1.0,
+        "name": "Black Stone",
+        "rareity": 0.10000000149011612,
+        "rareityString": "",
+        "sellPrice": 0.0,
+        "totalCount": 0,
+        "xp": 338.75
+    },
+    "clownfish": {
+        "buyPrice": 5.5,
+        "count": 0,
+        "luckFactor": 1.0,
+        "name": "Clown Fish",
+        "rareity": 0.7400000095367432,
+        "rareityString": "Pretty Common",
+        "sellPrice": 0.0,
+        "totalCount": 0,
+        "xp": 2.950000047683716
+    },
+    "coal": {
+        "buyPrice": 5.6,
+        "count": 6,
+        "luckFactor": 1.0,
+        "name": "Coal",
+        "rareity": 0.7200000286102295,
+        "rareityString": "",
+        "sellPrice": 0.0,
+        "totalCount": 6,
+        "xp": 4.110000133514404
+    },
+    "copper": {
+        "buyPrice": 23.21,
+        "count": 0,
+        "luckFactor": 1.0,
+        "name": "Copper",
+        "rareity": 0.2800000011920929,
+        "rareityString": "",
+        "sellPrice": 0.0,
+        "totalCount": 0,
+        "xp": 15.270000457763672
+    },
+    "creditcard": {
+        "convinienceCharge": 0.05000000074505806,
+        "has": false,
+        "hasInsurance": false
+    },
+    "currentCity": {
+        "atCity": true,
+        "code": "TRML",
+        "name": "Terminille",
+        "platformCount": 4
+    },
+    "diamond": {
+        "buyPrice": 2800.53,
+        "count": 0,
+        "luckFactor": 1.0,
+        "name": "Diamond",
+        "rareity": 0.05999999865889549,
+        "rareityString": "",
+        "sellPrice": 0.0,
+        "totalCount": 0,
+        "xp": 160.7100067138672
+    },
+    "dirt": {
+        "buyPrice": 1.79,
+        "count": 56,
+        "luckFactor": 1.0,
+        "name": "Dirt",
+        "rareity": 0.8500000238418579,
+        "rareityString": "",
+        "sellPrice": 0.6321105165171376,
+        "totalCount": 58,
+        "xp": 1.3799999952316284
+    },
+    "dualItems": {
+        "occured": false,
+        "ready": false,
+        "timesOccured": 0
+    },
+    "firstBoot": {
+        "occured": true,
+        "ready": false,
+        "timesOccured": 2
+    },
+    "firstTime": true,
+    "fishingRod": {
+        "health": 100.0,
+        "name": "Fishing Rod",
+        "required": [
+            [
+                {
+                    "buyPrice": 0.0,
+                    "count": 0,
+                    "luckFactor": 1.0,
+                    "name": "",
+                    "rareity": 1.0,
+                    "rareityString": "",
+                    "sellPrice": 0.0,
+                    "totalCount": 0,
+                    "xp": 0.5
+                },
+                {
+                    "buyPrice": 0.0,
+                    "count": 0,
+                    "luckFactor": 1.0,
+                    "name": "",
+                    "rareity": 1.0,
+                    "rareityString": "",
+                    "sellPrice": 0.0,
+                    "totalCount": 0,
+                    "xp": 0.5
+                }
+            ],
+            [
+                {
+                    "buyPrice": 0.0,
+                    "count": 0,
+                    "luckFactor": 1.0,
+                    "name": "",
+                    "rareity": 1.0,
+                    "rareityString": "",
+                    "sellPrice": 0.0,
+                    "totalCount": 0,
+                    "xp": 0.5
+                },
+                {
+                    "buyPrice": 0.0,
+                    "count": 0,
+                    "luckFactor": 1.0,
+                    "name": "",
+                    "rareity": 1.0,
+                    "rareityString": "",
+                    "sellPrice": 0.0,
+                    "totalCount": 0,
+                    "xp": 0.5
+                }
+            ],
+            [
+                {
+                    "buyPrice": 0.0,
+                    "count": 0,
+                    "luckFactor": 1.0,
+                    "name": "",
+                    "rareity": 1.0,
+                    "rareityString": "",
+                    "sellPrice": 0.0,
+                    "totalCount": 0,
+                    "xp": 0.5
+                },
+                {
+                    "buyPrice": 0.0,
+                    "count": 0,
+                    "luckFactor": 1.0,
+                    "name": "",
+                    "rareity": 1.0,
+                    "rareityString": "",
+                    "sellPrice": 0.0,
+                    "totalCount": 0,
+                    "xp": 0.5
+                }
+            ],
+            [
+                {
+                    "buyPrice": 0.0,
+                    "count": 0,
+                    "luckFactor": 1.0,
+                    "name": "",
+                    "rareity": 1.0,
+                    "rareityString": "",
+                    "sellPrice": 0.0,
+                    "totalCount": 0,
+                    "xp": 0.5
+                },
+                {
+                    "buyPrice": 0.0,
+                    "count": 0,
+                    "luckFactor": 1.0,
+                    "name": "",
+                    "rareity": 1.0,
+                    "rareityString": "",
+                    "sellPrice": 0.0,
+                    "totalCount": 0,
+                    "xp": 0.5
+                }
+            ],
+            [
+                {
+                    "buyPrice": 0.0,
+                    "count": 0,
+                    "luckFactor": 1.0,
+                    "name": "",
+                    "rareity": 1.0,
+                    "rareityString": "",
+                    "sellPrice": 0.0,
+                    "totalCount": 0,
+                    "xp": 0.5
+                },
+                {
+                    "buyPrice": 0.0,
+                    "count": 0,
+                    "luckFactor": 1.0,
+                    "name": "",
+                    "rareity": 1.0,
+                    "rareityString": "",
+                    "sellPrice": 0.0,
+                    "totalCount": 0,
+                    "xp": 0.5
+                }
+            ]
+        ],
+        "requiredCount": [
+            [
+                0,
+                0
+            ],
+            [
+                0,
+                0
+            ],
+            [
+                0,
+                0
+            ],
+            [
+                0,
+                0
+            ],
+            [
+                0,
+                0
+            ]
+        ],
+        "upgradeCost": [
+            250.0,
+            1200.0,
+            2800.0,
+            8500.0,
+            17999.0
+        ],
+        "upgradeXP": [
+            350.0,
+            450.0,
+            590.0,
+            999.0,
+            1300.0
+        ],
+        "waitTimeByLevel": [
+            0,
+            5,
+            4,
+            3,
+            2
+        ]
+    },
+    "gold": {
+        "buyPrice": 595.23,
+        "count": 0,
+        "luckFactor": 1.0,
+        "name": "Gold",
+        "rareity": 0.09000000357627869,
+        "rareityString": "",
+        "sellPrice": 0.0,
+        "totalCount": 0,
+        "xp": 57.880001068115234
+    },
+    "granite": {
+        "buyPrice": 7.68,
+        "count": 0,
+        "luckFactor": 1.0,
+        "name": "Granite",
+        "rareity": 0.5799999833106995,
+        "rareityString": "",
+        "sellPrice": 0.0,
+        "totalCount": 0,
+        "xp": 5.179999828338623
+    },
+    "guildUnlocked": {
+        "occured": true,
+        "ready": false,
+        "timesOccured": 0
+    },
+    "hardRock": {
+        "buyPrice": 159.76,
+        "count": 0,
+        "luckFactor": 1.0,
+        "name": "Hard Rock",
+        "rareity": 0.28999999165534973,
+        "rareityString": "",
+        "sellPrice": 0.0,
+        "totalCount": 0,
+        "xp": 25.270000457763672
+    },
+    "hasPickaxe": false,
+    "homeLessManBoot": {
+        "occured": true,
+        "ready": false,
+        "timesOccured": 0
+    },
+    "inventoryUnlock": {
+        "occured": true,
+        "ready": false,
+        "timesOccured": 0
+    },
+    "iron": {
+        "buyPrice": 25.11,
+        "count": 0,
+        "luckFactor": 1.0,
+        "name": "Iron",
+        "rareity": 0.3100000023841858,
+        "rareityString": "",
+        "sellPrice": 0.0,
+        "totalCount": 0,
+        "xp": 11.210000038146973
+    },
+    "jellyfish": {
+        "buyPrice": 118.21,
+        "count": 0,
+        "luckFactor": 1.0,
+        "name": "Jellyfish",
+        "rareity": 0.18000000715255737,
+        "rareityString": "Very Rare",
+        "sellPrice": 0.0,
+        "totalCount": 0,
+        "xp": 56.5
+    },
+    "level": 1,
+    "loansUnlocked": {
+        "occured": false,
+        "ready": false,
+        "timesOccured": 0
+    },
+    "lobser": {
+        "buyPrice": 150.0,
+        "count": 0,
+        "luckFactor": 1.0,
+        "name": "Lobster",
+        "rareity": 0.17000000178813934,
+        "rareityString": "Very Rare",
+        "sellPrice": 0.0,
+        "totalCount": 0,
+        "xp": 69.69000244140625
+    },
+    "luck": 1.0,
+    "magma": {
+        "buyPrice": 7200.33,
+        "count": 0,
+        "luckFactor": 1.0,
+        "name": "Magma",
+        "rareity": 0.09000000357627869,
+        "rareityString": "",
+        "sellPrice": 0.0,
+        "totalCount": 0,
+        "xp": 790.5499877929688
+    },
+    "mineDetailsUnlock": {
+        "occured": true,
+        "ready": false,
+        "timesOccured": 0
+    },
+    "name": "tdjytiy",
+    "objectives": [],
+    "octopusLeg": {
+        "buyPrice": 37.48,
+        "count": 0,
+        "luckFactor": 1.0,
+        "name": "Octopus Leg",
+        "rareity": 0.20999999344348907,
+        "rareityString": "Rare",
+        "sellPrice": 0.0,
+        "totalCount": 0,
+        "xp": 21.110000610351563
+    },
+    "pearl": {
+        "buyPrice": 785.0,
+        "count": 0,
+        "luckFactor": 1.0,
+        "name": "Pearl",
+        "rareity": 0.10000000149011612,
+        "rareityString": "Atlantis!",
+        "sellPrice": 0.0,
+        "totalCount": 0,
+        "xp": 99.5
+    },
+    "pickaxe": {
+        "health": 100.0,
+        "name": "Pickaxe",
+        "required": [
+            [
+                {
+                    "buyPrice": 0.0,
+                    "count": 0,
+                    "luckFactor": 1.0,
+                    "name": "",
+                    "rareity": 1.0,
+                    "rareityString": "",
+                    "sellPrice": 0.0,
+                    "totalCount": 0,
+                    "xp": 0.5
+                },
+                {
+                    "buyPrice": 0.0,
+                    "count": 0,
+                    "luckFactor": 1.0,
+                    "name": "",
+                    "rareity": 1.0,
+                    "rareityString": "",
+                    "sellPrice": 0.0,
+                    "totalCount": 0,
+                    "xp": 0.5
+                }
+            ],
+            [
+                {
+                    "buyPrice": 0.0,
+                    "count": 0,
+                    "luckFactor": 1.0,
+                    "name": "",
+                    "rareity": 1.0,
+                    "rareityString": "",
+                    "sellPrice": 0.0,
+                    "totalCount": 0,
+                    "xp": 0.5
+                },
+                {
+                    "buyPrice": 0.0,
+                    "count": 0,
+                    "luckFactor": 1.0,
+                    "name": "",
+                    "rareity": 1.0,
+                    "rareityString": "",
+                    "sellPrice": 0.0,
+                    "totalCount": 0,
+                    "xp": 0.5
+                }
+            ],
+            [
+                {
+                    "buyPrice": 0.0,
+                    "count": 0,
+                    "luckFactor": 1.0,
+                    "name": "",
+                    "rareity": 1.0,
+                    "rareityString": "",
+                    "sellPrice": 0.0,
+                    "totalCount": 0,
+                    "xp": 0.5
+                },
+                {
+                    "buyPrice": 0.0,
+                    "count": 0,
+                    "luckFactor": 1.0,
+                    "name": "",
+                    "rareity": 1.0,
+                    "rareityString": "",
+                    "sellPrice": 0.0,
+                    "totalCount": 0,
+                    "xp": 0.5
+                }
+            ],
+            [
+                {
+                    "buyPrice": 0.0,
+                    "count": 0,
+                    "luckFactor": 1.0,
+                    "name": "",
+                    "rareity": 1.0,
+                    "rareityString": "",
+                    "sellPrice": 0.0,
+                    "totalCount": 0,
+                    "xp": 0.5
+                },
+                {
+                    "buyPrice": 0.0,
+                    "count": 0,
+                    "luckFactor": 1.0,
+                    "name": "",
+                    "rareity": 1.0,
+                    "rareityString": "",
+                    "sellPrice": 0.0,
+                    "totalCount": 0,
+                    "xp": 0.5
+                }
+            ],
+            [
+                {
+                    "buyPrice": 0.0,
+                    "count": 0,
+                    "luckFactor": 1.0,
+                    "name": "",
+                    "rareity": 1.0,
+                    "rareityString": "",
+                    "sellPrice": 0.0,
+                    "totalCount": 0,
+                    "xp": 0.5
+                },
+                {
+                    "buyPrice": 0.0,
+                    "count": 0,
+                    "luckFactor": 1.0,
+                    "name": "",
+                    "rareity": 1.0,
+                    "rareityString": "",
+                    "sellPrice": 0.0,
+                    "totalCount": 0,
+                    "xp": 0.5
+                }
+            ]
+        ],
+        "requiredCount": [
+            [
+                0,
+                0
+            ],
+            [
+                0,
+                0
+            ],
+            [
+                0,
+                0
+            ],
+            [
+                0,
+                0
+            ],
+            [
+                0,
+                0
+            ]
+        ],
+        "upgradeCost": [
+            250.0,
+            1200.0,
+            2800.0,
+            8500.0,
+            17999.0
+        ],
+        "upgradeXP": [
+            350.0,
+            450.0,
+            590.0,
+            999.0,
+            1300.0
+        ],
+        "waitTimeByLevel": [
+            0,
+            5,
+            4,
+            3,
+            2
+        ]
+    },
+    "playerCreditCardUnlock": {
+        "occured": false,
+        "ready": false,
+        "timesOccured": 0
+    },
+    "playerWalletUpgrade": {
+        "occured": false,
+        "ready": false,
+        "timesOccured": 0
+    },
+    "quitMineUnlock": {
+        "occured": true,
+        "ready": false,
+        "timesOccured": 0
+    },
+    "railwayStationUnlock": {
+        "occured": false,
+        "ready": false,
+        "timesOccured": 0
+    },
+    "rock": {
+        "buyPrice": 2.75,
+        "count": 99,
+        "luckFactor": 1.0,
+        "name": "Rock",
+        "rareity": 0.75,
+        "rareityString": "",
+        "sellPrice": 1.2225670944017595,
+        "totalCount": 127,
+        "xp": 2.75
+    },
+    "ruby": {
+        "buyPrice": 3500.77,
+        "count": 0,
+        "luckFactor": 1.0,
+        "name": "Ruby",
+        "rareity": 0.03999999910593033,
+        "rareityString": "",
+        "sellPrice": 0.0,
+        "totalCount": 0,
+        "xp": 441.3800048828125
+    },
+    "salmon": {
+        "buyPrice": 4.5,
+        "count": 0,
+        "luckFactor": 1.0,
+        "name": "Salmon",
+        "rareity": 0.75,
+        "rareityString": "Pretty Common",
+        "sellPrice": 0.0,
+        "totalCount": 0,
+        "xp": 2.7899999618530273
+    },
+    "seashell": {
+        "buyPrice": 2.25,
+        "count": 0,
+        "luckFactor": 1.0,
+        "name": "Sea Shell",
+        "rareity": 0.9100000262260437,
+        "rareityString": "Pretty Common",
+        "sellPrice": 0.0,
+        "totalCount": 0,
+        "xp": 0.10999999940395355
+    },
+    "sellerMarketBoot": {
+        "occured": true,
+        "ready": false,
+        "timesOccured": 1
+    },
+    "shopUnlock": {
+        "occured": false,
+        "ready": false,
+        "timesOccured": 0
+    },
+    "silver": {
+        "buyPrice": 69.69,
+        "count": 0,
+        "luckFactor": 1.0,
+        "name": "Silver",
+        "rareity": 0.27000001072883606,
+        "rareityString": "",
+        "sellPrice": 0.0,
+        "totalCount": 0,
+        "xp": 21.690000534057617
+    },
+    "soakedBoot": {
+        "buyPrice": 0.79,
+        "count": 0,
+        "luckFactor": 1.0,
+        "name": "Soaked Boots",
+        "rareity": 0.05000000074505806,
+        "rareityString": "Very Common",
+        "sellPrice": 0.0,
+        "totalCount": 0,
+        "xp": 1.3799999952316284
+    },
+    "squid": {
+        "buyPrice": 15.85,
+        "count": 0,
+        "luckFactor": 1.0,
+        "name": "Squid",
+        "rareity": 0.3499999940395355,
+        "rareityString": "Rare",
+        "sellPrice": 0.0,
+        "totalCount": 0,
+        "xp": 11.180000305175781
+    },
+    "timesFished": 0,
+    "timesMined": 81,
+    "tin": {
+        "buyPrice": 71.42,
+        "count": 0,
+        "luckFactor": 1.0,
+        "name": "Tin",
+        "rareity": 0.23000000417232513,
+        "rareityString": "",
+        "sellPrice": 0.0,
+        "totalCount": 0,
+        "xp": 18.709999084472656
+    },
+    "trout": {
+        "buyPrice": 7.85,
+        "count": 0,
+        "luckFactor": 1.0,
+        "name": "Trout",
+        "rareity": 0.4300000071525574,
+        "rareityString": "Common",
+        "sellPrice": 0.0,
+        "totalCount": 0,
+        "xp": 5.320000171661377
+    },
+    "tuna": {
+        "buyPrice": 4.99,
+        "count": 0,
+        "luckFactor": 1.0,
+        "name": "Tuna",
+        "rareity": 0.6299999952316284,
+        "rareityString": "Common",
+        "sellPrice": 0.0,
+        "totalCount": 0,
+        "xp": 3.109999895095825
+    },
+    "usedCondom": {
+        "buyPrice": 0.0,
+        "count": 0,
+        "luckFactor": 1.0,
+        "name": "Used condom",
+        "rareity": 0.009999999776482582,
+        "rareityString": "Very Common",
+        "sellPrice": 0.0,
+        "totalCount": 0,
+        "xp": 0.10000000149011612
+    },
+    "usedEarphones": {
+        "buyPrice": 0.08,
+        "count": 0,
+        "luckFactor": 1.0,
+        "name": "Used earphones",
+        "rareity": 0.20000000298023224,
+        "rareityString": "Very Common",
+        "sellPrice": 0.0,
+        "totalCount": 0,
+        "xp": 1.6799999475479126
+    },
+    "wallet": 65.64159393310547,
+    "walletLimit": 300.0,
+    "whaleTooth": {
+        "buyPrice": 10000.0,
+        "count": 0,
+        "luckFactor": 1.0,
+        "name": "Blue Whale's tooth",
+        "rareity": 0.09000000357627869,
+        "rareityString": "How did you find this?",
+        "sellPrice": 0.0,
+        "totalCount": 0,
+        "xp": 1500.0
+    },
+    "wood": {
+        "buyPrice": 3.25,
+        "count": 77,
+        "luckFactor": 1.0,
+        "name": "Wood",
+        "rareity": 0.6800000071525574,
+        "rareityString": "",
+        "sellPrice": 1.6975530783612738,
+        "totalCount": 94,
+        "xp": 3.2100000381469727
+    },
+    "xp": 219.62000143527985,
+    "xpToLvl": [
+        300,
+        1500,
+        4750,
+        8900,
+        15000,
+        25000,
+        50000
+    ]
+}

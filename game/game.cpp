@@ -391,60 +391,6 @@ void saveThread(atomic<bool> &running, Savefile &save, Player &player)
   }
 }
 
-void gameEventThread(atomic<bool> &running, Player &player)
-{
-  vector<event*> allEvents = player.getEvents();
-  while(true)
-  {
-    player.getObjectives();
-
-    if(!player.bankBoot.occured)
-    {
-      player.bankBoot.objective.inPrgress = true;
-      player.bankBoot.ready = true;
-      player.bankBoot.notifictation();
-    }
-    if(!player.sellerMarketBoot.occured)
-    {
-      player.sellerMarketBoot.objective.inPrgress = true;
-      player.sellerMarketBoot.notifictation();
-      player.sellerMarketBoot.ready = true;
-    }
-    if(player.bankBoot.occured && !player.playerWalletUpgrade.occured && player.timesMined > 52)
-    {
-      player.playerWalletUpgrade.objective.inPrgress = true;
-      player.playerWalletUpgrade.notifictation();
-      player.playerWalletUpgrade.ready = true;
-    }
-    if(player.guildUnlocked.occured)
-    {
-      player.guildUnlocked.objective.inPrgress = true;
-      player.guildUnlocked.ready = true;
-      player.guildUnlocked.notifictation();
-    }
-    if(player.pickaxe.level > 0 && (player.wallet > 100 || player.bankBalance > 100) && player.level > 0 && !player.railwayStationUnlock.occured )
-    {
-      player.vivianCake.objective.inPrgress = true;
-      player.vivianCake.ready = true;
-      player.vivianCake.notifictation();
-      player.railwayStationUnlock.occured = true;
-    }
-    vector <Objective> obj;
-    for(auto event: allEvents)
-    {
-      if(!event->occured)
-      {
-          if(event->objective.messageShownTimes == 0)
-          {
-            event->notifictation();
-          }
-          obj.push_back(event->objective);
-      }
-    }
-    player.objectives = obj;
-  }
-}
-
 int main(void) {
   Savefile save;
   Player player = save.loadGameState();
@@ -452,9 +398,7 @@ int main(void) {
 
   atomic<bool> running = true;
   thread saveThreading(saveThread, ref(running), ref(save), ref(player));
-  thread objectivesThread(gameEventThread, ref(running), ref(player));
   saveThreading.detach();
-  objectivesThread.detach();
 
 player.fishingRod.level = 1;
 
@@ -471,6 +415,7 @@ player.fishingRod.level = 1;
   npcDialogueInit(player);
 
   while (true) {
+    player.getObjectives();
     mainmenu(player);
 
 

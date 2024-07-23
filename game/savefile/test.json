@@ -106,7 +106,7 @@
     "firstBoot": {
         "occured": true,
         "ready": false,
-        "timesOccured": 2
+        "timesOccured": 7
     },
     "firstTime": true,
     "fishingRod": {
@@ -301,8 +301,8 @@
         "xp": 5.179999828338623
     },
     "guildUnlocked": {
-        "occured": false,
-        "ready": false,
+        "occured": true,
+        "ready": true,
         "timesOccured": 0
     },
     "hardRock": {
@@ -388,15 +388,15 @@
         {
             "completed": false,
             "description": "Give him atleast $5. He may be your guardian angel!",
-            "messageShownTimes": 1,
-            "name": "Homelessman",
+            "messageShownTimes": 0,
+            "name": "Donate to homelessman",
             "reward": 0.0,
             "xpReward": 1.75
         },
         {
             "completed": false,
             "description": "",
-            "messageShownTimes": 1,
+            "messageShownTimes": 0,
             "name": "",
             "reward": 0.0,
             "xpReward": 0.0
@@ -404,7 +404,7 @@
         {
             "completed": false,
             "description": "",
-            "messageShownTimes": 1,
+            "messageShownTimes": 0,
             "name": "",
             "reward": 0.0,
             "xpReward": 0.0
@@ -412,7 +412,7 @@
         {
             "completed": false,
             "description": "",
-            "messageShownTimes": 1,
+            "messageShownTimes": 0,
             "name": "",
             "reward": 0.0,
             "xpReward": 0.0
@@ -420,7 +420,7 @@
         {
             "completed": false,
             "description": "",
-            "messageShownTimes": 1,
+            "messageShownTimes": 0,
             "name": "",
             "reward": 0.0,
             "xpReward": 0.0
@@ -428,7 +428,7 @@
         {
             "completed": false,
             "description": "",
-            "messageShownTimes": 1,
+            "messageShownTimes": 0,
             "name": "",
             "reward": 0.0,
             "xpReward": 0.0
@@ -436,31 +436,23 @@
         {
             "completed": false,
             "description": "Upgrade your wallet limit in the bank! More cash flow can't hurt!",
-            "messageShownTimes": 1,
-            "name": "Upgrade your wallet.",
+            "messageShownTimes": 0,
+            "name": "Upgrade your wallet",
             "reward": 0.0,
             "xpReward": 2.950000047683716
         },
         {
             "completed": false,
             "description": "Buy a cake for vivian from Syntax City, you're in for a surprise!",
-            "messageShownTimes": 1,
+            "messageShownTimes": 0,
             "name": "Vivian's Hunger",
             "reward": 1000.0,
             "xpReward": 17.559999465942383
         },
         {
             "completed": false,
-            "description": "Pickaxes are a thing now. Go to guild to buy them!",
-            "messageShownTimes": 1,
-            "name": "Visit the Guild",
-            "reward": 0.0,
-            "xpReward": 0.8500000238418579
-        },
-        {
-            "completed": false,
             "description": "",
-            "messageShownTimes": 1,
+            "messageShownTimes": 0,
             "name": "",
             "reward": 0.0,
             "xpReward": 0.0
@@ -494,145 +486,145 @@
         "required": [
             [
                 {
-                    "buyPrice": 0.0,
-                    "count": 0,
+                    "buyPrice": 2.75,
+                    "count": 30,
                     "luckFactor": 1.0,
-                    "name": "",
-                    "rareity": 1.0,
+                    "name": "Rock",
+                    "rareity": 0.75,
                     "rareityString": "",
-                    "sellPrice": 0.0,
-                    "totalCount": 0,
-                    "xp": 0.5
+                    "sellPrice": 1.2225670944017595,
+                    "totalCount": 97,
+                    "xp": 2.75
                 },
                 {
-                    "buyPrice": 0.0,
-                    "count": 0,
+                    "buyPrice": 3.25,
+                    "count": 19,
                     "luckFactor": 1.0,
-                    "name": "",
-                    "rareity": 1.0,
+                    "name": "Wood",
+                    "rareity": 0.6800000071525574,
                     "rareityString": "",
-                    "sellPrice": 0.0,
-                    "totalCount": 0,
-                    "xp": 0.5
+                    "sellPrice": 1.6975530783612738,
+                    "totalCount": 73,
+                    "xp": 3.2100000381469727
                 }
             ],
             [
                 {
-                    "buyPrice": 0.0,
+                    "buyPrice": 7.68,
                     "count": 0,
                     "luckFactor": 1.0,
-                    "name": "",
-                    "rareity": 1.0,
+                    "name": "Granite",
+                    "rareity": 0.5799999833106995,
                     "rareityString": "",
                     "sellPrice": 0.0,
                     "totalCount": 0,
-                    "xp": 0.5
+                    "xp": 5.179999828338623
                 },
                 {
-                    "buyPrice": 0.0,
-                    "count": 0,
+                    "buyPrice": 3.25,
+                    "count": 19,
                     "luckFactor": 1.0,
-                    "name": "",
-                    "rareity": 1.0,
+                    "name": "Wood",
+                    "rareity": 0.6800000071525574,
                     "rareityString": "",
-                    "sellPrice": 0.0,
-                    "totalCount": 0,
-                    "xp": 0.5
+                    "sellPrice": 1.6975530783612738,
+                    "totalCount": 73,
+                    "xp": 3.2100000381469727
                 }
             ],
             [
                 {
-                    "buyPrice": 0.0,
+                    "buyPrice": 23.21,
                     "count": 0,
                     "luckFactor": 1.0,
-                    "name": "",
-                    "rareity": 1.0,
+                    "name": "Copper",
+                    "rareity": 0.2800000011920929,
                     "rareityString": "",
                     "sellPrice": 0.0,
                     "totalCount": 0,
-                    "xp": 0.5
+                    "xp": 15.270000457763672
                 },
                 {
-                    "buyPrice": 0.0,
+                    "buyPrice": 71.42,
                     "count": 0,
                     "luckFactor": 1.0,
-                    "name": "",
-                    "rareity": 1.0,
+                    "name": "Tin",
+                    "rareity": 0.23000000417232513,
                     "rareityString": "",
                     "sellPrice": 0.0,
                     "totalCount": 0,
-                    "xp": 0.5
+                    "xp": 18.709999084472656
                 }
             ],
             [
                 {
-                    "buyPrice": 0.0,
+                    "buyPrice": 69.69,
                     "count": 0,
                     "luckFactor": 1.0,
-                    "name": "",
-                    "rareity": 1.0,
+                    "name": "Silver",
+                    "rareity": 0.27000001072883606,
                     "rareityString": "",
                     "sellPrice": 0.0,
                     "totalCount": 0,
-                    "xp": 0.5
+                    "xp": 21.690000534057617
                 },
                 {
-                    "buyPrice": 0.0,
+                    "buyPrice": 595.23,
                     "count": 0,
                     "luckFactor": 1.0,
-                    "name": "",
-                    "rareity": 1.0,
+                    "name": "Gold",
+                    "rareity": 0.09000000357627869,
                     "rareityString": "",
                     "sellPrice": 0.0,
                     "totalCount": 0,
-                    "xp": 0.5
+                    "xp": 57.880001068115234
                 }
             ],
             [
                 {
-                    "buyPrice": 0.0,
+                    "buyPrice": 2800.53,
                     "count": 0,
                     "luckFactor": 1.0,
-                    "name": "",
-                    "rareity": 1.0,
+                    "name": "Diamond",
+                    "rareity": 0.05999999865889549,
                     "rareityString": "",
                     "sellPrice": 0.0,
                     "totalCount": 0,
-                    "xp": 0.5
+                    "xp": 160.7100067138672
                 },
                 {
-                    "buyPrice": 0.0,
+                    "buyPrice": 3500.77,
                     "count": 0,
                     "luckFactor": 1.0,
-                    "name": "",
-                    "rareity": 1.0,
+                    "name": "Ruby",
+                    "rareity": 0.03999999910593033,
                     "rareityString": "",
                     "sellPrice": 0.0,
                     "totalCount": 0,
-                    "xp": 0.5
+                    "xp": 441.3800048828125
                 }
             ]
         ],
         "requiredCount": [
             [
-                0,
-                0
+                25,
+                55
             ],
             [
-                0,
-                0
+                35,
+                175
             ],
             [
-                0,
-                0
+                85,
+                85
             ],
             [
-                0,
-                0
+                125,
+                100
             ],
             [
-                0,
-                0
+                250,
+                20
             ]
         ],
         "upgradeCost": [
@@ -679,13 +671,13 @@
     },
     "rock": {
         "buyPrice": 2.75,
-        "count": 0,
+        "count": 31,
         "luckFactor": 1.0,
         "name": "Rock",
         "rareity": 0.75,
         "rareityString": "",
         "sellPrice": 1.2225670944017595,
-        "totalCount": 67,
+        "totalCount": 98,
         "xp": 2.75
     },
     "ruby": {
@@ -765,7 +757,7 @@
         "xp": 11.180000305175781
     },
     "timesFished": -1927976352,
-    "timesMined": 56,
+    "timesMined": 75,
     "tin": {
         "buyPrice": 71.42,
         "count": 0,
@@ -836,16 +828,16 @@
     },
     "wood": {
         "buyPrice": 3.25,
-        "count": 0,
+        "count": 31,
         "luckFactor": 1.0,
         "name": "Wood",
         "rareity": 0.6800000071525574,
         "rareityString": "",
         "sellPrice": 1.6975530783612738,
-        "totalCount": 54,
+        "totalCount": 85,
         "xp": 3.2100000381469727
     },
-    "xp": 143.56000065803528,
+    "xp": 200.87000107765198,
     "xpToLvl": [
         300,
         1500,

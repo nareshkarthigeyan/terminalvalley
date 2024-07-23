@@ -48,8 +48,10 @@ struct tool {
                                  requiredCount, upgradeCost, upgradeXP);
 };
 
-struct Objective
+class Objective
 {
+  public:
+
   string name;
   string description;
   bool completed;
@@ -57,6 +59,19 @@ struct Objective
   float xpReward;
   int messageShownTimes {0};
   bool inPrgress {false};
+
+  void notifictation()
+  {
+    static int blah = 0;
+    if(blah == 0)
+    {
+      achievementMessage("New objective Unlocked!");
+      achievementMessage(name);
+      cout << messageShownTimes << endl;
+    }
+    sleep(1);
+    blah++;
+  }
 
   NLOHMANN_DEFINE_TYPE_INTRUSIVE(Objective, name, description, completed, reward, xpReward, messageShownTimes);
 };
@@ -72,13 +87,10 @@ class event {
   {
     occured = true;
     timesOccured++;
-    
+    objective.completed = true;
   }
 
-  void notifictation()
-  {
-    objective.messageShownTimes++;
-  }
+  
 
   NLOHMANN_DEFINE_TYPE_INTRUSIVE(event, occured, timesOccured, ready);
 };
@@ -343,18 +355,7 @@ public:
   // railway Station:
   event railwayStationUnlock;
 
-  void getObjectives(){
-
-    //objective strudture: name, description, unlocked, completed, reward, xpReward, inprgrss
-    if(homeLessManBoot.occured)
-    {
-      donateToHomeLessMan.objective = {"Homelessman", "Give him atleast $5. He may be your guardian angel!", false, 0, 1.75, false};
-    }
-    bankBoot.objective = {"Open a bank account!", "It's good to have a bank account. Open a bank account! Costs $200.", false, 0, 2.88, false};
-    playerWalletUpgrade.objective = {"Upgrade your wallet.", "Upgrade your wallet limit in the bank! More cash flow can't hurt!", false, 0, 2.95, false};
-    vivianCake.objective = {"Vivian's Hunger", "Buy a cake for vivian from Syntax City, you're in for a surprise!", false, 1000, 17.56, false};
-    guildUnlocked.objective = {"Visit the Guild", "Pickaxes are a thing now. Go to guild to buy them!", false, 0, 0.85, false};
-  }
+  
 
   vector <event*> getEvents()
   {
@@ -432,17 +433,15 @@ public:
          << "\nWallet: " << moneyAsString(wallet, 2, "$") << " / $"
          << walletLimit << endl;
 
+    getObjectives();
     cout << "Objectives: " << endl;
 
     for(auto &obj: objectives){
-      if(obj.inPrgress)
-      {
         cout << "\t" << obj.name << ": " << obj.description << endl;
           if(obj.reward > 0);
           {
             cout << "\t" << "Reward: " << moneyAsString(obj.reward, 2, "$") << endl;
           }
-      }
     }
   }
 
@@ -558,6 +557,32 @@ public:
   //   }
   //   return;
   // };
+
+  void getObjectives(){
+
+    //objective strudture: name, description, unlocked, completed, reward, xpReward, inprgrss
+    if(homeLessManBoot.occured)
+    {
+      donateToHomeLessMan.objective = {"Donate to homelessman", "Give him atleast $5. He may be your guardian angel!", false, 0, 1.75, true};
+    }
+    if (sellerMarketBoot.occured)
+    {
+      bankBoot.objective = {"Open a Bank account", "It's good to have a bank account. Open a bank account! Costs $200.", false, 0, 2.88, true};
+    }
+    if(bankBoot.occured)
+    {
+      bankBoot.trigger();
+    }
+    if(bankBoot.occured && bankOnLunchBreak.timesOccured > 2)
+    {
+      playerWalletUpgrade.objective = {"Upgrade your wallet", "Upgrade your wallet limit in the bank! More cash flow can't hurt!", false, 0, 2.95, true};
+    }
+    if (guildUnlocked.occured)
+    {
+     guildUnlocked.objective = {"Visit the Guild", "Pickaxes are a thing now. Go to guild to buy them!", false, 0, 0.85, true};
+    }
+      vivianCake.objective = {"Vivian's Hunger", "Buy a cake for vivian from Syntax City, you're in for a surprise!", false, 1000, 17.56, true};
+  }
 
   NLOHMANN_DEFINE_TYPE_INTRUSIVE(
       Player, name, bankBalance, wallet, walletLimit, creditcard, luck,
