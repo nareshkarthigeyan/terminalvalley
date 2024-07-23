@@ -1,9 +1,9 @@
 {
-    "bankBalance": 0.0,
+    "bankBalance": 1231.3299560546875,
     "bankBoot": {
         "occured": true,
         "ready": true,
-        "timesOccured": 9
+        "timesOccured": 45
     },
     "bankOnLunchBreak": {
         "occured": false,
@@ -45,13 +45,13 @@
     },
     "coal": {
         "buyPrice": 5.6,
-        "count": 0,
+        "count": 144,
         "luckFactor": 1.0,
         "name": "Coal",
         "rareity": 0.7200000286102295,
         "rareityString": "",
-        "sellPrice": 0.0,
-        "totalCount": 0,
+        "sellPrice": 1.7799968188490893,
+        "totalCount": 394,
         "xp": 4.110000133514404
     },
     "copper": {
@@ -71,10 +71,10 @@
         "hasInsurance": false
     },
     "currentCity": {
-        "atCity": true,
-        "code": "TRML",
-        "name": "Terminille",
-        "platformCount": 4
+        "atCity": false,
+        "code": "SXCY",
+        "name": "Syntax City",
+        "platformCount": 5
     },
     "diamond": {
         "buyPrice": 2800.53,
@@ -94,8 +94,8 @@
         "name": "Dirt",
         "rareity": 0.8500000238418579,
         "rareityString": "",
-        "sellPrice": 0.6321105165171376,
-        "totalCount": 44,
+        "sellPrice": 0.5836559133820278,
+        "totalCount": 197,
         "xp": 1.3799999952316284
     },
     "dualItems": {
@@ -106,7 +106,7 @@
     "firstBoot": {
         "occured": true,
         "ready": false,
-        "timesOccured": 4
+        "timesOccured": 13
     },
     "firstTime": true,
     "fishingRod": {
@@ -296,8 +296,8 @@
         "name": "Granite",
         "rareity": 0.5799999833106995,
         "rareityString": "",
-        "sellPrice": 0.0,
-        "totalCount": 0,
+        "sellPrice": 3.223846164166587,
+        "totalCount": 154,
         "xp": 5.179999828338623
     },
     "guildUnlocked": {
@@ -320,7 +320,7 @@
     "homeLessManBoot": {
         "occured": true,
         "ready": false,
-        "timesOccured": 1
+        "timesOccured": 2
     },
     "inventoryUnlock": {
         "occured": true,
@@ -334,8 +334,8 @@
         "name": "Iron",
         "rareity": 0.3100000023841858,
         "rareityString": "",
-        "sellPrice": 0.0,
-        "totalCount": 0,
+        "sellPrice": 18.021719024191285,
+        "totalCount": 12,
         "xp": 11.210000038146973
     },
     "jellyfish": {
@@ -349,7 +349,7 @@
         "totalCount": 0,
         "xp": 56.5
     },
-    "level": 1,
+    "level": 3,
     "loansUnlocked": {
         "occured": false,
         "ready": false,
@@ -366,7 +366,7 @@
         "totalCount": 0,
         "xp": 69.69000244140625
     },
-    "luck": 0.9329999685287476,
+    "luck": 0.7289999723434448,
     "magma": {
         "buyPrice": 7200.33,
         "count": 0,
@@ -665,19 +665,19 @@
         "timesOccured": 0
     },
     "railwayStationUnlock": {
-        "occured": false,
+        "occured": true,
         "ready": false,
         "timesOccured": 0
     },
     "rock": {
         "buyPrice": 2.75,
-        "count": 0,
+        "count": 284,
         "luckFactor": 1.0,
         "name": "Rock",
         "rareity": 0.75,
         "rareityString": "",
-        "sellPrice": 1.2225670944017595,
-        "totalCount": 90,
+        "sellPrice": 0.8235350588151169,
+        "totalCount": 474,
         "xp": 2.75
     },
     "ruby": {
@@ -757,7 +757,7 @@
         "xp": 11.180000305175781
     },
     "timesFished": 0,
-    "timesMined": 60,
+    "timesMined": 499,
     "tin": {
         "buyPrice": 71.42,
         "count": 0,
@@ -813,8 +813,8 @@
         "totalCount": 0,
         "xp": 1.6799999475479126
     },
-    "wallet": 72.19510269165039,
-    "walletLimit": 300.0,
+    "wallet": 1422.0015983581543,
+    "walletLimit": 1000.0,
     "whaleTooth": {
         "buyPrice": 10000.0,
         "count": 0,
@@ -828,16 +828,16 @@
     },
     "wood": {
         "buyPrice": 3.25,
-        "count": 0,
+        "count": 365,
         "luckFactor": 1.0,
         "name": "Wood",
         "rareity": 0.6800000071525574,
         "rareityString": "",
-        "sellPrice": 1.6975530783612738,
-        "totalCount": 76,
+        "sellPrice": 1.1184682985135315,
+        "totalCount": 441,
         "xp": 3.2100000381469727
     },
-    "xp": 162.33000075817108,
+    "xp": 1713.1200112104416,
     "xpToLvl": [
         300,
         1500,

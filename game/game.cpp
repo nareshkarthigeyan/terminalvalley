@@ -174,11 +174,13 @@ public:
         RailwayStation rs;
         rs.init();
         rs.enter(player);
-      }
+      } break;
       case 'q': {
         Savefile save;
         save.saveGameState(player);
       }
+        cout << "Game saved!" << endl;
+        sleep(1);
         exit(0);
         break;
       }
@@ -414,8 +416,21 @@ player.fishingRod.level = 1;
 
   npcDialogueInit(player);
 
+  //remove this:
+  player.currentCity.name = "Syntax City";
+  player.vivianCake.occured = false;
+  player.vivanCake1.occured = true;
+  player.vivanCake2.occured = false;
+  player.railwayStationUnlock.occured = true;
+
   while (true) {
     player.getObjectives();
+    if(player.currentCity.name == "Syntax City" && player.vivanCake1.occured && !player.vivanCake2.occured)
+    {
+      Events event;
+      event.VivanCakeEvent2(player);
+      player.vivanCake2.occured = true;
+    }
     mainmenu(player);
 
 
@@ -432,6 +447,11 @@ player.fishingRod.level = 1;
     if ((player.homeLessManBoot.occured) &&
         (player.currentCity.name == Terminille.name)) {
       triggerHomelessMan(player);
+    }
+    if (player.bankBoot.occured && player.guildUnlocked.occured && (player.bankBalance >= 1000 || player.wallet >= 1000) && !player.railwayStationUnlock.occured)
+    {
+      achievementMessage("New Quest Unlocked. Visit Vivian at the bank.");
+      sleep(1);
     }
   }
 

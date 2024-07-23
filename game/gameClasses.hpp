@@ -78,7 +78,7 @@ class Objective
 
 class event {
   public: 
-  bool occured{false}; // change to false before game
+  bool occured{true}; // change to false before game
   int timesOccured{0};
   Objective objective;
   bool ready = {false};
@@ -172,6 +172,8 @@ public:
   item whaleTooth = {"Blue Whale's tooth", 0, 0.09, 10000, 1500,
                      rareityString[6]};
 
+  item blackBerryCake = {"Blackberry Cake", 0, 0, 0};
+
   vector<item> getMineItems() {
     vector<item> items = {dirt,   rock,       wood,  coal,     granite, iron,
                           copper, silver,     tin,   hardRock, gold,    diamond,
@@ -214,6 +216,8 @@ public:
     for (int i = 0; i < fishitems.size(); i++) {
       merged.push_back(fishitems[i]);
     }
+
+    merged.push_back(blackBerryCake);
 
     return merged;
   }
@@ -345,6 +349,9 @@ public:
   event playerCreditCardUnlock;
   event playerWalletUpgrade;
   event vivianCake;
+  event vivanCake1; //First cutscene
+  event vivanCake2; //Second cutscene
+  event vivanCake3; //final cutscene
 
   // market events
   event sellerMarketBoot;
@@ -367,7 +374,7 @@ public:
 
   NLOHMANN_DEFINE_TYPE_INTRUSIVE(PlayerEvents, firstBoot, homeLessManBoot, donateToHomeLessMan, inventoryUnlock, mineDetailsUnlock, quitMineUnlock,
                                     dualItems, shopUnlock, bankBoot, bankOnLunchBreak, loansUnlocked,playerCreditCardUnlock,playerWalletUpgrade,
-                                    vivianCake, sellerMarketBoot,guildUnlocked,railwayStationUnlock)
+                                    vivianCake, sellerMarketBoot,guildUnlocked,railwayStationUnlock, vivanCake1, vivanCake2, vivanCake3)
 };
 
 
@@ -433,16 +440,16 @@ public:
          << "\nWallet: " << moneyAsString(wallet, 2, "$") << " / $"
          << walletLimit << endl;
 
-    getObjectives();
-    cout << "Objectives: " << endl;
+    // getObjectives();
+    // cout << "Objectives: " << endl;
 
-    for(auto &obj: objectives){
-        cout << "\t" << obj.name << ": " << obj.description << endl;
-          if(obj.reward > 0);
-          {
-            cout << "\t" << "Reward: " << moneyAsString(obj.reward, 2, "$") << endl;
-          }
-    }
+    // for(auto &obj: objectives){
+    //     cout << "\t" << obj.name << ": " << obj.description << endl;
+    //       if(obj.reward > 0);
+    //       {
+    //         cout << "\t" << "Reward: " << moneyAsString(obj.reward, 2, "$") << endl;
+    //       }
+    // }
   }
 
   bool depositToWallet(float amount) {
@@ -743,41 +750,6 @@ void marketBootCutscene(Player &player);
 class Events {
 public:
   void FirstBoot(Player &player) {
-    // clearScreen();
-    // showMessage("...","*blinks*", 2, "???");
-    // sleep(2);
-    // showMessage("[looks around]","Where am I?", 2, "???");
-    // sleep(2);
-    // showMessage("I'm in a...","I'm in a terminal?", 2, "???");
-    // sleep(2);
-    // showMessage("ahhhhhhhhhhhh","How could I forget...", 2, "???");
-    // sleep(3);
-    // showMessage("HELLO DEAR WANDERE-*cough* *cough*","sorry, I can be such a
-    // klutz sometimes.", 2, "???"); sleep(3); showMessage("You know, it really
-    // wasn't supposed to be like this","but ever since *that* thing happened-",
-    // 4, "???"); sleep(2); showMessage("Well, where are my manners!","My name
-    // is [redacted]... and I will be your guide to your [redacted] journey
-    // through the-", 3, "???"); // replace with gibberish sleep(3);
-    // showMessage("What?","You don't know why you're here?", 3, "???");
-    // sleep(3);
-    // showMessage("That's strange","This has never happened before...", 2,
-    // "???"); sleep(3); showMessage("Oh, OH, maybe...","", 0, "???"); sleep(3);
-    // showMessage("the \033[33mprohphecy\033[0m...","it can't be..... can
-    // it....?", 0, "???"); sleep(5); showMessage("TELL ME YOUR NAME WANDERER!
-    // AT THIS INSTANT!", "", 0, "???"); string name; cout << ">> ";
-    // getline(cin, name);
-    // player.createPlayer(name);
-    // showMessage("checking database....","really checking database.....", 2);
-    // sleep(3);
-    // showMessage("This is really strange...","I can't seem to find your
-    // name.", 2, "???"); sleep(3); showMessage("\033[32m[DATABASE BREACH.
-    // SEARCHING UNAUTHORIZED INFORMATION. SELF-DESTRUCT INITIATE]\033[0m", "",
-    // 2, "SYSTEM42"); sleep(2); showMessage("Oh no... run away, wanderer.","You
-    // are not supposed to be here.. the prophecy...", 2, "???"); sleep(2);
-    // showMessage("", name, 0, "???");
-    // showMessage("!! GET AWAY FROM THIS PLACE -- CLOSE THE TERMINAL! AT THIS
-    // INSTANT-","", 0, "???");
-    //
     cout << "First Boot Cutsence here..." << endl;
 
     ifstream ip("assets/FirstBoot.csv");
@@ -876,6 +848,141 @@ public:
     marketBootCutscene(player);
     player.sellerMarketBoot.occured = true;
     player.sellerMarketBoot.timesOccured++;
+  }
+
+  void VivanCakeEvent1(Player &player)
+  {
+    ifstream ip("assets/VivianCake1.csv");
+
+    if (!ip.is_open())
+      cerr << "ERROR: files corrupted?" << endl;
+
+    vector<dialogue> firstBoot;
+    string content;
+    string author;
+    while (ip.good()) {
+      getline(ip, author, ',');
+      getline(ip, content, '\n');
+      // cout << "dialogue: " << content << endl;
+      // cout << "author: " << author << endl;
+
+      size_t pos = content.find("$player_name"); // to replace playername;
+
+      if (pos != string::npos) {
+        content.replace(content.find("$player_name"),
+                        sizeof("$player_name") - 1, player.name);
+      }
+      pos = content.find(";"); // to get commas
+      if (pos != string::npos) {
+        content.replace(content.find(";"), sizeof(";") - 1, ",");
+      }
+
+      if (author == "Achievement") {
+        achievementMessage(content);
+        player.wallet += 250;
+        sleep(1);
+        continue;
+      }
+      showDialogue(author, content);
+    }
+  }
+
+  void VivanCakeEvent2(Player &player)
+  {
+    ifstream ip("assets/VivianCake2.csv");
+
+    if (!ip.is_open())
+      cerr << "ERROR: files corrupted?" << endl;
+
+    vector<dialogue> firstBoot;
+    string content;
+    string author;
+    while (ip.good()) {
+      getline(ip, author, ',');
+      getline(ip, content, '\n');
+      // cout << "dialogue: " << content << endl;
+      // cout << "author: " << author << endl;
+
+      size_t pos = content.find("$player_name"); // to replace playername;
+
+      if (pos != string::npos) {
+        content.replace(content.find("$player_name"),
+                        sizeof("$player_name") - 1, player.name);
+      }
+      pos = content.find(";"); // to get commas
+      if (pos != string::npos) {
+        content.replace(content.find(";"), sizeof(";") - 1, ",");
+      }
+
+      if (author == "Achievement") {
+        achievementMessage(content);
+        player.blackBerryCake.count++;
+        player.blackBerryCake.totalCount++;
+        sleep(1);
+        continue;
+      }
+      showDialogue(author, content);
+    }
+  }
+
+  void VivianCakeEvent3(Player &player)
+  {
+    int rand = randInt(0, 100);
+    string filename;
+    if(rand <= 15)
+    {
+      filename = "assets/VivianCake3good.csv";
+    } else {
+      filename = "assets/VivianCake3bad.csv";
+    }
+      ifstream ip(filename);
+
+    if (!ip.is_open())
+      cerr << "ERROR: files corrupted?" << endl;
+
+    vector<dialogue> firstBoot;
+    string content;
+    string author;
+    while (ip.good()) {
+      getline(ip, author, ',');
+      getline(ip, content, '\n');
+      // cout << "dialogue: " << content << endl;
+      // cout << "author: " << author << endl;
+
+      size_t pos = content.find("$player_name"); // to replace playername;
+
+      if (pos != string::npos) {
+        content.replace(content.find("$player_name"),
+                        sizeof("$player_name") - 1, player.name);
+      }
+      pos = content.find(";"); // to get commas
+      if (pos != string::npos) {
+        content.replace(content.find(";"), sizeof(";") - 1, ",");
+      }
+
+      if (author == "Achievement") {
+        achievementMessage(content);
+        player.blackBerryCake.count++;
+        player.blackBerryCake.totalCount++;
+        sleep(1);
+        continue;
+      }
+      showDialogue(author, content);
+    }
+  }
+
+  void vivanCakeEvent(Player &player)
+  {
+    if(!player.vivanCake1.occured)
+    { 
+      VivanCakeEvent1(player);
+      player.vivanCake1.occured = true;
+      player.railwayStationUnlock.occured = true;
+    }
+    if(player.vivanCake1.occured && player.vivanCake2.occured)
+    {
+      VivianCakeEvent3(player);
+    }
   }
 };
 
@@ -1796,6 +1903,15 @@ public:
   }
 
   void enter(Player &player) {
+
+    if(player.bankBoot.occured && player.guildUnlocked.occured && (player.bankBalance >= 1000 || player.wallet >= 1000) && !player.railwayStationUnlock.occured)
+    {
+      //TODO
+      Events event;
+      event.vivanCakeEvent(player);
+      return;
+    }
+
     if (!player.bankBoot.occured && player.wallet >= 200) {
       bankBoot(player);
       
