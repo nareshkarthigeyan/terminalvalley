@@ -1,12 +1,15 @@
 {
-    "bankBalance": 1231.3299560546875,
+    "badges": [
+        "Vivian's Blueberry cake"
+    ],
+    "bankBalance": 0.0,
     "bankBoot": {
         "occured": true,
-        "ready": true,
-        "timesOccured": 45
+        "ready": false,
+        "timesOccured": 5
     },
     "bankOnLunchBreak": {
-        "occured": false,
+        "occured": true,
         "ready": false,
         "timesOccured": 0
     },
@@ -45,13 +48,13 @@
     },
     "coal": {
         "buyPrice": 5.6,
-        "count": 144,
+        "count": 0,
         "luckFactor": 1.0,
         "name": "Coal",
         "rareity": 0.7200000286102295,
         "rareityString": "",
-        "sellPrice": 1.7799968188490893,
-        "totalCount": 394,
+        "sellPrice": 0.0,
+        "totalCount": 0,
         "xp": 4.110000133514404
     },
     "copper": {
@@ -71,10 +74,10 @@
         "hasInsurance": false
     },
     "currentCity": {
-        "atCity": false,
-        "code": "SXCY",
-        "name": "Syntax City",
-        "platformCount": 5
+        "atCity": true,
+        "code": "TRML",
+        "name": "Terminille",
+        "platformCount": 4
     },
     "diamond": {
         "buyPrice": 2800.53,
@@ -94,19 +97,19 @@
         "name": "Dirt",
         "rareity": 0.8500000238418579,
         "rareityString": "",
-        "sellPrice": 0.5836559133820278,
-        "totalCount": 197,
+        "sellPrice": 0.0,
+        "totalCount": 0,
         "xp": 1.3799999952316284
     },
     "dualItems": {
-        "occured": false,
+        "occured": true,
         "ready": false,
         "timesOccured": 0
     },
     "firstBoot": {
         "occured": true,
         "ready": false,
-        "timesOccured": 13
+        "timesOccured": 2
     },
     "firstTime": true,
     "fishingRod": {
@@ -296,13 +299,13 @@
         "name": "Granite",
         "rareity": 0.5799999833106995,
         "rareityString": "",
-        "sellPrice": 3.223846164166587,
-        "totalCount": 154,
+        "sellPrice": 0.0,
+        "totalCount": 0,
         "xp": 5.179999828338623
     },
     "guildUnlocked": {
         "occured": true,
-        "ready": true,
+        "ready": false,
         "timesOccured": 0
     },
     "hardRock": {
@@ -320,7 +323,7 @@
     "homeLessManBoot": {
         "occured": true,
         "ready": false,
-        "timesOccured": 2
+        "timesOccured": 0
     },
     "inventoryUnlock": {
         "occured": true,
@@ -334,8 +337,8 @@
         "name": "Iron",
         "rareity": 0.3100000023841858,
         "rareityString": "",
-        "sellPrice": 18.021719024191285,
-        "totalCount": 12,
+        "sellPrice": 0.0,
+        "totalCount": 0,
         "xp": 11.210000038146973
     },
     "jellyfish": {
@@ -349,9 +352,9 @@
         "totalCount": 0,
         "xp": 56.5
     },
-    "level": 3,
+    "level": 1,
     "loansUnlocked": {
-        "occured": false,
+        "occured": true,
         "ready": false,
         "timesOccured": 0
     },
@@ -366,7 +369,7 @@
         "totalCount": 0,
         "xp": 69.69000244140625
     },
-    "luck": 0.7289999723434448,
+    "luck": 1.0,
     "magma": {
         "buyPrice": 7200.33,
         "count": 0,
@@ -383,81 +386,8 @@
         "ready": false,
         "timesOccured": 0
     },
-    "name": "Naaaaaar",
-    "objectives": [
-        {
-            "completed": false,
-            "description": "Give him atleast $5. He may be your guardian angel!",
-            "messageShownTimes": 0,
-            "name": "Donate to homelessman",
-            "reward": 0.0,
-            "xpReward": 1.75
-        },
-        {
-            "completed": false,
-            "description": "",
-            "messageShownTimes": 0,
-            "name": "",
-            "reward": 0.0,
-            "xpReward": 0.0
-        },
-        {
-            "completed": false,
-            "description": "",
-            "messageShownTimes": 0,
-            "name": "",
-            "reward": 0.0,
-            "xpReward": 0.0
-        },
-        {
-            "completed": false,
-            "description": "",
-            "messageShownTimes": 0,
-            "name": "",
-            "reward": 0.0,
-            "xpReward": 0.0
-        },
-        {
-            "completed": false,
-            "description": "",
-            "messageShownTimes": 0,
-            "name": "",
-            "reward": 0.0,
-            "xpReward": 0.0
-        },
-        {
-            "completed": false,
-            "description": "",
-            "messageShownTimes": 0,
-            "name": "",
-            "reward": 0.0,
-            "xpReward": 0.0
-        },
-        {
-            "completed": false,
-            "description": "Upgrade your wallet limit in the bank! More cash flow can't hurt!",
-            "messageShownTimes": 0,
-            "name": "Upgrade your wallet",
-            "reward": 0.0,
-            "xpReward": 2.950000047683716
-        },
-        {
-            "completed": false,
-            "description": "Buy a cake for vivian from Syntax City, you're in for a surprise!",
-            "messageShownTimes": 0,
-            "name": "Vivian's Hunger",
-            "reward": 1000.0,
-            "xpReward": 17.559999465942383
-        },
-        {
-            "completed": false,
-            "description": "",
-            "messageShownTimes": 0,
-            "name": "",
-            "reward": 0.0,
-            "xpReward": 0.0
-        }
-    ],
+    "name": "Naresh",
+    "objectives": [],
     "octopusLeg": {
         "buyPrice": 37.48,
         "count": 0,
@@ -650,13 +580,13 @@
         ]
     },
     "playerCreditCardUnlock": {
-        "occured": false,
+        "occured": true,
         "ready": false,
         "timesOccured": 0
     },
     "playerWalletUpgrade": {
-        "occured": false,
-        "ready": true,
+        "occured": true,
+        "ready": false,
         "timesOccured": 0
     },
     "quitMineUnlock": {
@@ -671,13 +601,13 @@
     },
     "rock": {
         "buyPrice": 2.75,
-        "count": 284,
+        "count": 0,
         "luckFactor": 1.0,
         "name": "Rock",
         "rareity": 0.75,
         "rareityString": "",
-        "sellPrice": 0.8235350588151169,
-        "totalCount": 474,
+        "sellPrice": 0.0,
+        "totalCount": 0,
         "xp": 2.75
     },
     "ruby": {
@@ -715,11 +645,11 @@
     },
     "sellerMarketBoot": {
         "occured": true,
-        "ready": true,
-        "timesOccured": 1
+        "ready": false,
+        "timesOccured": 0
     },
     "shopUnlock": {
-        "occured": false,
+        "occured": true,
         "ready": false,
         "timesOccured": 0
     },
@@ -757,7 +687,7 @@
         "xp": 11.180000305175781
     },
     "timesFished": 0,
-    "timesMined": 499,
+    "timesMined": 0,
     "tin": {
         "buyPrice": 71.42,
         "count": 0,
@@ -813,8 +743,8 @@
         "totalCount": 0,
         "xp": 1.6799999475479126
     },
-    "wallet": 1422.0015983581543,
-    "walletLimit": 1000.0,
+    "wallet": 0.0,
+    "walletLimit": 300.0,
     "whaleTooth": {
         "buyPrice": 10000.0,
         "count": 0,
@@ -828,16 +758,16 @@
     },
     "wood": {
         "buyPrice": 3.25,
-        "count": 365,
+        "count": 0,
         "luckFactor": 1.0,
         "name": "Wood",
         "rareity": 0.6800000071525574,
         "rareityString": "",
-        "sellPrice": 1.1184682985135315,
-        "totalCount": 441,
+        "sellPrice": 0.0,
+        "totalCount": 0,
         "xp": 3.2100000381469727
     },
-    "xp": 1713.1200112104416,
+    "xp": 0.0,
     "xpToLvl": [
         300,
         1500,

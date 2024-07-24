@@ -102,6 +102,7 @@ public:
   int interactionCount;
   vector<string> dialogues;
   int heartPoints{0};
+  float money {0};
 
   NLOHMANN_DEFINE_TYPE_INTRUSIVE(NPC, name, description, interactionCount,
                                  dialogues, heartPoints)
@@ -398,6 +399,7 @@ public:
   int level{1};
   array<int, 7> xpToLvl = {300, 1500, 4750, 8900, 15000, 25000, 50000};
   city currentCity = Terminille;
+  vector<string> badges;
 
   int timesFished;
 
@@ -439,6 +441,12 @@ public:
          << xpToLvl[level - 1] << "\nLuck: " << luck
          << "\nWallet: " << moneyAsString(wallet, 2, "$") << " / $"
          << walletLimit << endl;
+
+         cout << "Achievements: " << endl;
+         for(auto item: badges)
+         {
+          cout << "\t" << item << endl;
+         }
 
     // getObjectives();
     // cout << "Objectives: " << endl;
@@ -602,7 +610,7 @@ public:
       mineDetailsUnlock, quitMineUnlock, dualItems, shopUnlock, bankBoot,
       bankOnLunchBreak, loansUnlocked, playerCreditCardUnlock,
       playerWalletUpgrade, sellerMarketBoot, guildUnlocked,
-      railwayStationUnlock)
+      railwayStationUnlock, badges)
 };
 
 NPC Vivian = {"Vivian", "Bank Handler", 0};
@@ -929,11 +937,13 @@ public:
   {
     int rand = randInt(0, 100);
     string filename;
-    if(rand <= 15)
+    if(rand > 15)
     {
       filename = "assets/VivianCake3good.csv";
+      player.badges.push_back("Vivian's Blueberry cake");
     } else {
       filename = "assets/VivianCake3bad.csv";
+      player.badges.push_back("Vivian's Smushed cake");
     }
       ifstream ip(filename);
 
@@ -1904,7 +1914,7 @@ public:
 
   void enter(Player &player) {
 
-    if(player.bankBoot.occured && player.guildUnlocked.occured && (player.bankBalance >= 1000 || player.wallet >= 1000) && !player.railwayStationUnlock.occured)
+    if((player.bankBoot.occured && player.guildUnlocked.occured && (player.bankBalance >= 1000 || player.wallet >= 1000) && !player.railwayStationUnlock.occured) || player.vivanCake1.occured && player.vivanCake2.occured && !player.vivanCake3.occured)
     {
       //TODO
       Events event;

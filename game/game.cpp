@@ -417,10 +417,11 @@ player.fishingRod.level = 1;
   npcDialogueInit(player);
 
   //remove this:
-  player.currentCity.name = "Syntax City";
+  player.currentCity.name = "Terminille";
   player.vivianCake.occured = false;
   player.vivanCake1.occured = true;
-  player.vivanCake2.occured = false;
+  player.vivanCake2.occured = true;
+  player.vivanCake3.occured = false;
   player.railwayStationUnlock.occured = true;
 
   while (true) {
@@ -443,6 +444,7 @@ player.fishingRod.level = 1;
     if (!player.homeLessManBoot.occured && player.wallet > 0 &&
         player.currentCity.name == Terminille.name) {
       player.homeLessManBoot.occured = true;
+      player.badges.push_back("Guardian Angel");
     }
     if ((player.homeLessManBoot.occured) &&
         (player.currentCity.name == Terminille.name)) {
