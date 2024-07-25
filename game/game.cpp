@@ -320,6 +320,11 @@ void mine(Player &player) {
 }
 
 void triggerHomelessMan(Player &player) {
+  if(HomelessMan.interactionCount == 0)
+  {
+    achievementMessage("+ Guardian Angel Badge");
+    player.badges.push_back("Gueardian Angel");
+  }
   int random = randInt(1, 100);
 
   if (random <= 6) // change to 6;
@@ -328,7 +333,7 @@ void triggerHomelessMan(Player &player) {
     char res;
 
     while (true) {
-      res = getPlayerResponse("a) Give him money\nb) Ignore");
+      res = getPlayerResponse("a) Give him money\nb) Play Rock Paper Scissors\nc) Ignore");
       if (res == 'a') {
         float amount;
         cout << "Enter amount ( You have: $" << moneyAsString(player.wallet)
@@ -338,7 +343,7 @@ void triggerHomelessMan(Player &player) {
         if (amount <= 0) {
           // cout << "walking away..." << endl;
           // sleep(2);
-          res = 'b';
+          res = 'c';
         } else if (amount > player.wallet) {
           achievementMessage("Insufficient Funds with you. Irony.");
           achievementMessage("\t+ 0.01 luck for the good intent\t");
@@ -362,7 +367,56 @@ void triggerHomelessMan(Player &player) {
         }
       }
 
-      if (res == 'b') {
+      if(res == 'b')
+      {
+         int rock = 0;
+         int paper = 1;
+         int scissors = 2;
+
+         int rand = randInt(0, 2);
+
+         int playerRes;
+
+         char response = getPlayerResponse("Choose your move:\na)Rock\nb)Paper\nc)Scissors");
+         switch (response)
+         {
+          case 'a':
+          playerRes = 0;
+          break;
+          case 'b':
+          playerRes = 1;
+          break;
+          case 'c':
+          playerRes = 2;
+          break;
+         }
+
+         if(playerRes == rand)
+         {
+          cout << "Game tied." << endl;
+          sleep(1);
+          return;
+         } else if (playerRes - res ==  1 || playerRes - res == -2)
+         {
+          cout << "You win." << endl;
+          float luckUp =
+              0.1 + ((float)(randInt(10, 90) * player.wallet / randInt(50, 60)) / 100);
+            player.luck += luckUp;
+            ostringstream message;
+            message << "\t + " << luckUp << " Player Luck!\t";
+            achievementMessage(message.str());
+         } else {
+             cout << "You lose." << endl;
+          float luckUp =
+              0.1 + ((float)(randInt(10, 90) * player.wallet / randInt(50, 60)) / 100);
+            player.luck -= luckUp;
+            ostringstream message;
+            message << "\t - " << luckUp << " Player Luck!\t";
+            achievementMessage(message.str());
+         }
+      }
+
+      if (res == 'c') {
         cout << "walking away..." << endl;
 
         float luckUp = (float)randInt(60, 290) / 1000;
@@ -375,6 +429,7 @@ void triggerHomelessMan(Player &player) {
       }
     }
     player.homeLessManBoot.timesOccured++;
+    HomelessMan.interactionCount++;
   }
 }
 
@@ -402,7 +457,7 @@ int main(void) {
   thread saveThreading(saveThread, ref(running), ref(save), ref(player));
   saveThreading.detach();
 
-player.fishingRod.level = 1;
+// player.fishingRod.level = 1;
 
   if (!player.firstBoot.occured) {
     Events event;
@@ -438,7 +493,6 @@ player.fishingRod.level = 1;
     if (!player.homeLessManBoot.occured && player.wallet > 0 &&
         player.currentCity.name == Terminille.name) {
       player.homeLessManBoot.occured = true;
-      player.badges.push_back("Guardian Angel");
     }
     if ((player.homeLessManBoot.occured) &&
         (player.currentCity.name == Terminille.name)) {

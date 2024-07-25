@@ -39,7 +39,7 @@ struct tool {
   string name;
   int level{0};
   float health{100};
-  vector<int> waitTimeByLevel = {0, 5, 4, 3, 2}; // to change
+  vector<int> waitTimeByLevel = {6, 5, 4, 3, 2}; // to change
   array<array<item, 2>, 5> required;
   array<array<int, 2>, 5> requiredCount;
   vector<long double> upgradeCost = {250, 1200, 2800, 8500, 17999};
@@ -79,7 +79,7 @@ class Objective
 
 class event {
   public: 
-  bool occured{true}; // change to false before game
+  bool occured{false}; // change to false before game
   int timesOccured{0};
   Objective objective;
   bool ready = {false};
@@ -106,7 +106,7 @@ public:
   float money {0};
 
   NLOHMANN_DEFINE_TYPE_INTRUSIVE(NPC, name, description, interactionCount,
-                                 dialogues, heartPoints)
+                                 dialogues, heartPoints, money)
 };
 
 struct city {
@@ -395,8 +395,8 @@ public:
                                    hasInsurance)
   } creditcard;
   float luck{1};
-  int timesMined;
-  long double xp;
+  int timesMined {0};
+long double xp {0};
   int level{1};
   array<int, 7> xpToLvl = {300, 1500, 4750, 8900, 15000, 25000, 50000};
   city currentCity = Terminille;
@@ -792,7 +792,7 @@ public:
     player.sellerMarketBoot.timesOccured++;
   }
 
-  void VivanCakeEvent1(Player &player)
+  void vivianCakeEvent1(Player &player)
   {
     ifstream ip("assets/cakeEvent1.csv");
 
@@ -829,7 +829,7 @@ public:
     }
   }
 
-  void VivanCakeEvent2(Player &player)
+  void vivianCakeEvent2(Player &player)
   {
     ifstream ip("assets/cakeEvent2.csv");
 
@@ -913,9 +913,10 @@ public:
       }
       showDialogue(author, content);
     }
+    player.vivianCake3.occured = true;
   }
 
-  void vivanCakeEvent(Player &player)
+  void vivianCakeEvent(Player &player)
   {
     if(!player.cakeEventStart.occured)
     { 
@@ -990,25 +991,25 @@ public:
 
     switch (player.timesMined) {
     case 1:
-      showMessage("This might take a while...", "", 0);
+      achievementMessage("This might take a while...");
       break;
     case 3:
-      showMessage("The items you mine would be stored in your inventory...",
-                  "click 'i' on the prompt menu to access it.", 1);
+      achievementMessage("The items you mine would be stored in your inventory...");
+      sleep(1);
+      achievementMessage( "click 'i' on the prompt menu to access it.");
       player.inventoryUnlock.occured = true;
       break;
     case 6:
-      showMessage("Mining takes so long...",
-                  "If only there was a way to speed things up...", 1);
+      achievementMessage("Mining takes so long...");
+      sleep(1);
+      achievementMessage("If only there was a way to speed things up...");
       break;
     case 9:
-      showMessage("To get details about your position in the mine, enter 'd' "
-                  "into the terminal when in the mine.",
-                  "", 0);
+      achievementMessage("To get details about your position in the mine, enter 'd' into the terminal when in the mine.");
       player.mineDetailsUnlock.occured = true;
       break;
     case 10:
-      showMessage("And you can quit the mine by entering 'q'.", "", 0);
+      achievementMessage("You can quit the mine by entering 'q'.");
       player.quitMineUnlock.occured = true;
       break;
     case 15:
@@ -1183,6 +1184,14 @@ public:
       int count = (randInt(1, itemCountByLevel) * selecteditem->rareity) + 1;
 
       cout << "\t" << count << " pieces of " << selecteditem->name << endl;
+      
+      if(selecteditem->totalCount == 0)
+      {
+            ostringstream message;
+            message << "You unlocked - " << selecteditem->name;
+            achievementMessage(message.str());
+      }
+
       player.incrementItemCount(selecteditem->name, count);
       player.addXP(selecteditem->xp);
 
@@ -1221,6 +1230,10 @@ public:
       }
       if (res == 'q' && player.quitMineUnlock.occured) {
         break;
+      }
+      if (res == 'p')
+      {
+        player.display();
       }
       if (res != 'm') {
         continue;
@@ -1419,7 +1432,12 @@ public:
     sleep(1);
     showDialogue(Manjunath.name, getDialogue(Manjunath), 1);
     //  showMessage(getDialogue(Manjunath), "", 2, Manjunath.name);
-    cout << "s) SELL\nb) BUY\nq) Quit market";
+    if(player.level < 2)
+    {
+      cout << "s) Sell\nq) Quit market";
+    } else {
+      cout << "s) Sell\nb) Buy\nq) Quit market";
+    }
     char res = getPlayerResponse();
 
     if (res == 's') {
@@ -1428,15 +1446,15 @@ public:
         sell(player);
 
         char r;
-        cout << "Quit Market? (y)\n>> ";
+        cout << "Continue Selling? (y/n)\n>> ";
         cin >> r;
 
-        if (r == 'y') {
+        if (r == 'n') {
           break;
         }
       }
 
-    } else if (res == 'b') {
+    } else if (res == 'b' && player.level > 1) {
       buy(player);
     }
   }
@@ -1721,7 +1739,7 @@ public:
       if (depositAmount == 0) {
         return;
       }
-      if (depositAmount <= player.walletLimit) {
+      if (depositAmount - 0.01 <= player.wallet) {
         cout << "Transferring funds..." << endl;
         sleep(1);
         player.bankBalance += depositAmount;
@@ -1852,7 +1870,7 @@ public:
     {
       //TODO
       Events event;
-      event.vivanCakeEvent(player);
+      event.vivianCakeEvent(player);
       return;
     }
 
