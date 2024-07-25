@@ -15,6 +15,7 @@
 #define WEIGHT 1
 
 using namespace std;
+using json = nlohmann::json;
 
 class item {
 public:
@@ -92,7 +93,7 @@ class event {
 
   
 
-  NLOHMANN_DEFINE_TYPE_INTRUSIVE(event, occured, timesOccured, ready);
+  NLOHMANN_DEFINE_TYPE_INTRUSIVE(event, occured, timesOccured, objective, ready);
 };
 
 class NPC {
@@ -168,7 +169,7 @@ public:
   item squid = {"Squid", 0, 0.35, 15.85, 11.18, rareityString[3]};
   item octopusLeg = {"Octopus Leg", 0, 0.21, 37.48, 21.11, rareityString[3]};
   item jellyfish = {"Jellyfish", 0, 0.18, 118.21, 56.5, rareityString[4]};
-  item lobser = {"Lobster", 0, 0.17, 150.00, 69.69, rareityString[4]};
+  item lobster = {"Lobster", 0, 0.17, 150.00, 69.69, rareityString[4]};
   item pearl = {"Pearl", 0, 0.10, 785, 99.5, rareityString[5]};
   item whaleTooth = {"Blue Whale's tooth", 0, 0.09, 10000, 1500,
                      rareityString[6]};
@@ -185,7 +186,7 @@ public:
   vector<item> getFishItems() {
     vector<item> items = {soakedBoot, seashell,   usedEarphones, usedCondom,
                           salmon,     clownfish,  tuna,          trout,
-                          squid,      octopusLeg, jellyfish,     lobser,
+                          squid,      octopusLeg, jellyfish,     lobster,
                           pearl,      whaleTooth};
     return items;
   }
@@ -194,7 +195,7 @@ public:
     vector<item *> items = {
         &soakedBoot, &seashell, &usedEarphones, &usedCondom, &salmon,
         &clownfish,  &tuna,     &trout,         &squid,      &octopusLeg,
-        &jellyfish,  &lobser,   &pearl,         &whaleTooth};
+        &jellyfish,  &lobster,   &pearl,         &whaleTooth};
     return items;
   }
 
@@ -323,7 +324,7 @@ public:
                                  blackStone, magma, bedrock, soakedBoot,
                                  seashell, usedEarphones, usedCondom, salmon,
                                  clownfish, tuna, trout, squid, octopusLeg,
-                                 jellyfish, lobser, pearl, whaleTooth);
+                                 jellyfish, lobster, pearl, whaleTooth);
 };
 
 class PlayerEvents {
@@ -349,10 +350,10 @@ public:
   event loansUnlocked;
   event playerCreditCardUnlock;
   event playerWalletUpgrade;
-  event vivianCake;
-  event vivanCake1; //First cutscene
-  event vivanCake2; //Second cutscene
-  event vivanCake3; //final cutscene
+  event cakeEvent;
+  event cakeEventStart; //First cutscene
+  event cakeEventMid; //Second cutscene
+  event cakeEventEnd; //final cutscene
 
   // market events
   event sellerMarketBoot;
@@ -369,13 +370,13 @@ public:
   {
     vector <event*> playerEvents = {&firstBoot, &homeLessManBoot, &donateToHomeLessMan, &inventoryUnlock, &mineDetailsUnlock, &quitMineUnlock,
                                     &dualItems, &shopUnlock, &bankBoot, &bankOnLunchBreak, &loansUnlocked,&playerCreditCardUnlock,&playerWalletUpgrade,
-                                    &vivianCake, &sellerMarketBoot,&guildUnlocked,&railwayStationUnlock};
+                                    &cakeEvent, &sellerMarketBoot,&guildUnlocked,&railwayStationUnlock, &cakeEventStart, &cakeEventMid, &cakeEventEnd};
     return playerEvents;
   }
 
   NLOHMANN_DEFINE_TYPE_INTRUSIVE(PlayerEvents, firstBoot, homeLessManBoot, donateToHomeLessMan, inventoryUnlock, mineDetailsUnlock, quitMineUnlock,
                                     dualItems, shopUnlock, bankBoot, bankOnLunchBreak, loansUnlocked,playerCreditCardUnlock,playerWalletUpgrade,
-                                    vivianCake, sellerMarketBoot,guildUnlocked,railwayStationUnlock, vivanCake1, vivanCake2, vivanCake3)
+                                    cakeEvent, sellerMarketBoot,guildUnlocked,railwayStationUnlock, cakeEventStart, cakeEventMid, cakeEventEnd)
 };
 
 
@@ -447,17 +448,6 @@ public:
          {
           cout << "\t" << item << endl;
          }
-
-    // getObjectives();
-    // cout << "Objectives: " << endl;
-
-    // for(auto &obj: objectives){
-    //     cout << "\t" << obj.name << ": " << obj.description << endl;
-    //       if(obj.reward > 0);
-    //       {
-    //         cout << "\t" << "Reward: " << moneyAsString(obj.reward, 2, "$") << endl;
-    //       }
-    // }
   }
 
   bool depositToWallet(float amount) {
@@ -543,74 +533,18 @@ public:
   }
 
 
-  // void getObjectives()
-  // {
-  //   vector<Objective> obj;
-
-  //   // Objective marketBootObjective = {"Unlock Market", "Mine atleast 15 times to unlock selling and seller's market, and meet manjunath!", sellerMarketBoot, 0, false, true};
-  //   // Objective bankBootObjective = {"Create a bank account", "Open a bank account", sellerMarketBoot, 0, false, true};
-
-  //   Objective marketBootObjective = {"Unlock Market", "Mine atleast 15 times to unlock selling and seller's market, and meet manjunath.", true, false, 0, 5.56 };
-  //   Objective bankBootObjective = {"Open a bank account", "Go to the bank with atleast $200 in your wallet and meet Vivian.", true, false, 0 , 8.53};
-  //   Objective walletUpgradeObjective1 = {"Upgrade your wallet to $1000", "Wallet limits are low! Upgrade your wallet limit.", true, false, 0 , 6.53};
-  //   Objective guildBootObjective = {"Buy a pickaxe", "Visit the guild with the right amount of resources and money and buy a pickaxe to speed up your mining!", true, false, 0 , 11.53};
-  //   if(!sellerMarketBoot.occured)
-  //   {
-  //     objectives.push_back(marketBootObjective);
-  //   }
-  //   if(!bankBoot.occured && marketBootObjective.completed);
-  //   {
-  //     objectives.push_back(bankBootObjective);
-  //   }
-  //   if(bankBootObjective.completed)
-  //   {
-  //     objectives.push_back(walletUpgradeObjective1);
-  //   }
-  //   if(guildUnlocked.occured)
-  //   {
-  //     objectives.push_back(guildBootObjective);
-  //   }
-  //   return;
-  // };
-
-  void getObjectives(){
-
-    //objective strudture: name, description, unlocked, completed, reward, xpReward, inprgrss
-    if(homeLessManBoot.occured)
-    {
-      donateToHomeLessMan.objective = {"Donate to homelessman", "Give him atleast $5. He may be your guardian angel!", false, 0, 1.75, true};
-    }
-    if (sellerMarketBoot.occured)
-    {
-      bankBoot.objective = {"Open a Bank account", "It's good to have a bank account. Open a bank account! Costs $200.", false, 0, 2.88, true};
-    }
-    if(bankBoot.occured)
-    {
-      bankBoot.trigger();
-    }
-    if(bankBoot.occured && bankOnLunchBreak.timesOccured > 2)
-    {
-      playerWalletUpgrade.objective = {"Upgrade your wallet", "Upgrade your wallet limit in the bank! More cash flow can't hurt!", false, 0, 2.95, true};
-    }
-    if (guildUnlocked.occured)
-    {
-     guildUnlocked.objective = {"Visit the Guild", "Pickaxes are a thing now. Go to guild to buy them!", false, 0, 0.85, true};
-    }
-      vivianCake.objective = {"Vivian's Hunger", "Buy a cake for vivian from Syntax City, you're in for a surprise!", false, 1000, 17.56, true};
-  }
-
-  NLOHMANN_DEFINE_TYPE_INTRUSIVE(
-      Player, name, bankBalance, wallet, walletLimit, creditcard, luck,
-      timesMined, xp, level, xpToLvl, currentCity, timesFished, firstTime, objectives,
-      hasPickaxe, pickaxe, fishingRod, dirt, rock, wood, coal, granite, iron,
-      copper, silver, tin, hardRock, gold, diamond, ruby, blackStone, magma,
-      bedrock, soakedBoot, seashell, usedEarphones, usedCondom, salmon,
-      clownfish, tuna, trout, squid, octopusLeg, jellyfish, lobser, pearl,
-      whaleTooth, firstBoot, homeLessManBoot, inventoryUnlock,
-      mineDetailsUnlock, quitMineUnlock, dualItems, shopUnlock, bankBoot,
-      bankOnLunchBreak, loansUnlocked, playerCreditCardUnlock,
-      playerWalletUpgrade, sellerMarketBoot, guildUnlocked,
-      railwayStationUnlock, badges)
+  // NLOHMANN_DEFINE_TYPE_INTRUSIVE(
+  //     Player, name, bankBalance, wallet, walletLimit, creditcard, luck,
+  //     timesMined, xp, level, xpToLvl, currentCity, timesFished, firstTime, objectives,
+  //     hasPickaxe, pickaxe, fishingRod, dirt, rock, wood, coal, granite, iron,
+  //     copper, silver, tin, hardRock, gold, diamond, ruby, blackStone, magma,
+  //     bedrock, soakedBoot, seashell, usedEarphones, usedCondom, salmon,
+  //     clownfish, tuna, trout, squid, octopusLeg, jellyfish, lobster, pearl,
+  //     whaleTooth, firstBoot, homeLessManBoot, inventoryUnlock,
+  //     mineDetailsUnlock, quitMineUnlock, dualItems, shopUnlock, bankBoot,
+  //     bankOnLunchBreak, loansUnlocked, playerCreditCardUnlock,
+  //     playerWalletUpgrade, sellerMarketBoot, guildUnlocked,
+  //     railwayStationUnlock, badges, cakeEventStart, cakeEventMid, cakeEventEnd, cakeEvent) //can't have more than 64!
 };
 
 NPC Vivian = {"Vivian", "Bank Handler", 0};
@@ -860,7 +794,7 @@ public:
 
   void VivanCakeEvent1(Player &player)
   {
-    ifstream ip("assets/VivianCake1.csv");
+    ifstream ip("assets/cakeEvent1.csv");
 
     if (!ip.is_open())
       cerr << "ERROR: files corrupted?" << endl;
@@ -897,7 +831,7 @@ public:
 
   void VivanCakeEvent2(Player &player)
   {
-    ifstream ip("assets/VivianCake2.csv");
+    ifstream ip("assets/cakeEvent2.csv");
 
     if (!ip.is_open())
       cerr << "ERROR: files corrupted?" << endl;
@@ -933,16 +867,16 @@ public:
     }
   }
 
-  void VivianCakeEvent3(Player &player)
+  void cakeEventEvent3(Player &player)
   {
     int rand = randInt(0, 100);
     string filename;
     if(rand > 15)
     {
-      filename = "assets/VivianCake3good.csv";
+      filename = "assets/cakeEvent3good.csv";
       player.badges.push_back("Vivian's Blueberry cake");
     } else {
-      filename = "assets/VivianCake3bad.csv";
+      filename = "assets/cakeEvent3bad.csv";
       player.badges.push_back("Vivian's Smushed cake");
     }
       ifstream ip(filename);
@@ -983,15 +917,15 @@ public:
 
   void vivanCakeEvent(Player &player)
   {
-    if(!player.vivanCake1.occured)
+    if(!player.cakeEventStart.occured)
     { 
       VivanCakeEvent1(player);
-      player.vivanCake1.occured = true;
+      player.cakeEventStart.occured = true;
       player.railwayStationUnlock.occured = true;
     }
-    if(player.vivanCake1.occured && player.vivanCake2.occured)
+    if(player.cakeEventStart.occured && player.cakeEventMid.occured)
     {
-      VivianCakeEvent3(player);
+      cakeEventEvent3(player);
     }
   }
 };
@@ -1914,7 +1848,7 @@ public:
 
   void enter(Player &player) {
 
-    if((player.bankBoot.occured && player.guildUnlocked.occured && (player.bankBalance >= 1000 || player.wallet >= 1000) && !player.railwayStationUnlock.occured) || player.vivanCake1.occured && player.vivanCake2.occured && !player.vivanCake3.occured)
+    if((player.bankBoot.occured && player.guildUnlocked.occured && (player.bankBalance >= 1000 || player.wallet >= 1000) && !player.railwayStationUnlock.occured) || player.cakeEventStart.occured && player.cakeEventMid.occured && !player.cakeEventEnd.occured)
     {
       //TODO
       Events event;
@@ -2643,5 +2577,103 @@ void fish(Player &player) {
     }
   }
 };
+
+void to_json(json& j, const Player& p) {
+    j = json{
+        {"name", p.name}, {"bankBalance", p.bankBalance}, {"wallet", p.wallet}, 
+        {"walletLimit", p.walletLimit}, {"creditcard", p.creditcard}, {"luck", p.luck}, 
+        {"timesMined", p.timesMined}, {"xp", p.xp}, {"level", p.level}, 
+        {"xpToLvl", p.xpToLvl}, {"currentCity", p.currentCity}, {"timesFished", p.timesFished}, 
+        {"firstTime", p.firstTime}, {"objectives", p.objectives}, {"hasPickaxe", p.hasPickaxe}, 
+        {"pickaxe", p.pickaxe}, {"fishingRod", p.fishingRod}, {"dirt", p.dirt}, 
+        {"rock", p.rock}, {"wood", p.wood}, {"coal", p.coal}, {"granite", p.granite}, 
+        {"iron", p.iron}, {"copper", p.copper}, {"silver", p.silver}, {"tin", p.tin}, 
+        {"hardRock", p.hardRock}, {"gold", p.gold}, {"diamond", p.diamond}, 
+        {"ruby", p.ruby}, {"blackStone", p.blackStone}, {"magma", p.magma}, 
+        {"bedrock", p.bedrock}, {"soakedBoot", p.soakedBoot}, {"seashell", p.seashell}, 
+        {"usedEarphones", p.usedEarphones}, {"usedCondom", p.usedCondom}, {"salmon", p.salmon}, 
+        {"clownfish", p.clownfish}, {"tuna", p.tuna}, {"trout", p.trout}, 
+        {"squid", p.squid}, {"octopusLeg", p.octopusLeg}, {"jellyfish", p.jellyfish}, 
+        {"lobster", p.lobster}, {"pearl", p.pearl}, {"whaleTooth", p.whaleTooth}, 
+        {"firstBoot", p.firstBoot}, {"homeLessManBoot", p.homeLessManBoot}, {"inventoryUnlock", p.inventoryUnlock}, 
+        {"mineDetailsUnlock", p.mineDetailsUnlock}, {"quitMineUnlock", p.quitMineUnlock}, {"dualItems", p.dualItems}, 
+        {"shopUnlock", p.shopUnlock}, {"bankBoot", p.bankBoot}, {"bankOnLunchBreak", p.bankOnLunchBreak}, 
+        {"loansUnlocked", p.loansUnlocked}, {"playerCreditCardUnlock", p.playerCreditCardUnlock}, 
+        {"playerWalletUpgrade", p.playerWalletUpgrade}, {"sellerMarketBoot", p.sellerMarketBoot}, 
+        {"guildUnlocked", p.guildUnlocked}, {"railwayStationUnlock", p.railwayStationUnlock}, 
+        {"badges", p.badges}, {"cakeEventStart", p.cakeEventStart}, {"cakeEventMid", p.cakeEventMid}, 
+        {"cakeEventEnd", p.cakeEventEnd}, {"cakeEvent", p.cakeEvent}
+    };
+}
+
+void from_json(const json& j, Player& p) {
+    j.at("name").get_to(p.name);
+    j.at("bankBalance").get_to(p.bankBalance);
+    j.at("wallet").get_to(p.wallet);
+    j.at("walletLimit").get_to(p.walletLimit);
+    j.at("creditcard").get_to(p.creditcard);
+    j.at("luck").get_to(p.luck);
+    j.at("timesMined").get_to(p.timesMined);
+    j.at("xp").get_to(p.xp);
+    j.at("level").get_to(p.level);
+    j.at("xpToLvl").get_to(p.xpToLvl);
+    j.at("currentCity").get_to(p.currentCity);
+    j.at("timesFished").get_to(p.timesFished);
+    j.at("firstTime").get_to(p.firstTime);
+    j.at("objectives").get_to(p.objectives);
+    j.at("hasPickaxe").get_to(p.hasPickaxe);
+    j.at("pickaxe").get_to(p.pickaxe);
+    j.at("fishingRod").get_to(p.fishingRod);
+    j.at("dirt").get_to(p.dirt);
+    j.at("rock").get_to(p.rock);
+    j.at("wood").get_to(p.wood);
+    j.at("coal").get_to(p.coal);
+    j.at("granite").get_to(p.granite);
+    j.at("iron").get_to(p.iron);
+    j.at("copper").get_to(p.copper);
+    j.at("silver").get_to(p.silver);
+    j.at("tin").get_to(p.tin);
+    j.at("hardRock").get_to(p.hardRock);
+    j.at("gold").get_to(p.gold);
+    j.at("diamond").get_to(p.diamond);
+    j.at("ruby").get_to(p.ruby);
+    j.at("blackStone").get_to(p.blackStone);
+    j.at("magma").get_to(p.magma);
+    j.at("bedrock").get_to(p.bedrock);
+    j.at("soakedBoot").get_to(p.soakedBoot);
+    j.at("seashell").get_to(p.seashell);
+    j.at("usedEarphones").get_to(p.usedEarphones);
+    j.at("usedCondom").get_to(p.usedCondom);
+    j.at("salmon").get_to(p.salmon);
+    j.at("clownfish").get_to(p.clownfish);
+    j.at("tuna").get_to(p.tuna);
+    j.at("trout").get_to(p.trout);
+    j.at("squid").get_to(p.squid);
+    j.at("octopusLeg").get_to(p.octopusLeg);
+    j.at("jellyfish").get_to(p.jellyfish);
+    j.at("lobster").get_to(p.lobster);
+    j.at("pearl").get_to(p.pearl);
+    j.at("whaleTooth").get_to(p.whaleTooth);
+    j.at("firstBoot").get_to(p.firstBoot);
+    j.at("homeLessManBoot").get_to(p.homeLessManBoot);
+    j.at("inventoryUnlock").get_to(p.inventoryUnlock);
+    j.at("mineDetailsUnlock").get_to(p.mineDetailsUnlock);
+    j.at("quitMineUnlock").get_to(p.quitMineUnlock);
+    j.at("dualItems").get_to(p.dualItems);
+    j.at("shopUnlock").get_to(p.shopUnlock);
+    j.at("bankBoot").get_to(p.bankBoot);
+    j.at("bankOnLunchBreak").get_to(p.bankOnLunchBreak);
+    j.at("loansUnlocked").get_to(p.loansUnlocked);
+    j.at("playerCreditCardUnlock").get_to(p.playerCreditCardUnlock);
+    j.at("playerWalletUpgrade").get_to(p.playerWalletUpgrade);
+    j.at("sellerMarketBoot").get_to(p.sellerMarketBoot);
+    j.at("guildUnlocked").get_to(p.guildUnlocked);
+    j.at("railwayStationUnlock").get_to(p.railwayStationUnlock);
+    j.at("badges").get_to(p.badges);
+    j.at("cakeEventStart").get_to(p.cakeEventStart);
+    j.at("cakeEventMid").get_to(p.cakeEventMid);
+    j.at("cakeEventEnd").get_to(p.cakeEventEnd);
+    j.at("cakeEvent").get_to(p.cakeEvent);
+}
 
 #endif

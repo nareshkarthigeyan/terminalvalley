@@ -417,20 +417,14 @@ player.fishingRod.level = 1;
   npcDialogueInit(player);
 
   //remove this:
-  player.currentCity.name = "Terminille";
-  player.vivianCake.occured = false;
-  player.vivanCake1.occured = true;
-  player.vivanCake2.occured = true;
-  player.vivanCake3.occured = false;
-  player.railwayStationUnlock.occured = true;
 
   while (true) {
-    player.getObjectives();
-    if(player.currentCity.name == "Syntax City" && player.vivanCake1.occured && !player.vivanCake2.occured)
+
+    if(player.currentCity.name == "Syntax City" && player.cakeEventStart.occured && !player.cakeEventMid.occured)
     {
       Events event;
       event.VivanCakeEvent2(player);
-      player.vivanCake2.occured = true;
+      player.cakeEventMid.occured = true;
     }
     mainmenu(player);
 
