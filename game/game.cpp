@@ -320,15 +320,15 @@ void mine(Player &player) {
 }
 
 void triggerHomelessMan(Player &player) {
-  if(HomelessMan.interactionCount == 0)
-  {
-    achievementMessage("+ Guardian Angel Badge");
-    player.badges.push_back("Gueardian Angel");
-  }
   int random = randInt(1, 100);
 
   if (random <= 6) // change to 6;
   {
+    if(HomelessMan.interactionCount == 0)
+    {
+      achievementMessage("+ Guardian Angel Badge");
+      player.badges.push_back("Gueardian Angel");
+    }
     showDialogue(HomelessMan.name, getDialogue(HomelessMan));
     char res;
 
@@ -478,7 +478,7 @@ int main(void) {
     if(player.currentCity.name == "Syntax City" && player.cakeEventStart.occured && !player.cakeEventMid.occured)
     {
       Events event;
-      event.VivanCakeEvent2(player);
+      event.vivianCakeEvent2(player);
       player.cakeEventMid.occured = true;
     }
     mainmenu(player);

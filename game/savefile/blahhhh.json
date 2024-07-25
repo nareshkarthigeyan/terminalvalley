@@ -1,5 +1,8 @@
 {
-    "badges": [],
+    "badges": [
+        "Gueardian Angel",
+        "Gueardian Angel"
+    ],
     "bankBalance": 0.0,
     "bankBoot": {
         "objective": {
@@ -191,7 +194,7 @@
         },
         "occured": true,
         "ready": false,
-        "timesOccured": 1
+        "timesOccured": 2
     },
     "firstTime": true,
     "fishingRod": {

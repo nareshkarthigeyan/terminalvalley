@@ -867,7 +867,7 @@ public:
     }
   }
 
-  void cakeEventEvent3(Player &player)
+  void vivianCakeEvent3(Player &player)
   {
     int rand = randInt(0, 100);
     string filename;
@@ -913,20 +913,20 @@ public:
       }
       showDialogue(author, content);
     }
-    player.vivianCake3.occured = true;
+    player.cakeEventEnd.occured = true;
   }
 
   void vivianCakeEvent(Player &player)
   {
     if(!player.cakeEventStart.occured)
     { 
-      VivanCakeEvent1(player);
+      vivianCakeEvent1(player);
       player.cakeEventStart.occured = true;
       player.railwayStationUnlock.occured = true;
     }
     if(player.cakeEventStart.occured && player.cakeEventMid.occured)
     {
-      cakeEventEvent3(player);
+      vivianCakeEvent3(player);
     }
   }
 };
