@@ -1,0 +1,50 @@
+Achievement,Syntax City Unlocked!
+???,[turns around]
+???,[on the phone] uhm... yes dear; I think I see that person.
+???,[oh the phone] The one with the horrible pants-! I think they heard me!
+???,[on the phone] ah; vivi calm down dear. I got this.
+???,[hangs up]...[turns to you]
+???,Ahem; hello... you must be $player_name
+???,I'm vivi- I mean; vivan's aunt. She must have mentioned me.
+Vivian's Aunt,It's a pleasure to meet you! Vivi has told me so many things about you on the phone
+Vivian's Aunt,Oops; I wasn't supposed to tell you that-
+Vivian's Aunt,Keep it a secret; okay?
+Vivian's Aunt,Anyways; this is the cake you I had to give her!
+Achievement,+1 Vivan's Blackberry Cake
+Vivian's Aunt,Here; I have some for you as well...
+Vivian's Aunt,No; it's alright! I want you to have some
+Vivian's Aunt,I have cake in excess anyway! So go on.. eat it...
+Vivian's Aunt,Go on....
+Vivian's Aunt,[watches you to eat]
+Vivian's Aunt,....what? It's good? It reminds you of your mom's cooking?
+Vivian's Aunt,hahaha... you don't have to flatter me so much
+Vivian's Aunt,hahahaha [tears up] it's not that good...
+Vivian's Aunt,No one's ever complimented me about this
+Vivian's Aunt,Thank you so much; $player_name!
+Vivian's Aunt,[Holds your hands and cries] I take it back! Your pants are amazing!
+??,[from behind]... honey.. are you crying?
+??,HEY THERE! WHAT ARE YOU DOING TO MY WIFE!
+Vivian's Aunt,...no honey; this is Vivian's friend $player_name; He's here to pick up the cake
+??,Ah... I see how it is... apologies; young soul.
+??,[Turns to you]
+??,I am Smith; a retired navy seal
+Veteran Smith,I've put the army days behind my back; owning a fish shop is what I do now
+Veteran Smith,Fishing is such a calm; peaceful way to spend your retirement.
+Veteran Smith,Say what; do you wanna learn fishing? I could really do some good company.
+Veteran Smith,You can sell me what you catch for a good price too!
+Vivian's Aunt,Ah; honey... it's time...
+Veteran Smith,[Turns to his wife] Oh; go ahead.. I'll come..
+Vivian's Aunt,[blushes]
+Vivian's Aunt,[turns to you] $player_name; you can always come to this city for a meal! I promise you that!!
+Vivian's Aunt,bye... [leaves]
+Veteran Smith,[turns to you] Say what; follow me... I'll teach you the ropes of it all
+Achievement,Fishing Unlocked
+Veteran Smith,Here; $player_name... have this
+Achievement,+1 Fishing Rod
+Veteran Smith,It's an old one; really robust and my favourite
+Veteran Smith,I think it's time it belonged to someone worthy...
+Veteran Smith,Let's go to the pond...
+Veteran Smith,$enter_pond
+
+
+ 

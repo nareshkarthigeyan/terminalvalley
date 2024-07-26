@@ -472,6 +472,11 @@ int main(void) {
   npcDialogueInit(player);
 
   //remove this:
+  player.currentCity.name = "Syntax City";
+  player.cakeEventStart.occured = true;
+  player.cakeEventMid.occured = true;
+  player.timesFished = 0;
+  player.fishingRod.level = 1;
 
   while (true) {
 
@@ -480,6 +485,10 @@ int main(void) {
       Events event;
       event.vivianCakeEvent2(player);
       player.cakeEventMid.occured = true;
+    }
+    if(player.currentCity.name == "Syntax City" && player.cakeEventStart.occured && player.cakeEventMid.occured && !player.cakeEventEnd.occured)
+    {
+      achievementMessage("Go to Vivian in Terminille to deliver the cake!");
     }
     mainmenu(player);
 

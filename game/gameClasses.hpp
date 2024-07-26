@@ -79,7 +79,7 @@ class Objective
 
 class event {
   public: 
-  bool occured{false}; // change to false before game
+  bool occured{true}; // change to false before game
   int timesOccured{0};
   Objective objective;
   bool ready = {false};
@@ -157,11 +157,11 @@ public:
       "Very Common", "Pretty Common",         "Common", "Rare", "Very Rare",
       "Atlantis!",   "How did you find this?"};
   // Fishing items:
-  item soakedBoot = {"Soaked Boots", 0, 0.05, 0.79, 1.38, rareityString[0]};
-  item seashell = {"Sea Shell", 0, 0.91, 2.25, 0.11, rareityString[1]};
-  item usedEarphones = {"Used earphones", 0, 0.20, 0.08, 1.68,
+  item soakedBoot = {"Soaked Boots", 0, 0.95, 0.79, 1.38, rareityString[0]};
+  item seashell = {"Sea Shell", 0, 0.90, 2.25, 0.11, rareityString[1]};
+  item usedEarphones = {"Used earphones", 0, 0.90, 0.08, 1.68,
                         rareityString[0]};
-  item usedCondom = {"Used condom", 0, 0.01, 0, 0.1, rareityString[0]};
+  item usedCondom = {"Used condom", 0, 0.65, 0, 0.1, rareityString[0]};
   item salmon = {"Salmon", 0, 0.75, 4.50, 2.79, rareityString[1]};
   item clownfish = {"Clown Fish", 0, 0.74, 5.50, 2.95, rareityString[1]};
   item tuna = {"Tuna", 0, 0.63, 4.99, 3.11, rareityString[2]};
@@ -557,6 +557,7 @@ NPC System42 = {"System42", "Prevents 4th wall breaks.", 0};
 NPC BillMurry = {"Bill Murry", "Weather reporter.", 0};
 NPC Rick = {"Rick", "Guild Master", 0};
 NPC bitwise = {"Mayor Bitwise", "Mayor of the town.", 0};
+NPC veteranSmith = {"Veteran Smith", "A retired Navy Seal, and a fishing expert. He's also Vivian's Uncle. Go to him to sell or buy fishes.", 0};
 
 void npcDialogueInit(Player &player) {
   Vivian.dialogues = {
@@ -689,6 +690,7 @@ class Quest {
 };
 
 void marketBootCutscene(Player &player);
+void fishBootCutscene(Player &player);
 class Events {
 public:
   void FirstBoot(Player &player) {
@@ -742,7 +744,7 @@ public:
       getline(ip, content, '\n');
 
       size_t pos = content.find("$player_name"); // to replace playername;
-      size_t response = content.find("$get_response"); // to replace playername;
+      size_t response = content.find("$get_response"); // to get player input;
 
       if(response != string::npos)
       {
@@ -839,6 +841,7 @@ public:
     vector<dialogue> firstBoot;
     string content;
     string author;
+    player.fishingRod.level = 1;
     while (ip.good()) {
       getline(ip, author, ',');
       getline(ip, content, '\n');
@@ -854,6 +857,16 @@ public:
       pos = content.find(";"); // to get commas
       if (pos != string::npos) {
         content.replace(content.find(";"), sizeof(";") - 1, ",");
+      }
+
+      size_t response = content.find("$enter_pond"); // to get player input;
+
+      if(response != string::npos)
+      {
+        player.cakeEventMid.occured = true;
+        fishBootCutscene(player);
+
+        return;
       }
 
       if (author == "Achievement") {
@@ -1663,6 +1676,7 @@ void marketBootCutscene(Player &player)
     sleep(3);
 }
 
+
 class Bank {
 public:
   long double bankBalance;
@@ -2391,7 +2405,7 @@ public:
 class Pond {
 
 public:
-  int fishingLevels[MAX_FISHIN_LEVELS] = {0, 78, 227, 477, 695, 900};
+  int fishingLevels[MAX_FISHIN_LEVELS] = {0, 18, 69, 185, 256, 512};
 
   int getFishingLevelAsInt(Player &player) {
     int currentFishLevel = 0;
@@ -2412,61 +2426,22 @@ public:
     return currentFishLevel;
   }
 
-    void getFishableCount(Player player, int fishableCount[]) {
+     void getFishableCount(Player player, int fishableCount[]) {
     int fishLevel = getFishingLevelAsInt(player);
-    fishableCount[0] = 0;
     switch (fishLevel) {
-    case 0:
-      fishableCount[0] = 0;
-      fishableCount[1] = 5;
-      break;
-    case 1:
-      fishableCount[0] = 1;
-      fishableCount[1] = 5;
-      break;
-    case 2:
-      fishableCount[0] = 3;
-      fishableCount[1] = 7;
-      break;
-    case 3:
-      fishableCount[0] = 0;
-      fishableCount[1] = 7;
-      break;
-    case 4:
-      fishableCount[0] = 0;
-      fishableCount[1] = 8;
-      break;
-    case 5:
-      fishableCount[0] = 0;
-      fishableCount[1] = 9;
-      break;
-    case 6:
-      fishableCount[0] = 0;
-      fishableCount[1] = 10;
-      break;
-    case 7:
-      fishableCount[0] = 0;
-      fishableCount[1] = 11;
-      break;
-    case 8:
-      fishableCount[0] = 0;
-      fishableCount[1] = 12;
-      break;
-    case 9:
-      fishableCount[0] = 0;
-      fishableCount[1] = 13;
-      break;
-    case 10:
-      fishableCount[0] = 0;
-      fishableCount[1] = 14;
-      break;
-    case 11:
-    case 12:
-      fishableCount[0] = 0;
-      fishableCount[1] = 14;
-      break;
-    default:
-      break;
+      case 0: fishableCount[0] = 0; fishableCount[1] = 5; break;
+      case 1: fishableCount[0] = 1; fishableCount[1] = 7; break;
+      case 2: fishableCount[0] = 3; fishableCount[1] = 8; break;
+      case 3: fishableCount[0] = 3; fishableCount[1] = 8; break;
+      case 4: fishableCount[0] = 4; fishableCount[1] = 9; break;
+      case 5: fishableCount[0] = 4; fishableCount[1] = 10; break;
+      case 6: fishableCount[0] = 5; fishableCount[1] = 11; break;
+      case 7: fishableCount[0] = 5; fishableCount[1] = 12; break;
+      case 8: fishableCount[0] = 5; fishableCount[1] = 13; break;
+      case 9: fishableCount[0] = 5; fishableCount[1] = 14; break;
+      case 10: fishableCount[0] = 5; fishableCount[1] = 14; break;
+      case 11: case 12: fishableCount[0] = 6; fishableCount[1] = 14; break;
+      default: break;
     }
     return;
   }
@@ -2475,8 +2450,8 @@ public:
     int mineLevel = getFishingLevelAsInt(player);
     vector<item *> fishable;
     int fishableCount[2] = {
-        0, 3}; //                         0    1      2    3      4       5 6 7
-               //                         8       9       10      11      12 13
+        0, 3};
+    // getFishableCount(player, fishableCount);
     vector<item *> items =
         player
             .getFishItemsByAddress(); // vector<item> items = {dirt, rock, wood,
@@ -2488,7 +2463,6 @@ public:
                                       // &silver, &tin, &hardRock, &gold,
                                       // &diamond, &ruby, &blackStone, &magma,
                                       // &bedrock};
-    player.caluclateWeights(items);
     getFishableCount(player, fishableCount);
 
     for (int i = 0, j = fishableCount[0]; i < fishableCount[1]; i++, j++) {
@@ -2500,52 +2474,81 @@ public:
 
 void fish(Player &player) {
     int fishableCount[2];
-     getFishableCount(player, fishableCount);
+    getFishableCount(player, fishableCount);
 
-    vector<item *> fishable =
-        getFishable(player); // and caluclate item weights;
+    vector<item *> fishable = getFishable(player); // Calculate item weights
+    player.caluclateWeights(fishable);
 
+//calcuating weights
+    // cout << "Calculating weights..." << endl;
     float totalWeight = 0;
+
     for (int i = 0; i < fishableCount[1]; i++) {
-      totalWeight += fishable[i]->weight;
+      // cout << fishable[i]->rareity << endl;
+        //totalWeight += 1.0f / (fishable[i]->rareity + baseValue); // Adjusted weight calculation
+        totalWeight += fishable[i]->weight;
     }
 
-    int itemRepeatCount = 1;// player.dualItems.occured ? randInt(2, 3) : 1;
-    cout << "You got: " << endl;
+    // float totalWeight = 0;
+    // for (int i = 0; i < fishableCount[1]; i++) {
+    //     totalWeight += fishable[i]->weight;
+    // }
+
+    // debug output
+    // cout << "Total weight: " << totalWeight << endl;
+    // cout << "Fishable items:" << endl;
+    // for (auto &itm : fishable) {
+    //     cout << itm->name << " (weight: " << itm->weight << ")" << endl;
+    // }
+
+    int itemRepeatCount = 1; //change
+    cout << "You caught: " << endl;
 
     for (int i = 0; i < itemRepeatCount; i++) {
-      float random = static_cast<float>(rand()) / static_cast<float>(RAND_MAX) *
-                     totalWeight;
-      item *selecteditem;
+        float random = static_cast<float>(rand()) / static_cast<float>(RAND_MAX) * totalWeight;
+        item *selectedItem = nullptr;
 
-      float accWeight = 0;
-      for (int i = 0; i < fishableCount[1]; i++) {
-        accWeight += fishable[i]->weight;
-        if (random < accWeight) {
-          selecteditem = fishable[i];
-          break;
+        float accWeight = 0;
+        for (int j = 0; j < fishableCount[1]; j++) {
+            accWeight += fishable[j]->weight;
+            if (random < accWeight) {
+                selectedItem = fishable[j];
+                break;
+            }
         }
-        random -= fishable[i]->weight;
-      }
-      int itemCountByLevel = 2;
-      int count = (randInt(1, itemCountByLevel) * selecteditem->rareity) == 0 ?  (randInt(1, itemCountByLevel) * selecteditem->rareity) + 1 : 1;
 
-      cout << "\t" << count << " pieces of " << selecteditem->name << endl;
-      player.incrementItemCount(selecteditem->name, count);
-      player.addXP(selecteditem->xp);
+        // if (selectedItem == nullptr) {
+        //     cout << "Error: selectedItem is null. Check weight calculations and random logic." << endl;
+        //     return;
+        // }
 
-      auto it = find(fishable.begin(), fishable.end(), selecteditem);
-      if (it != fishable.end()) {
-        fishable.erase(it);
-        // Recalculate total weight after removal
-        totalWeight = 0;
-        for (auto &itemPtr : fishable) {
-          totalWeight += itemPtr->weight;
+        int itemCountByLevel = 100;
+        int count = randInt(1, 3);
+
+        cout << "\t" << count << " " << selectedItem->name;
+
+        if (selectedItem->totalCount == 0) {
+            ostringstream message;
+            message << "You unlocked - " << selectedItem->name;
+            cout << endl;
+            achievementMessage(message.str());
         }
-      }
+
+        player.incrementItemCount(selectedItem->name, count);
+        player.addXP(selectedItem->xp);
+
+        auto it = find(fishable.begin(), fishable.end(), selectedItem);
+        if (it != fishable.end()) {
+            fishable.erase(it);
+            // Recalculate total weight after removal
+            totalWeight = 0;
+            for (auto &itemPtr : fishable) {
+                totalWeight += itemPtr->weight;
+            }
+        }
     }
     player.timesFished++;
-  }
+}
 
   void display(Player &player) {
     int currentFishingLevel = getFishingLevelAsInt(player);
@@ -2565,6 +2568,33 @@ void fish(Player &player) {
     }
   }
 
+  void fishingMessages(Player &player)
+  {
+    int fishNumber = player.timesFished;
+
+    cout << endl;
+    switch (fishNumber)
+    {
+    case 0:
+      showDialogue(veteranSmith.name, "Fishing is a patient art... go on... click 'f' to fling the fishing rod into the water");
+      break;
+    case 3:
+      showDialogue(veteranSmith.name, "ha ha ha... you get a lot of garbage at first... keep going...");
+      break;
+    case 5:
+      showDialogue(veteranSmith.name, "Fishing depends on you luck, sometimes you don't get the good loot you want...");
+      break;
+    case 8:
+      showDialogue(veteranSmith.name, "It must remind you of mining...");
+      break;
+    case 10:
+      showDialogue(veteranSmith.name, "It takes a while to get your first fish... keep grinding");
+      break;
+    default:
+      break;
+    }
+  }
+
   void enter(Player &player) {
     cout << "entering pond..." << endl;
     if (player.fishingRod.level < 1) {
@@ -2575,10 +2605,11 @@ void fish(Player &player) {
     cout << "click 'f' to fish...";
     char res;
     while (true) {
-      res = getPlayerResponse();
+      fishingMessages(player);
+      cout << ">> ";
+      cin >> res;
       switch (res) {
       case 'f':
-        cout << "outside fish";
         fish(player); // todo
         break;
       case 'q':
@@ -2595,6 +2626,12 @@ void fish(Player &player) {
     }
   }
 };
+
+void fishBootCutscene(Player &player)
+{
+  Pond pond;
+  pond.enter(player);
+}
 
 void to_json(json& j, const Player& p) {
     j = json{
