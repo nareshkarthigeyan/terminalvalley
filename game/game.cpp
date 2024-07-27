@@ -205,6 +205,11 @@ public:
       case 'i':
         player.displayInventory();
         break;
+      case 'f':{
+        FishMarket fishmarket;
+        fishmarket.menu(player);
+        break;
+      }
       case 'q': {
         Savefile save;
         save.saveGameState(player);
@@ -240,7 +245,7 @@ void mainmenu(Player &player) {
     if (player.inventoryUnlock.occured) {
       menu.push_back({"i) inventory", 'i'});
     }
-    menu.push_back({"c) cake shop", 'c'});
+    // menu.push_back({"c) cake shop", 'c'});
     menu.push_back({"w) pond", 'w'});
     menu.push_back({"f) fish shop", 'f'});
   }
@@ -377,7 +382,7 @@ void triggerHomelessMan(Player &player) {
 
          int playerRes;
 
-         char response = getPlayerResponse("Choose your move:\na)Rock\nb)Paper\nc)Scissors");
+         char response = getPlayerResponse("Choose your move:\na) Rock\nb) Paper\nc) Scissors");
          switch (response)
          {
           case 'a':
@@ -394,6 +399,7 @@ void triggerHomelessMan(Player &player) {
          if(playerRes == rand)
          {
           cout << "Game tied." << endl;
+          achievementMessage("No change in luck");
           sleep(1);
           return;
          } else if (playerRes - res ==  1 || playerRes - res == -2)
@@ -435,16 +441,31 @@ void triggerHomelessMan(Player &player) {
 
 void saveThread(atomic<bool> &running, Savefile &save, Player &player)
 {
-  int i = 0;
+  int i = 1;
+
   while(running)
   {
-    sleep(5);
-    save.saveGameState(player);
-    i++;
-    if(i % 20 == 0)
+    sleep(1);
+    if(i % 5 == 0)
     {
-      achievementMessage("Game autosaved");
+      save.saveGameState(player);
+      if(i % 70 == 0)
+      {
+        achievementMessage("Game autosaved");
+      }
     }
+
+    if(i % 120 == 0) //change to 30
+    {
+      float byThis =  static_cast<float>(rand()) / static_cast<float>(RAND_MAX) / 10;
+      // ostringstream stringThis;
+      // stringThis << "Player luck change: " << player.luck << " to ";
+      randInt(1, 100) % 2 == 0 && player.luck - byThis > 0.2 || player.luck > 2.4 ? player.luck -= byThis : player.luck += byThis;
+      // stringThis << player.luck;
+      // achievementMessage(stringThis.str());
+    }
+
+    i++;
   }
 }
 
@@ -472,11 +493,12 @@ int main(void) {
   npcDialogueInit(player);
 
   //remove this:
-  player.currentCity.name = "Syntax City";
-  player.cakeEventStart.occured = true;
-  player.cakeEventMid.occured = true;
-  player.timesFished = 0;
-  player.fishingRod.level = 1;
+  // player.currentCity.name = "Syntax City";
+  // player.cakeEventStart.occured = true;
+  // player.cakeEventMid.occured = true;
+  // player.cakeEventEnd.occured = false;
+  // player.timesFished = 0;
+  // player.fishingRod.level = 1;
 
   while (true) {
 

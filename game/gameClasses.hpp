@@ -79,7 +79,7 @@ class Objective
 
 class event {
   public: 
-  bool occured{true}; // change to false before game
+  bool occured{false}; // change to false before game
   int timesOccured{0};
   Objective objective;
   bool ready = {false};
@@ -131,7 +131,8 @@ public:
   bool hasPickaxe = false;
 
   tool pickaxe = {"Pickaxe", 0};
-  tool fishingRod = {"Fishing Rod", 0};
+  vector<int> fishWaitTime = {8, 8, 6, 5, 4, 3};
+  tool fishingRod = {"Fishing Rod", 0, 100, fishWaitTime};
 
   // Rarity - lower, the rarer
 
@@ -259,6 +260,19 @@ public:
     return activeItems;
   }
 
+  vector<item *> getActiveFishItems() {
+    vector<item *> items = getFishItemsByAddress();
+    vector<item *> activeItems;
+
+    for (int i = 0; i < items.size(); i++) {
+      // items[i]->count = 1; //remove this
+      if (items[i]->count != 0) {
+        activeItems.push_back(items[i]);
+      }
+    }
+    return activeItems;
+  }
+
   vector<tool> getTools() {
     vector<tool> tools = {pickaxe, fishingRod};
     return tools;
@@ -293,7 +307,7 @@ public:
 
   void caluclateWeights(vector<item *> items) {
     for (int i = 0; i < items.size(); i++) {
-      items[i]->weight = WEIGHT / items[i]->rareity;
+      items[i]->weight = (WEIGHT / items[i]->rareity);
     }
   }
 
@@ -360,7 +374,7 @@ public:
 
   // guild events:
   event guildUnlocked;
-
+  event fishingRodUpgradeUnlock;
   // railway Station:
   event railwayStationUnlock;
 
@@ -664,6 +678,10 @@ void npcDialogueInit(Player &player) {
       "Just remember, life is a box of chocolates.",
       "Even after so much of a man's life force has been lost, his beard "
       "continues to grow."};
+
+  veteranSmith.dialogues = {
+    "Hey, you got some fish to sell?"
+  };
 };
 
 string getDialogue(NPC npc) {
@@ -865,8 +883,7 @@ public:
       {
         player.cakeEventMid.occured = true;
         fishBootCutscene(player);
-
-        return;
+        continue;
       }
 
       if (author == "Achievement") {
@@ -878,6 +895,7 @@ public:
       }
       showDialogue(author, content);
     }
+    player.fishingRodUpgradeUnlock.occured = true;
   }
 
   void vivianCakeEvent3(Player &player)
@@ -2482,10 +2500,12 @@ void fish(Player &player) {
 //calcuating weights
     // cout << "Calculating weights..." << endl;
     float totalWeight = 0;
+    float playerLuck = player.luck;
 
     for (int i = 0; i < fishableCount[1]; i++) {
       // cout << fishable[i]->rareity << endl;
         //totalWeight += 1.0f / (fishable[i]->rareity + baseValue); // Adjusted weight calculation
+        fishable[i]->weight *= playerLuck;
         totalWeight += fishable[i]->weight;
     }
 
@@ -2525,12 +2545,12 @@ void fish(Player &player) {
         int itemCountByLevel = 100;
         int count = randInt(1, 3);
 
-        cout << "\t" << count << " " << selectedItem->name;
+        cout << "\t" << count << " " << selectedItem->name << endl;
 
         if (selectedItem->totalCount == 0) {
             ostringstream message;
             message << "You unlocked - " << selectedItem->name;
-            cout << endl;
+            // cout << endl;
             achievementMessage(message.str());
         }
 
@@ -2547,7 +2567,6 @@ void fish(Player &player) {
             }
         }
     }
-    player.timesFished++;
 }
 
   void display(Player &player) {
@@ -2590,6 +2609,10 @@ void fish(Player &player) {
     case 10:
       showDialogue(veteranSmith.name, "It takes a while to get your first fish... keep grinding");
       break;
+    case 12:
+      showDialogue(veteranSmith.name, "I need to go meet my wife...");
+      showDialogue(veteranSmith.name, "You carry on, meet me when you are satisfied with your catch. Let's meet outside once you are done");
+      showDialogue(veteranSmith.name, "You can exit the pond by clicking 'q', you must already know that at this point.");
     default:
       break;
     }
@@ -2602,20 +2625,30 @@ void fish(Player &player) {
       sleep(1);
       return;
     }
-    cout << "click 'f' to fish...";
+    cout << "click 'f' to fish..." << endl;
     char res;
     while (true) {
-      fishingMessages(player);
       cout << ">> ";
       cin >> res;
       switch (res) {
       case 'f':
+        cout << "fishing...";
+        player.timesFished++;
+        fishingMessages(player);
+        sleep(player.fishingRod.waitTimeByLevel[player.fishingRod.level]);
         fish(player); // todo
+
         break;
       case 'q':
+      if(player.timesFished > 12)
+      {
         cout << "exiting pond..." << endl;
         sleep(1);
         return;
+      } else {
+        achievementMessage("Cannot exit pond mid-quest. Fish atleast 13 times.");
+        break;
+      }
       case 'd':
         display(player); // todo
         break;
@@ -2632,6 +2665,242 @@ void fishBootCutscene(Player &player)
   Pond pond;
   pond.enter(player);
 }
+
+class FishMarket {
+public:
+  double basePrice = 0.25;
+  double priceMultiplyer = 10.0;
+
+  vector<item *> setPrices(vector<item *> items, int multiplier = 1) {
+    for (int i = 0; i < items.size(); i++) {
+      items[i]->sellPrice = items[i]->buyPrice;
+      items[i]->sellPrice *=
+          (basePrice * pow(priceMultiplyer, 1 - items[i]->rareity) *
+           multiplier);
+    }
+    return items;
+  }
+
+  // void resetPrices(vector<item*> items, int multiplier = 1)
+  // {
+  //     for(int i = 0; i < items.size(); i++)
+  //     {
+  //         items[i]->sellPrice /= (basePrice * pow(priceMultiplyer, 1 -
+  //         items[i]->rareity) * multiplier);
+  //     }
+  //     return;
+  // }
+
+  void menu(Player &player) {
+    // if (!player.sellerMarketBoot.occured) {
+    //   achievementMessage("Seller's Market Unlocked");
+    //   Events event;
+    //   event.sellerMarketBoot(player);
+
+    //   return;
+    // }
+
+    // if (!player.bankBoot.occured) {
+    //   achievementMessage(
+    //       "You do not have a bank account to recieve money to. Go to bank!");
+    //   sleep(2);
+    //   cout << "exiting market..." << endl;
+    //   sleep(1);
+    //   return;
+    // }
+
+    basePrice *= player.luck;
+    priceMultiplyer *= player.luck;
+    cout << "You have entered the Fish Market market... buckle up!" << endl;
+    sleep(1);
+    showDialogue(veteranSmith.name, getDialogue(veteranSmith), 1);
+    //  showMessage(getDialogue(Manjunath), "", 2, Manjunath.name);
+    if(player.level < 2)
+    {
+      cout << "s) Sell\nq) Quit market";
+    } else {
+      cout << "s) Sell\nb) Buy\nq) Quit market";
+    }
+    char res = getPlayerResponse();
+
+    if (res == 's') {
+      FirstTimeSell:
+      while (true) {
+        sell(player);
+
+        char r;
+        cout << "Continue Selling? (y/n)\n>> ";
+        cin >> r;
+
+        if (r == 'n') {
+          break;
+        }
+      }
+
+    } else if (res == 'b' && player.level > 1) {
+      buy(player);
+    }
+  }
+  void sell(Player &player) {
+    // vector<item*> activeItems = player.getActiveMineItems(); //
+    // cout << "active items recieved to sell fn" << endl;
+
+    vector<item *> items = setPrices(player.getActiveFishItems());
+
+    if (items.size() > 0) {
+      float totalCost = 0;
+      for (int i = 0; i < items.size(); i++) {
+        if (items[i]->count != 0) {
+          totalCost += (items[i]->count * items[i]->sellPrice);
+        }
+      }
+
+      int i;
+      for (i = 0; i < items.size(); i++) {
+        cout << i + 1 << ") " << items[i]->name << ": $" << items[i]->sellPrice
+             << " per unit \t|\t You have: " << items[i]->count << "." << endl;
+      }
+      cout << i + 1 << ") " << "SELL ALL: $" << moneyAsString(totalCost)
+           << "\t\t|\t + 2% bonus." << endl;
+
+      // if(player.sellerMarketBoot.occured)
+      // {
+      // cout << "0) Quit" << endl;
+      // }
+      int res;
+      do {
+        //res = getSpecificPlayerResponse("Sell Item by index", 0, items.size());
+        cout << "Sell Item by index >> ";
+        cin >> res;
+        if (res == 0) {
+          return;
+        }
+      } while (res - 1 > items.size() || res < 0);
+
+      res--;
+
+      if (res == items.size()) {
+        char confirm;
+        cout << "You are about to sell all your items, this cannot be undone. "
+                "Confirm? (y): ";
+        confirm = getPlayerResponse();
+
+        if (confirm == 'y') {
+          cout << "Selling all items..." << endl;
+          sleep(1);
+
+          if (player.depositToWallet(totalCost + (0.02 * totalCost))) {
+            for (int i = 0; i < items.size(); i++) {
+              items[i]->count = 0;
+            }
+            // cout << "Business sucessful!\n\t+ "
+            //      << moneyAsString(totalCost + (0.05 * totalCost))
+            //      << "$.\tKa-ching!" << endl;
+          }
+
+          sleep(1);
+        }
+      } else {
+
+        for (i = 0; i < items.size(); i++) {
+          if (items[i] == items[res]) {
+            cout << "You have: [" << items[res]->name << " - "
+                 << items[res]->count << "] - Sell price: [$"
+                 << moneyAsString(items[res]->sellPrice) << "] per unit."
+                 << " (Max profit: ["
+                 << moneyAsString(items[res]->sellPrice * items[res]->count)
+                 << "])" << endl;
+
+            int countSelling;
+           do {
+              cout << "Enter Quantity >> ";
+              cin >> countSelling;
+
+              //countSelling = getSpecificPlayerResponse("Enter Quantity", 0, items[res]->count - 1);
+
+           } while (isdigit(res) && countSelling < 0 || countSelling > items[res]->count);
+
+            cout << "selling..." << endl;
+            if (player.depositToWallet(items[res]->sellPrice * countSelling)) {
+              items[res]->count -= countSelling;
+              // cout << "Business sucessful!\n\t+ "
+              //     << moneyAsString(items[res]->sellPrice * countSelling)
+              //     << "$.\tKa-ching!" << endl;
+            }
+            sleep(1);
+          }
+        }
+      }
+
+      // resetPrices(items);
+      return;
+
+    } else {
+      achievementMessage("You have nothing to sell. Try fishing.");
+      // resetPrices(items);
+    }
+  }
+  void buy(Player &player) {
+    Pond pond;
+    int sellerInflation = randInt(2, 6);
+    vector<item *> fishable =
+        setPrices(pond.getFishable(player), sellerInflation);
+
+    if (fishable.size() <= 0) {
+      achievementMessage("You have nothing to buy right now. Go fish for some "
+                         "resources to unlock buying market.");
+      sleep(3);
+      return;
+    }
+    int j = 0;
+    for (int i = 0, j = 0; i < fishable.size(); i++) {
+      if (fishable[i]->totalCount > 0) {
+        cout << j + 1 << ") " << fishable[i]->name << ": $"
+             << moneyAsString(fishable[i]->sellPrice) << " per unit" << endl;
+        j++;
+      };
+    }
+
+    cout << "0) Quit" << endl;
+    int res;
+    do {
+      cout << "Buy Item by index >> ";
+      cin >> res;
+    } while (isdigit(res) && (res > fishable.size() || res < 0));
+
+    // res = getSpecificPlayerResponse("Buy item by index", 1, fishable.size() - 1);
+
+    res--;
+
+    if (res == -1) {
+      return;
+    }
+
+    for (int i = 0; i < fishable.size(); i++) {
+      if (fishable[i] == fishable[res]) {
+        cout << "Your wallet balance: $" << moneyAsString(player.wallet)
+             << endl;
+        int countSelling;
+        do {
+          cout << "Enter Quantity >> ";
+          cin >> countSelling;
+
+          //countSelling = getSpecificPlayerResponse("Enter Quantity", 1, 1000);
+
+        } while (isdigit(res) && countSelling * fishable[i]->sellPrice > player.wallet);
+
+        cout << "Buying..." << endl;
+        sleep(2);
+        if (player.withdrawFromWallet(fishable[res]->sellPrice *
+                                      countSelling)) {
+          fishable[res]->count += countSelling;
+        }
+        sleep(1);
+      }
+    }
+  }
+};
+
 
 void to_json(json& j, const Player& p) {
     j = json{
@@ -2657,7 +2926,7 @@ void to_json(json& j, const Player& p) {
         {"playerWalletUpgrade", p.playerWalletUpgrade}, {"sellerMarketBoot", p.sellerMarketBoot}, 
         {"guildUnlocked", p.guildUnlocked}, {"railwayStationUnlock", p.railwayStationUnlock}, 
         {"badges", p.badges}, {"cakeEventStart", p.cakeEventStart}, {"cakeEventMid", p.cakeEventMid}, 
-        {"cakeEventEnd", p.cakeEventEnd}, {"cakeEvent", p.cakeEvent}
+        {"cakeEventEnd", p.cakeEventEnd}, {"cakeEvent", p.cakeEvent}, {"fishingRodUpgradeUnlock" , p.fishingRodUpgradeUnlock}
     };
 }
 
@@ -2729,6 +2998,7 @@ void from_json(const json& j, Player& p) {
     j.at("cakeEventMid").get_to(p.cakeEventMid);
     j.at("cakeEventEnd").get_to(p.cakeEventEnd);
     j.at("cakeEvent").get_to(p.cakeEvent);
+    j.at("fishingRodUpgradeUnlock").get_to(p.fishingRodUpgradeUnlock);
 }
 
 #endif
