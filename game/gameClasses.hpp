@@ -416,7 +416,7 @@ long double xp {0};
   city currentCity = Terminille;
   vector<string> badges;
 
-  int timesFished;
+  int timesFished {0};
 
   bool firstTime = true;
 
@@ -1056,6 +1056,9 @@ public:
 
         cout << "Back to mine..." << endl;
       }
+    case 20:
+      achievementMessage("Bank Unlocked");
+      achievementMessage("You can access other stuff in the main menu. Click 'q' to quit mine and go to main menu");
       // seller's market cutscene
       break;
     }
@@ -1302,17 +1305,17 @@ public:
       player.pickaxe.required[1][0] = player.granite;
       player.pickaxe.requiredCount[1][0] = 35;
       player.pickaxe.required[1][1] = player.wood;
-      player.pickaxe.requiredCount[1][1] = 175;
+      player.pickaxe.requiredCount[1][1] = 75;
 
       player.pickaxe.required[2][0] = player.copper;
-      player.pickaxe.requiredCount[2][0] = 85;
+      player.pickaxe.requiredCount[2][0] = 35;
       player.pickaxe.required[2][1] = player.tin;
-      player.pickaxe.requiredCount[2][1] = 85;
+      player.pickaxe.requiredCount[2][1] = 45;
 
       player.pickaxe.required[3][0] = player.silver;
-      player.pickaxe.requiredCount[3][0] = 125;
+      player.pickaxe.requiredCount[3][0] = 85;
       player.pickaxe.required[3][1] = player.gold;
-      player.pickaxe.requiredCount[3][1] = 100;
+      player.pickaxe.requiredCount[3][1] = 60;
 
       player.pickaxe.required[4][0] = player.diamond;
       player.pickaxe.requiredCount[4][0] = 250;
@@ -1332,12 +1335,12 @@ public:
     string FinalMessage;
     if (level == 0) {
       cout << "Pickaxe" << endl;
-      cout << "Description: The one and only mining tool you need!" << endl;
+      cout << "Description: The one and only mining tool you need! Increase mining speed by +1 Seconds." << endl;
       cout << "Cost: " << endl;
 
       FinalMessage = "Buy Pickaxe? [y/n]";
     } else {
-      cout << "Upgrade your pickaxe now!!!" << endl;
+      cout << "Upgrade your pickaxe now!!! Increase mining speed by +1 Seconds." << endl;
       cout << "Current pickaxe level: " << player.pickaxe.level
            << "\nPickaxe Level after upgrade: " << player.pickaxe.level + 1
            << endl;
@@ -1402,7 +1405,7 @@ public:
   void enter(Player &player) {
     char res;
     while (true) {
-
+      cout << "GUILD:" << endl;
       res = getPlayerResponse("p) Pickaxe\nq) Quit Guild");
       if (res == 'p') {
         upgradePickaxe(player);

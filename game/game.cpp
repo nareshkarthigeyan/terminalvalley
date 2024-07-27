@@ -329,11 +329,11 @@ void triggerHomelessMan(Player &player) {
 
   if (random <= 6) // change to 6;
   {
-    if(HomelessMan.interactionCount == 0)
-    {
-      achievementMessage("+ Guardian Angel Badge");
-      player.badges.push_back("Gueardian Angel");
-    }
+    // if(HomelessMan.interactionCount == 0)
+    // {
+    //   achievementMessage("+ Guardian Angel Badge");
+    //   player.badges.push_back("Gueardian Angel");
+    // }
     showDialogue(HomelessMan.name, getDialogue(HomelessMan));
     char res;
 
@@ -411,6 +411,7 @@ void triggerHomelessMan(Player &player) {
             ostringstream message;
             message << "\t + " << luckUp << " Player Luck!\t";
             achievementMessage(message.str());
+            return;
          } else {
              cout << "You lose." << endl;
           float luckUp =
@@ -419,7 +420,9 @@ void triggerHomelessMan(Player &player) {
             ostringstream message;
             message << "\t - " << luckUp << " Player Luck!\t";
             achievementMessage(message.str());
+            return;
          }
+         return;
       }
 
       if (res == 'c') {
@@ -442,6 +445,11 @@ void triggerHomelessMan(Player &player) {
 void saveThread(atomic<bool> &running, Savefile &save, Player &player)
 {
   int i = 1;
+
+  if(player.luck < 0.01)
+  {
+    player.luck = 1;
+  }
 
   while(running)
   {
