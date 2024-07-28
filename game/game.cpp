@@ -165,6 +165,10 @@ public:
         guild.enter(player);
         break;
 
+      case 'n':
+        player.displayQuests();
+        break;
+
       case 'p':
         player.display();
         sleep(1);
@@ -238,6 +242,10 @@ void mainmenu(Player &player) {
     }
     if (player.guildUnlocked.occured && player.level > 0) {
       menu.push_back({"c) guild", 'c'});
+    }
+    if (player.walletLimit > 300)
+    {
+      menu.push_back({"n) Notice Board", 'n'});
     }
   }
 
@@ -334,6 +342,7 @@ void triggerHomelessMan(Player &player) {
     //   achievementMessage("+ Guardian Angel Badge");
     //   player.badges.push_back("Gueardian Angel");
     // }
+    player.validateQuest(HomelessMan);
     showDialogue(HomelessMan.name, getDialogue(HomelessMan));
     char res;
 
@@ -444,11 +453,12 @@ void triggerHomelessMan(Player &player) {
 
 void saveThread(atomic<bool> &running, Savefile &save, Player &player)
 {
-  int i = 1;
+  int i = 0;
 
   if(player.luck < 0.01)
   {
     player.luck = 1;
+    achievementMessage("Your luck is so bad that the universe decided to reset it");
   }
 
   while(running)
@@ -473,6 +483,12 @@ void saveThread(atomic<bool> &running, Savefile &save, Player &player)
       // achievementMessage(stringThis.str());
     }
 
+    if(i % 300 == 0)
+    {
+      player.getNpcList();
+      player.getQuests();
+    }
+
     i++;
   }
 }
@@ -491,7 +507,7 @@ int main(void) {
   if (!player.firstBoot.occured) {
     Events event;
     event.FirstBoot(player);
-    mine(player);
+    // mine(player);
   }
 
 
@@ -508,7 +524,30 @@ int main(void) {
   // player.timesFished = 0;
   // player.fishingRod.level = 1;
 
+      player.currentQuest = player.nothing;
+
   while (true) {
+    
+    //remove this: {
+      // Vivian.interactionCount = 55;
+      // HomelessMan.interactionCount = 99;
+      // Manjunath.interactionCount = 5;
+      // veteranSmith.interactionCount = 10;
+
+
+      // player.incrementItemCount(player.wood.name, 10);
+      // player.incrementItemCount(player.rock.name, 10);
+      // player.incrementItemCount(player.usedCondom.name, 10);
+      // player.walletLimit = 1000;
+      // player.getNpcList();
+      // // cout << "getting quests..." << endl;
+      // player.getQuests();
+      // // cout << "displaying quests..." << endl;
+      // player.displayQuests();
+
+      // cout << player.currentQuest.name << player.currentQuest.description;
+      //}
+
 
     if(player.currentCity.name == "Syntax City" && player.cakeEventStart.occured && !player.cakeEventMid.occured)
     {
@@ -537,10 +576,16 @@ int main(void) {
         (player.currentCity.name == Terminille.name)) {
       triggerHomelessMan(player);
     }
-    if (player.bankBoot.occured && player.guildUnlocked.occured && (player.bankBalance >= 1000 || player.wallet >= 1000) && !player.railwayStationUnlock.occured)
+    if (player.bankBoot.occured && player.guildUnlocked.occured && (player.bankBalance >= 500 || player.wallet >= 500) && !player.railwayStationUnlock.occured)
     {
       achievementMessage("New Quest Unlocked. Visit Vivian at the bank.");
       sleep(1);
+    }
+    if(player.playerWalletUpgrade.occured && !player.questsUnlock.occured)
+    {
+      achievementMessage("Notice board Quests Unlocked! Click 'n' to go there");
+      player.questsUnlock.occured = true;
+      
     }
   }
 

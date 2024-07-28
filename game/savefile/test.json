@@ -1,0 +1,1157 @@
+{
+    "allQuests": [
+        {
+            "description": "Need 42 units of Tin. Thanks! Deposit it here.",
+            "inProgress": false,
+            "itemCount": 42,
+            "itemReq": {
+                "buyPrice": null,
+                "count": 0,
+                "luckFactor": 1.0,
+                "name": "Tin",
+                "rareity": 1.0,
+                "rareityString": "",
+                "sellPrice": null,
+                "totalCount": 0,
+                "xp": 0.5
+            },
+            "name": "Help wanted! - Homeless Man",
+            "npc": {
+                "description": "Asks for spare change. Claims to be your guardian angel",
+                "dialogues": [
+                    "I say the world can go to hell, but I must have my tea",
+                    "How do you claim to be alive, and you have no story to tell",
+                    "Most things they claim to change life don't amuse me",
+                    "Morality? [laughs] what even is that? A fantasy?",
+                    "It's better to be delusional and in a mental paradise than being wound up in reality and suffering",
+                    "The stars seem to align to tell me that I am insignificant.",
+                    "There is not much difference between me and you, we both are the same, yes",
+                    "Being sincere can also mean being stupid at the same time.",
+                    "love is suffering, there is no other meaning to it",
+                    "My god, a moment of bliss, isn't that enough for this lifetime?",
+                    "The secure ones are the most insecure if you watch them closely...",
+                    "I have seen the things you can never imagine...",
+                    "Nowadays all capable people are terribly afraid of being judged, hence turn into miserable pieces of shits.",
+                    "I will never understand how a man of my thoughts can continue living...",
+                    "Standing against injustice? Isn't is just showing off to the world how much justice you are... a good person.",
+                    "Denial of death is the single most thing that drives us from being afraid to live.",
+                    "Why bother not looking rude when all your actions are rude enough?",
+                    "[sings 'why this kolaveri']",
+                    "Just remember, life is a box of chocolates.",
+                    "Even after so much of a man's life force has been lost, his beard continues to grow."
+                ],
+                "heartPoints": 0,
+                "interactionCount": 99,
+                "money": 0.0,
+                "name": "Homeless Man"
+            },
+            "reward": 542.0
+        }
+    ],
+    "badges": [],
+    "bankBalance": 0.0,
+    "bankBoot": {
+        "objective": {
+            "completed": false,
+            "description": "",
+            "messageShownTimes": 0,
+            "name": "",
+            "reward": 0.0,
+            "xpReward": 0.0
+        },
+        "occured": false,
+        "ready": false,
+        "timesOccured": 0
+    },
+    "bankOnLunchBreak": {
+        "objective": {
+            "completed": true,
+            "description": "",
+            "messageShownTimes": 0,
+            "name": "",
+            "reward": 4.580284160492097e-41,
+            "xpReward": 1.046680598155609e-17
+        },
+        "occured": false,
+        "ready": false,
+        "timesOccured": 0
+    },
+    "bedrock": {
+        "buyPrice": 10000.11,
+        "count": 0,
+        "luckFactor": 1.0,
+        "name": "Bedrock",
+        "rareity": 0.07999999821186066,
+        "rareityString": "",
+        "sellPrice": 0.0,
+        "totalCount": 0,
+        "xp": 1590.780029296875
+    },
+    "blackStone": {
+        "buyPrice": 975.21,
+        "count": 0,
+        "luckFactor": 1.0,
+        "name": "Black Stone",
+        "rareity": 0.10000000149011612,
+        "rareityString": "",
+        "sellPrice": 0.0,
+        "totalCount": 0,
+        "xp": 338.75
+    },
+    "cakeEvent": {
+        "objective": {
+            "completed": false,
+            "description": "",
+            "messageShownTimes": 0,
+            "name": "",
+            "reward": 0.0,
+            "xpReward": 0.0
+        },
+        "occured": false,
+        "ready": false,
+        "timesOccured": 0
+    },
+    "cakeEventEnd": {
+        "objective": {
+            "completed": false,
+            "description": "",
+            "messageShownTimes": 0,
+            "name": "",
+            "reward": 0.0,
+            "xpReward": 0.0
+        },
+        "occured": false,
+        "ready": false,
+        "timesOccured": 0
+    },
+    "cakeEventMid": {
+        "objective": {
+            "completed": false,
+            "description": "",
+            "messageShownTimes": 0,
+            "name": "",
+            "reward": 0.0,
+            "xpReward": 0.0
+        },
+        "occured": false,
+        "ready": false,
+        "timesOccured": 0
+    },
+    "cakeEventStart": {
+        "objective": {
+            "completed": false,
+            "description": "",
+            "messageShownTimes": 0,
+            "name": "",
+            "reward": 0.0,
+            "xpReward": 0.0
+        },
+        "occured": false,
+        "ready": false,
+        "timesOccured": 0
+    },
+    "clownfish": {
+        "buyPrice": 5.5,
+        "count": 0,
+        "luckFactor": 1.0,
+        "name": "Clown Fish",
+        "rareity": 0.7400000095367432,
+        "rareityString": "Pretty Common",
+        "sellPrice": 0.0,
+        "totalCount": 0,
+        "xp": 2.950000047683716
+    },
+    "coal": {
+        "buyPrice": 5.6,
+        "count": 0,
+        "luckFactor": 1.0,
+        "name": "Coal",
+        "rareity": 0.7200000286102295,
+        "rareityString": "",
+        "sellPrice": 0.0,
+        "totalCount": 0,
+        "xp": 4.110000133514404
+    },
+    "copper": {
+        "buyPrice": 23.21,
+        "count": 0,
+        "luckFactor": 1.0,
+        "name": "Copper",
+        "rareity": 0.2800000011920929,
+        "rareityString": "",
+        "sellPrice": 0.0,
+        "totalCount": 0,
+        "xp": 15.270000457763672
+    },
+    "creditcard": {
+        "convinienceCharge": 0.05000000074505806,
+        "has": false,
+        "hasInsurance": false
+    },
+    "currentCity": {
+        "atCity": true,
+        "code": "TRML",
+        "name": "Terminille",
+        "platformCount": 4
+    },
+    "currentQuest": {
+        "description": "",
+        "inProgress": false,
+        "itemCount": 0,
+        "itemReq": {
+            "buyPrice": 0.0,
+            "count": 0,
+            "luckFactor": 1.0,
+            "name": "",
+            "rareity": 1.0,
+            "rareityString": "",
+            "sellPrice": 0.0,
+            "totalCount": 0,
+            "xp": 0.5
+        },
+        "name": "",
+        "npc": {
+            "description": "",
+            "dialogues": [],
+            "heartPoints": 0,
+            "interactionCount": 0,
+            "money": 0.0,
+            "name": ""
+        },
+        "reward": 0.0
+    },
+    "diamond": {
+        "buyPrice": 2800.53,
+        "count": 0,
+        "luckFactor": 1.0,
+        "name": "Diamond",
+        "rareity": 0.05999999865889549,
+        "rareityString": "",
+        "sellPrice": 0.0,
+        "totalCount": 0,
+        "xp": 160.7100067138672
+    },
+    "dirt": {
+        "buyPrice": 1.79,
+        "count": 0,
+        "luckFactor": 1.0,
+        "name": "Dirt",
+        "rareity": 0.8500000238418579,
+        "rareityString": "",
+        "sellPrice": 0.0,
+        "totalCount": 0,
+        "xp": 1.3799999952316284
+    },
+    "dualItems": {
+        "objective": {
+            "completed": true,
+            "description": "",
+            "messageShownTimes": 0,
+            "name": "",
+            "reward": 4.5914945482066956e-41,
+            "xpReward": 1.401298464324817e-45
+        },
+        "occured": false,
+        "ready": false,
+        "timesOccured": 0
+    },
+    "firstBoot": {
+        "objective": {
+            "completed": true,
+            "description": "",
+            "messageShownTimes": 0,
+            "name": "",
+            "reward": 0.0,
+            "xpReward": 9.172905995198941e+28
+        },
+        "occured": true,
+        "ready": false,
+        "timesOccured": 3
+    },
+    "firstTime": true,
+    "fishingRod": {
+        "health": 100.0,
+        "name": "Fishing Rod",
+        "required": [
+            [
+                {
+                    "buyPrice": 0.0,
+                    "count": 0,
+                    "luckFactor": 1.0,
+                    "name": "",
+                    "rareity": 1.0,
+                    "rareityString": "",
+                    "sellPrice": 0.0,
+                    "totalCount": 0,
+                    "xp": 0.5
+                },
+                {
+                    "buyPrice": 0.0,
+                    "count": 0,
+                    "luckFactor": 1.0,
+                    "name": "",
+                    "rareity": 1.0,
+                    "rareityString": "",
+                    "sellPrice": 0.0,
+                    "totalCount": 0,
+                    "xp": 0.5
+                }
+            ],
+            [
+                {
+                    "buyPrice": 0.0,
+                    "count": 0,
+                    "luckFactor": 1.0,
+                    "name": "",
+                    "rareity": 1.0,
+                    "rareityString": "",
+                    "sellPrice": 0.0,
+                    "totalCount": 0,
+                    "xp": 0.5
+                },
+                {
+                    "buyPrice": 0.0,
+                    "count": 0,
+                    "luckFactor": 1.0,
+                    "name": "",
+                    "rareity": 1.0,
+                    "rareityString": "",
+                    "sellPrice": 0.0,
+                    "totalCount": 0,
+                    "xp": 0.5
+                }
+            ],
+            [
+                {
+                    "buyPrice": 0.0,
+                    "count": 0,
+                    "luckFactor": 1.0,
+                    "name": "",
+                    "rareity": 1.0,
+                    "rareityString": "",
+                    "sellPrice": 0.0,
+                    "totalCount": 0,
+                    "xp": 0.5
+                },
+                {
+                    "buyPrice": 0.0,
+                    "count": 0,
+                    "luckFactor": 1.0,
+                    "name": "",
+                    "rareity": 1.0,
+                    "rareityString": "",
+                    "sellPrice": 0.0,
+                    "totalCount": 0,
+                    "xp": 0.5
+                }
+            ],
+            [
+                {
+                    "buyPrice": 0.0,
+                    "count": 0,
+                    "luckFactor": 1.0,
+                    "name": "",
+                    "rareity": 1.0,
+                    "rareityString": "",
+                    "sellPrice": 0.0,
+                    "totalCount": 0,
+                    "xp": 0.5
+                },
+                {
+                    "buyPrice": 0.0,
+                    "count": 0,
+                    "luckFactor": 1.0,
+                    "name": "",
+                    "rareity": 1.0,
+                    "rareityString": "",
+                    "sellPrice": 0.0,
+                    "totalCount": 0,
+                    "xp": 0.5
+                }
+            ],
+            [
+                {
+                    "buyPrice": 0.0,
+                    "count": 0,
+                    "luckFactor": 1.0,
+                    "name": "",
+                    "rareity": 1.0,
+                    "rareityString": "",
+                    "sellPrice": 0.0,
+                    "totalCount": 0,
+                    "xp": 0.5
+                },
+                {
+                    "buyPrice": 0.0,
+                    "count": 0,
+                    "luckFactor": 1.0,
+                    "name": "",
+                    "rareity": 1.0,
+                    "rareityString": "",
+                    "sellPrice": 0.0,
+                    "totalCount": 0,
+                    "xp": 0.5
+                }
+            ]
+        ],
+        "requiredCount": [
+            [
+                0,
+                0
+            ],
+            [
+                0,
+                0
+            ],
+            [
+                0,
+                0
+            ],
+            [
+                0,
+                0
+            ],
+            [
+                0,
+                0
+            ]
+        ],
+        "upgradeCost": [
+            250.0,
+            1200.0,
+            2800.0,
+            8500.0,
+            17999.0
+        ],
+        "upgradeXP": [
+            350.0,
+            450.0,
+            590.0,
+            999.0,
+            1300.0
+        ],
+        "waitTimeByLevel": [
+            8,
+            8,
+            6,
+            5,
+            4,
+            3
+        ]
+    },
+    "fishingRodUpgradeUnlock": {
+        "objective": {
+            "completed": false,
+            "description": "",
+            "messageShownTimes": 0,
+            "name": "",
+            "reward": 0.0,
+            "xpReward": 0.0
+        },
+        "occured": false,
+        "ready": false,
+        "timesOccured": 0
+    },
+    "gold": {
+        "buyPrice": 595.23,
+        "count": 0,
+        "luckFactor": 1.0,
+        "name": "Gold",
+        "rareity": 0.09000000357627869,
+        "rareityString": "",
+        "sellPrice": 0.0,
+        "totalCount": 0,
+        "xp": 57.880001068115234
+    },
+    "granite": {
+        "buyPrice": 7.68,
+        "count": 0,
+        "luckFactor": 1.0,
+        "name": "Granite",
+        "rareity": 0.5799999833106995,
+        "rareityString": "",
+        "sellPrice": 0.0,
+        "totalCount": 0,
+        "xp": 5.179999828338623
+    },
+    "guildUnlocked": {
+        "objective": {
+            "completed": false,
+            "description": "",
+            "messageShownTimes": 0,
+            "name": "",
+            "reward": 0.0,
+            "xpReward": 2.665373459872261e+20
+        },
+        "occured": false,
+        "ready": false,
+        "timesOccured": 0
+    },
+    "hardRock": {
+        "buyPrice": 159.76,
+        "count": 0,
+        "luckFactor": 1.0,
+        "name": "Hard Rock",
+        "rareity": 0.28999999165534973,
+        "rareityString": "",
+        "sellPrice": 0.0,
+        "totalCount": 0,
+        "xp": 25.270000457763672
+    },
+    "hasPickaxe": false,
+    "homeLessManBoot": {
+        "objective": {
+            "completed": true,
+            "description": "",
+            "messageShownTimes": 0,
+            "name": "",
+            "reward": 0.0,
+            "xpReward": 1.1619756789112102e-17
+        },
+        "occured": false,
+        "ready": false,
+        "timesOccured": 0
+    },
+    "inventoryUnlock": {
+        "objective": {
+            "completed": true,
+            "description": "",
+            "messageShownTimes": 0,
+            "name": "",
+            "reward": 4.580284160492097e-41,
+            "xpReward": 4.438915566217152e-39
+        },
+        "occured": false,
+        "ready": false,
+        "timesOccured": 0
+    },
+    "iron": {
+        "buyPrice": 25.11,
+        "count": 0,
+        "luckFactor": 1.0,
+        "name": "Iron",
+        "rareity": 0.3100000023841858,
+        "rareityString": "",
+        "sellPrice": 0.0,
+        "totalCount": 0,
+        "xp": 11.210000038146973
+    },
+    "jellyfish": {
+        "buyPrice": 118.21,
+        "count": 0,
+        "luckFactor": 1.0,
+        "name": "Jellyfish",
+        "rareity": 0.18000000715255737,
+        "rareityString": "Very Rare",
+        "sellPrice": 0.0,
+        "totalCount": 0,
+        "xp": 56.5
+    },
+    "level": 1,
+    "loansUnlocked": {
+        "objective": {
+            "completed": false,
+            "description": "",
+            "messageShownTimes": 0,
+            "name": "",
+            "reward": 0.0,
+            "xpReward": 0.0
+        },
+        "occured": false,
+        "ready": false,
+        "timesOccured": 0
+    },
+    "lobster": {
+        "buyPrice": 150.0,
+        "count": 0,
+        "luckFactor": 1.0,
+        "name": "Lobster",
+        "rareity": 0.17000000178813934,
+        "rareityString": "Very Rare",
+        "sellPrice": 0.0,
+        "totalCount": 0,
+        "xp": 69.69000244140625
+    },
+    "luck": 1.0,
+    "magma": {
+        "buyPrice": 7200.33,
+        "count": 0,
+        "luckFactor": 1.0,
+        "name": "Magma",
+        "rareity": 0.09000000357627869,
+        "rareityString": "",
+        "sellPrice": 0.0,
+        "totalCount": 0,
+        "xp": 790.5499877929688
+    },
+    "mineDetailsUnlock": {
+        "objective": {
+            "completed": false,
+            "description": "",
+            "messageShownTimes": 0,
+            "name": "",
+            "reward": 0.0,
+            "xpReward": 1.0466772894331588e-17
+        },
+        "occured": false,
+        "ready": false,
+        "timesOccured": 0
+    },
+    "name": "test",
+    "npcList": [
+        {
+            "description": "Asks for spare change. Claims to be your guardian angel",
+            "dialogues": [
+                "I say the world can go to hell, but I must have my tea",
+                "How do you claim to be alive, and you have no story to tell",
+                "Most things they claim to change life don't amuse me",
+                "Morality? [laughs] what even is that? A fantasy?",
+                "It's better to be delusional and in a mental paradise than being wound up in reality and suffering",
+                "The stars seem to align to tell me that I am insignificant.",
+                "There is not much difference between me and you, we both are the same, yes",
+                "Being sincere can also mean being stupid at the same time.",
+                "love is suffering, there is no other meaning to it",
+                "My god, a moment of bliss, isn't that enough for this lifetime?",
+                "The secure ones are the most insecure if you watch them closely...",
+                "I have seen the things you can never imagine...",
+                "Nowadays all capable people are terribly afraid of being judged, hence turn into miserable pieces of shits.",
+                "I will never understand how a man of my thoughts can continue living...",
+                "Standing against injustice? Isn't is just showing off to the world how much justice you are... a good person.",
+                "Denial of death is the single most thing that drives us from being afraid to live.",
+                "Why bother not looking rude when all your actions are rude enough?",
+                "[sings 'why this kolaveri']",
+                "Just remember, life is a box of chocolates.",
+                "Even after so much of a man's life force has been lost, his beard continues to grow."
+            ],
+            "heartPoints": 0,
+            "interactionCount": 99,
+            "money": 0.0,
+            "name": "Homeless Man"
+        },
+        {
+            "description": "Asks for spare change. Claims to be your guardian angel",
+            "dialogues": [
+                "I say the world can go to hell, but I must have my tea",
+                "How do you claim to be alive, and you have no story to tell",
+                "Most things they claim to change life don't amuse me",
+                "Morality? [laughs] what even is that? A fantasy?",
+                "It's better to be delusional and in a mental paradise than being wound up in reality and suffering",
+                "The stars seem to align to tell me that I am insignificant.",
+                "There is not much difference between me and you, we both are the same, yes",
+                "Being sincere can also mean being stupid at the same time.",
+                "love is suffering, there is no other meaning to it",
+                "My god, a moment of bliss, isn't that enough for this lifetime?",
+                "The secure ones are the most insecure if you watch them closely...",
+                "I have seen the things you can never imagine...",
+                "Nowadays all capable people are terribly afraid of being judged, hence turn into miserable pieces of shits.",
+                "I will never understand how a man of my thoughts can continue living...",
+                "Standing against injustice? Isn't is just showing off to the world how much justice you are... a good person.",
+                "Denial of death is the single most thing that drives us from being afraid to live.",
+                "Why bother not looking rude when all your actions are rude enough?",
+                "[sings 'why this kolaveri']",
+                "Just remember, life is a box of chocolates.",
+                "Even after so much of a man's life force has been lost, his beard continues to grow."
+            ],
+            "heartPoints": 0,
+            "interactionCount": 99,
+            "money": 0.0,
+            "name": "Homeless Man"
+        },
+        {
+            "description": "Asks for spare change. Claims to be your guardian angel",
+            "dialogues": [
+                "I say the world can go to hell, but I must have my tea",
+                "How do you claim to be alive, and you have no story to tell",
+                "Most things they claim to change life don't amuse me",
+                "Morality? [laughs] what even is that? A fantasy?",
+                "It's better to be delusional and in a mental paradise than being wound up in reality and suffering",
+                "The stars seem to align to tell me that I am insignificant.",
+                "There is not much difference between me and you, we both are the same, yes",
+                "Being sincere can also mean being stupid at the same time.",
+                "love is suffering, there is no other meaning to it",
+                "My god, a moment of bliss, isn't that enough for this lifetime?",
+                "The secure ones are the most insecure if you watch them closely...",
+                "I have seen the things you can never imagine...",
+                "Nowadays all capable people are terribly afraid of being judged, hence turn into miserable pieces of shits.",
+                "I will never understand how a man of my thoughts can continue living...",
+                "Standing against injustice? Isn't is just showing off to the world how much justice you are... a good person.",
+                "Denial of death is the single most thing that drives us from being afraid to live.",
+                "Why bother not looking rude when all your actions are rude enough?",
+                "[sings 'why this kolaveri']",
+                "Just remember, life is a box of chocolates.",
+                "Even after so much of a man's life force has been lost, his beard continues to grow."
+            ],
+            "heartPoints": 0,
+            "interactionCount": 99,
+            "money": 0.0,
+            "name": "Homeless Man"
+        },
+        {
+            "description": "Asks for spare change. Claims to be your guardian angel",
+            "dialogues": [
+                "I say the world can go to hell, but I must have my tea",
+                "How do you claim to be alive, and you have no story to tell",
+                "Most things they claim to change life don't amuse me",
+                "Morality? [laughs] what even is that? A fantasy?",
+                "It's better to be delusional and in a mental paradise than being wound up in reality and suffering",
+                "The stars seem to align to tell me that I am insignificant.",
+                "There is not much difference between me and you, we both are the same, yes",
+                "Being sincere can also mean being stupid at the same time.",
+                "love is suffering, there is no other meaning to it",
+                "My god, a moment of bliss, isn't that enough for this lifetime?",
+                "The secure ones are the most insecure if you watch them closely...",
+                "I have seen the things you can never imagine...",
+                "Nowadays all capable people are terribly afraid of being judged, hence turn into miserable pieces of shits.",
+                "I will never understand how a man of my thoughts can continue living...",
+                "Standing against injustice? Isn't is just showing off to the world how much justice you are... a good person.",
+                "Denial of death is the single most thing that drives us from being afraid to live.",
+                "Why bother not looking rude when all your actions are rude enough?",
+                "[sings 'why this kolaveri']",
+                "Just remember, life is a box of chocolates.",
+                "Even after so much of a man's life force has been lost, his beard continues to grow."
+            ],
+            "heartPoints": 0,
+            "interactionCount": 99,
+            "money": 0.0,
+            "name": "Homeless Man"
+        }
+    ],
+    "objectives": [],
+    "octopusLeg": {
+        "buyPrice": 37.48,
+        "count": 0,
+        "luckFactor": 1.0,
+        "name": "Octopus Leg",
+        "rareity": 0.20999999344348907,
+        "rareityString": "Rare",
+        "sellPrice": 0.0,
+        "totalCount": 0,
+        "xp": 21.110000610351563
+    },
+    "pearl": {
+        "buyPrice": 785.0,
+        "count": 0,
+        "luckFactor": 1.0,
+        "name": "Pearl",
+        "rareity": 0.10000000149011612,
+        "rareityString": "Atlantis!",
+        "sellPrice": 0.0,
+        "totalCount": 0,
+        "xp": 99.5
+    },
+    "pickaxe": {
+        "health": 100.0,
+        "name": "Pickaxe",
+        "required": [
+            [
+                {
+                    "buyPrice": 0.0,
+                    "count": 0,
+                    "luckFactor": 1.0,
+                    "name": "",
+                    "rareity": 1.0,
+                    "rareityString": "",
+                    "sellPrice": 0.0,
+                    "totalCount": 0,
+                    "xp": 0.5
+                },
+                {
+                    "buyPrice": 0.0,
+                    "count": 0,
+                    "luckFactor": 1.0,
+                    "name": "",
+                    "rareity": 1.0,
+                    "rareityString": "",
+                    "sellPrice": 0.0,
+                    "totalCount": 0,
+                    "xp": 0.5
+                }
+            ],
+            [
+                {
+                    "buyPrice": 0.0,
+                    "count": 0,
+                    "luckFactor": 1.0,
+                    "name": "",
+                    "rareity": 1.0,
+                    "rareityString": "",
+                    "sellPrice": 0.0,
+                    "totalCount": 0,
+                    "xp": 0.5
+                },
+                {
+                    "buyPrice": 0.0,
+                    "count": 0,
+                    "luckFactor": 1.0,
+                    "name": "",
+                    "rareity": 1.0,
+                    "rareityString": "",
+                    "sellPrice": 0.0,
+                    "totalCount": 0,
+                    "xp": 0.5
+                }
+            ],
+            [
+                {
+                    "buyPrice": 0.0,
+                    "count": 0,
+                    "luckFactor": 1.0,
+                    "name": "",
+                    "rareity": 1.0,
+                    "rareityString": "",
+                    "sellPrice": 0.0,
+                    "totalCount": 0,
+                    "xp": 0.5
+                },
+                {
+                    "buyPrice": 0.0,
+                    "count": 0,
+                    "luckFactor": 1.0,
+                    "name": "",
+                    "rareity": 1.0,
+                    "rareityString": "",
+                    "sellPrice": 0.0,
+                    "totalCount": 0,
+                    "xp": 0.5
+                }
+            ],
+            [
+                {
+                    "buyPrice": 0.0,
+                    "count": 0,
+                    "luckFactor": 1.0,
+                    "name": "",
+                    "rareity": 1.0,
+                    "rareityString": "",
+                    "sellPrice": 0.0,
+                    "totalCount": 0,
+                    "xp": 0.5
+                },
+                {
+                    "buyPrice": 0.0,
+                    "count": 0,
+                    "luckFactor": 1.0,
+                    "name": "",
+                    "rareity": 1.0,
+                    "rareityString": "",
+                    "sellPrice": 0.0,
+                    "totalCount": 0,
+                    "xp": 0.5
+                }
+            ],
+            [
+                {
+                    "buyPrice": 0.0,
+                    "count": 0,
+                    "luckFactor": 1.0,
+                    "name": "",
+                    "rareity": 1.0,
+                    "rareityString": "",
+                    "sellPrice": 0.0,
+                    "totalCount": 0,
+                    "xp": 0.5
+                },
+                {
+                    "buyPrice": 0.0,
+                    "count": 0,
+                    "luckFactor": 1.0,
+                    "name": "",
+                    "rareity": 1.0,
+                    "rareityString": "",
+                    "sellPrice": 0.0,
+                    "totalCount": 0,
+                    "xp": 0.5
+                }
+            ]
+        ],
+        "requiredCount": [
+            [
+                0,
+                0
+            ],
+            [
+                0,
+                0
+            ],
+            [
+                0,
+                0
+            ],
+            [
+                0,
+                0
+            ],
+            [
+                0,
+                0
+            ]
+        ],
+        "upgradeCost": [
+            250.0,
+            1200.0,
+            2800.0,
+            8500.0,
+            17999.0
+        ],
+        "upgradeXP": [
+            350.0,
+            450.0,
+            590.0,
+            999.0,
+            1300.0
+        ],
+        "waitTimeByLevel": [
+            6,
+            5,
+            4,
+            3,
+            2
+        ]
+    },
+    "playerCreditCardUnlock": {
+        "objective": {
+            "completed": false,
+            "description": "",
+            "messageShownTimes": 0,
+            "name": "",
+            "reward": 0.0,
+            "xpReward": 0.0
+        },
+        "occured": false,
+        "ready": false,
+        "timesOccured": 0
+    },
+    "playerWalletUpgrade": {
+        "objective": {
+            "completed": true,
+            "description": "",
+            "messageShownTimes": 0,
+            "name": "",
+            "reward": -0.0,
+            "xpReward": 0.0
+        },
+        "occured": false,
+        "ready": false,
+        "timesOccured": 0
+    },
+    "quitMineUnlock": {
+        "objective": {
+            "completed": true,
+            "description": "",
+            "messageShownTimes": 0,
+            "name": "",
+            "reward": 4.580284160492097e-41,
+            "xpReward": 1.1615283396359415e-17
+        },
+        "occured": false,
+        "ready": false,
+        "timesOccured": 0
+    },
+    "railwayStationUnlock": {
+        "objective": {
+            "completed": false,
+            "description": "",
+            "messageShownTimes": 0,
+            "name": "",
+            "reward": 0.0,
+            "xpReward": 0.0
+        },
+        "occured": false,
+        "ready": false,
+        "timesOccured": 0
+    },
+    "rock": {
+        "buyPrice": 2.75,
+        "count": 30,
+        "luckFactor": 1.0,
+        "name": "Rock",
+        "rareity": 0.75,
+        "rareityString": "",
+        "sellPrice": 0.0,
+        "totalCount": 30,
+        "xp": 2.75
+    },
+    "ruby": {
+        "buyPrice": 3500.77,
+        "count": 0,
+        "luckFactor": 1.0,
+        "name": "Ruby",
+        "rareity": 0.03999999910593033,
+        "rareityString": "",
+        "sellPrice": 0.0,
+        "totalCount": 0,
+        "xp": 441.3800048828125
+    },
+    "salmon": {
+        "buyPrice": 4.5,
+        "count": 0,
+        "luckFactor": 1.0,
+        "name": "Salmon",
+        "rareity": 0.75,
+        "rareityString": "Pretty Common",
+        "sellPrice": 0.0,
+        "totalCount": 0,
+        "xp": 2.7899999618530273
+    },
+    "seashell": {
+        "buyPrice": 2.25,
+        "count": 0,
+        "luckFactor": 1.0,
+        "name": "Sea Shell",
+        "rareity": 0.8999999761581421,
+        "rareityString": "Pretty Common",
+        "sellPrice": 0.0,
+        "totalCount": 0,
+        "xp": 0.10999999940395355
+    },
+    "sellerMarketBoot": {
+        "objective": {
+            "completed": true,
+            "description": "",
+            "messageShownTimes": 0,
+            "name": "",
+            "reward": 7.097552316265888e+22,
+            "xpReward": 6.37944068610648e-39
+        },
+        "occured": false,
+        "ready": false,
+        "timesOccured": 0
+    },
+    "shopUnlock": {
+        "objective": {
+            "completed": false,
+            "description": "",
+            "messageShownTimes": 0,
+            "name": "",
+            "reward": 0.0,
+            "xpReward": 0.0
+        },
+        "occured": false,
+        "ready": false,
+        "timesOccured": 0
+    },
+    "silver": {
+        "buyPrice": 69.69,
+        "count": 0,
+        "luckFactor": 1.0,
+        "name": "Silver",
+        "rareity": 0.27000001072883606,
+        "rareityString": "",
+        "sellPrice": 0.0,
+        "totalCount": 0,
+        "xp": 21.690000534057617
+    },
+    "soakedBoot": {
+        "buyPrice": 0.79,
+        "count": 0,
+        "luckFactor": 1.0,
+        "name": "Soaked Boots",
+        "rareity": 0.949999988079071,
+        "rareityString": "Very Common",
+        "sellPrice": 0.0,
+        "totalCount": 0,
+        "xp": 1.3799999952316284
+    },
+    "squid": {
+        "buyPrice": 15.85,
+        "count": 0,
+        "luckFactor": 1.0,
+        "name": "Squid",
+        "rareity": 0.3499999940395355,
+        "rareityString": "Rare",
+        "sellPrice": 0.0,
+        "totalCount": 0,
+        "xp": 11.180000305175781
+    },
+    "timesFished": 0,
+    "timesMined": 0,
+    "tin": {
+        "buyPrice": 71.42,
+        "count": 0,
+        "luckFactor": 1.0,
+        "name": "Tin",
+        "rareity": 0.23000000417232513,
+        "rareityString": "",
+        "sellPrice": 0.0,
+        "totalCount": 0,
+        "xp": 18.709999084472656
+    },
+    "trout": {
+        "buyPrice": 7.85,
+        "count": 0,
+        "luckFactor": 1.0,
+        "name": "Trout",
+        "rareity": 0.4300000071525574,
+        "rareityString": "Common",
+        "sellPrice": 0.0,
+        "totalCount": 0,
+        "xp": 5.320000171661377
+    },
+    "tuna": {
+        "buyPrice": 4.99,
+        "count": 0,
+        "luckFactor": 1.0,
+        "name": "Tuna",
+        "rareity": 0.6299999952316284,
+        "rareityString": "Common",
+        "sellPrice": 0.0,
+        "totalCount": 0,
+        "xp": 3.109999895095825
+    },
+    "usedCondom": {
+        "buyPrice": 0.0,
+        "count": 0,
+        "luckFactor": 1.0,
+        "name": "Used condom",
+        "rareity": 0.6499999761581421,
+        "rareityString": "Very Common",
+        "sellPrice": 0.0,
+        "totalCount": 0,
+        "xp": 0.10000000149011612
+    },
+    "usedEarphones": {
+        "buyPrice": 0.08,
+        "count": 0,
+        "luckFactor": 1.0,
+        "name": "Used earphones",
+        "rareity": 0.8999999761581421,
+        "rareityString": "Very Common",
+        "sellPrice": 0.0,
+        "totalCount": 0,
+        "xp": 1.6799999475479126
+    },
+    "wallet": 0.0,
+    "walletLimit": 300.0,
+    "whaleTooth": {
+        "buyPrice": 10000.0,
+        "count": 0,
+        "luckFactor": 1.0,
+        "name": "Blue Whale's tooth",
+        "rareity": 0.09000000357627869,
+        "rareityString": "How did you find this?",
+        "sellPrice": 0.0,
+        "totalCount": 0,
+        "xp": 1500.0
+    },
+    "wood": {
+        "buyPrice": 3.25,
+        "count": 30,
+        "luckFactor": 1.0,
+        "name": "Wood",
+        "rareity": 0.6800000071525574,
+        "rareityString": "",
+        "sellPrice": 0.0,
+        "totalCount": 30,
+        "xp": 3.2100000381469727
+    },
+    "xp": 0.0,
+    "xpToLvl": [
+        300,
+        1500,
+        4750,
+        8900,
+        15000,
+        25000,
+        50000
+    ]
+}

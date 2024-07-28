@@ -79,7 +79,7 @@ class Objective
 
 class event {
   public: 
-  bool occured{false}; // change to false before game
+  bool occured{true}; // change to false before game
   int timesOccured{0};
   Objective objective;
   bool ready = {false};
@@ -378,6 +378,8 @@ public:
   // railway Station:
   event railwayStationUnlock;
 
+  event questsUnlock;
+
   
 
   vector <event*> getEvents()
@@ -393,6 +395,31 @@ public:
                                     cakeEvent, sellerMarketBoot,guildUnlocked,railwayStationUnlock, cakeEventStart, cakeEventMid, cakeEventEnd)
 };
 
+NPC Vivian = {"Vivian", "Bank Handler", 0};
+NPC Manjunath = {"Manjunath", "Buyer. Likes Dad Jokes", 0};
+NPC HomelessMan = {"Homeless Man",
+                   "Asks for spare change. Claims to be your guardian angel",
+                   0};
+NPC Redacted = {"???", "Player guide.", 0};
+NPC System42 = {"System42", "Prevents 4th wall breaks.", 0};
+NPC BillMurry = {"Bill Murry", "Weather reporter.", 0};
+NPC Rick = {"Rick", "Guild Master", 0};
+NPC bitwise = {"Mayor Bitwise", "Mayor of the town.", 0};
+NPC veteranSmith = {"Veteran Smith", "A retired Navy Seal, and a fishing expert. He's also Vivian's Uncle. Go to him to sell or buy fishes.", 0};
+
+class Quest
+{
+  public:
+  string name;
+  string description;
+  NPC npc;
+  item itemReq;
+  int itemCount {0};
+  bool inProgress;
+  float reward {0};
+  NLOHMANN_DEFINE_TYPE_INTRUSIVE(Quest, name, description, npc, itemReq, itemCount, inProgress, reward);
+
+};
 
 
 class Player : public Inventory, public PlayerEvents {
@@ -415,12 +442,199 @@ long double xp {0};
   array<int, 7> xpToLvl = {300, 1500, 4750, 8900, 15000, 25000, 50000};
   city currentCity = Terminille;
   vector<string> badges;
-
   int timesFished {0};
-
   bool firstTime = true;
 
   vector<Objective> objectives;  
+  vector<NPC> npcList; // = {Vivian, Manjunath, HomelessMan, veteranSmith};
+  vector<Quest> allQuests; 
+  Quest currentQuest;
+  Quest nothing = {"No active Quests right now!", "Go to notice board and pick a Quest to do it"};//add
+
+  void getNpcList()
+  {
+    npcList.clear();
+
+    vector<NPC> allNPCs = {Vivian, Manjunath, HomelessMan, veteranSmith};
+    // for(int i = 0; i < allNPCs.size(); i++)
+    // {
+      if(bankBoot.occured)
+      {
+        npcList.push_back(Vivian);
+      }
+      if(sellerMarketBoot.occured)
+      {
+        npcList.push_back(Manjunath);
+      }
+      if(fishingRod.level > 0)
+      {
+        npcList.push_back(veteranSmith);
+      }
+      if (homeLessManBoot.occured)
+      {
+        npcList.push_back(HomelessMan);
+      }
+    // }
+  }
+
+  void getQuests()
+  {
+    allQuests.clear();
+    // cout << "NPC list size: " << npcList.size() << endl;
+    if(npcList.empty()) return;
+    int num = randInt(1, npcList.size());
+    vector<NPC> npcListLocal = npcList;
+    if(num == 0)
+    {
+      // achievementMessage("There are no requests right now. Come back later.");
+      return;
+    }
+
+    vector<string> titleMessages = {"A little help for $NPC", "Help wanted! - $NPC", "$NPC - Need a favour!", "Do me a favour this one time - $NPC" };
+    vector<string> descMessages = {"Need $count of $item. Planning to build something. Give it when you see me...", "Hey, would want $count $item! Don't ask why :)", "You got $item? I need about $count of them. I'll take it the next time we meet.", "Urgenly require $count pieces of $item for personal reasons. Hurry!", "Planning to make a lemonade stand. I need $count $item... can you get 'em?"};
+
+    for(int i = 0; i < num; i++){
+      // cout << "creating quest " << i << endl;
+      int rand = randInt(0, npcListLocal.size() - 1);
+      NPC selected = npcListLocal[rand];
+      string title;
+      string desc;
+      item itemReq;
+      int count;
+      
+      vector<item*> activeItems = getAllActiveItemsByAdress();
+      if(activeItems.size() == 0)
+      {
+        return;
+      }
+      itemReq.name = activeItems[randInt(0, activeItems.size() - 1)]->name;
+      itemReq.buyPrice = 0;
+      itemReq.sellPrice = 0;
+      count = randInt(8, 45);
+      npcListLocal.erase(npcListLocal.begin() + rand);
+
+      // if(randInt(0, 100) % 2 == 0)
+      // {
+      //   desc << "Need " << count << " units of " << itemReq.name << ". Thanks! Deposit it here.";
+      // } else {
+      //   desc << "Collect " << count << " units of " << itemReq.name << " for me! Will take it from you here!";
+      // }
+      //title of Quest:      
+      title = titleMessages[randInt(0, titleMessages.size() - 1)]; // to replace playername;
+      size_t pos = title.find("$NPC"); // to replace playername;
+
+      if (pos != string::npos) {
+        title.replace(title.find("$NPC"),
+                        sizeof("$NPC") - 1, selected.name);
+      }
+
+      //Description of Quest:
+      desc = descMessages[randInt(0, descMessages.size() - 1)]; // to replace playername;
+      size_t pos1 = desc.find("$count"); // to replace playername;
+      if (pos1 != string::npos) {
+        desc.replace(desc.find("$count"),
+                        sizeof("$count") - 1, to_string(count));
+      }
+      size_t pos2 = desc.find("$item"); // to replace playername;
+      if (pos2 != string::npos) {
+        desc.replace(desc.find("$item"),
+                        sizeof("$item") - 1, itemReq.name);
+      }
+
+      Quest quest;
+      quest.name = title;
+      quest.npc = selected;
+      quest.itemCount = count;
+      quest.itemReq = itemReq;
+      quest.description = desc;
+      quest.itemReq.rareity = itemReq.rareity;
+      quest.reward = randInt(50, 400) / itemReq.rareity;
+      quest.inProgress = false;
+
+      allQuests.push_back(quest);
+      
+    }
+  }
+
+  void validateQuest(NPC npc)
+  {
+    if (currentQuest.npc.name != npc.name)
+    {
+      return;
+    }
+
+    vector<item*> allItems = getAllActiveItemsByAdress();
+    for(int i = 0; i < allItems.size(); i++)
+    {
+      if (currentQuest.itemReq.name == allItems[i]->name && currentQuest.itemCount <= allItems[i]->count)
+      {
+            cout << "Met " << npc.name << "..." << endl;
+            sleep(1);
+            achievementMessage("Quest Complete!");
+            if (depositToWallet(currentQuest.reward))
+            {
+              showDialogue(npc.name, "Thanks for your help!");
+              // cout << "\t + " << moneyAsString(currentQuest.reward) << "\tKa-ching!";
+              cout << " - " << allItems[i]->count << endl;
+              //allItems[i]->count -= currentQuest.itemCount;
+              cout << " - " << currentQuest.itemCount << " " << currentQuest.itemReq.name << endl;
+              //cout << " - " << allItems[i]->count << endl;
+              currentQuest = nothing;
+              getQuests();
+              return;
+            } else 
+            {
+              achievementMessage("Not enough wallet balance to complete quest!");
+              sleep(1);
+            }
+      }
+    }
+  }
+
+  void displayQuests()
+  {
+    int i  = 1;
+    char res;
+    int ress;
+    if(allQuests.size() == 0)
+    {
+       achievementMessage("There are no requests right now. Come back later.");
+       return;
+    }
+    for(auto q: allQuests)
+    {
+      cout << i << ") \t" << q.name <<
+      endl << "\t"  << q.description <<
+      endl << "\t" << "Reward: " << moneyAsString(q.reward, 2, "$") <<
+      endl;
+      i++;
+    }
+    while (true)
+    {
+        cout << "Choose Quest (0 to quit) >> ";
+        cin >> res;
+        
+        if (isdigit(res))
+        {
+            ress = res - '0'; // Convert char digit to int
+            
+            if (ress == 0)
+            {
+                return; // Quit if 0 is entered
+            }
+            else if (ress > 0 && ress < i)
+            {
+              //cout << "allquests[ress -1]: " << allQuests[ress - 1].name;
+              currentQuest = allQuests[ress - 1];
+              //cout << "currentQuest" << currentQuest.name;
+                achievementMessage("Selected Quest!");
+                sleep(1);
+            break;
+            }
+        }
+        cout << "Invalid selection. Try again." << endl;
+    }
+  }
 
   void createPlayer(string namePrompt) {
     name = namePrompt;
@@ -462,6 +676,21 @@ long double xp {0};
          {
           cout << "\t" << item << endl;
          }
+         cout << endl;
+
+         cout << "taking current quests..." << endl;
+          Quest q = currentQuest;
+
+          if(q.name == "") {
+            cout << "no quest found !!!" << endl;
+            return;
+          }
+          cout << "QUEST:" << endl;
+          cout << "\t" << currentQuest.name <<
+          endl << "\t"  << currentQuest.description <<
+          endl << "\t" << "Reward: " << moneyAsString(currentQuest.reward, 2 , "$") <<
+          endl;
+
   }
 
   bool depositToWallet(float amount) {
@@ -561,17 +790,6 @@ long double xp {0};
   //     railwayStationUnlock, badges, cakeEventStart, cakeEventMid, cakeEventEnd, cakeEvent) //can't have more than 64!
 };
 
-NPC Vivian = {"Vivian", "Bank Handler", 0};
-NPC Manjunath = {"Manjunath", "Buyer. Likes Dad Jokes", 0};
-NPC HomelessMan = {"Homeless Man",
-                   "Asks for spare change. Claims to be your guardian angel",
-                   0};
-NPC Redacted = {"???", "Player guide.", 0};
-NPC System42 = {"System42", "Prevents 4th wall breaks.", 0};
-NPC BillMurry = {"Bill Murry", "Weather reporter.", 0};
-NPC Rick = {"Rick", "Guild Master", 0};
-NPC bitwise = {"Mayor Bitwise", "Mayor of the town.", 0};
-NPC veteranSmith = {"Veteran Smith", "A retired Navy Seal, and a fishing expert. He's also Vivian's Uncle. Go to him to sell or buy fishes.", 0};
 
 void npcDialogueInit(Player &player) {
   Vivian.dialogues = {
@@ -699,13 +917,13 @@ struct dialogue {
   string author;
 };
 
-class Quest {
-  string title;
-  string description;
-  int levelRequired;
-  bool isOccuring{false};
-  long double reward;
-};
+// class Quest {
+//   string title;
+//   string description;
+//   int levelRequired;
+//   bool isOccuring{false};
+//   long double reward;
+// };
 
 void marketBootCutscene(Player &player);
 void fishBootCutscene(Player &player);
@@ -1464,6 +1682,7 @@ public:
     priceMultiplyer *= player.luck;
     cout << "You have entered the market... buckle up!" << endl;
     sleep(1);
+    player.validateQuest(Manjunath);
     showDialogue(Manjunath.name, getDialogue(Manjunath), 1);
     //  showMessage(getDialogue(Manjunath), "", 2, Manjunath.name);
     if(player.level < 2)
@@ -1935,6 +2154,7 @@ public:
     } else {
 
       // showMessage(getDialogue(Vivian), "", 2, Vivian.name);
+      player.validateQuest(Vivian);
       showDialogue(Vivian.name, getDialogue(Vivian));
 
       vector<string> menu = {"a) Withdraw Amount",   "b) Deposit Amount",
@@ -2716,6 +2936,7 @@ public:
     priceMultiplyer *= player.luck;
     cout << "You have entered the Fish Market market... buckle up!" << endl;
     sleep(1);
+    player.validateQuest(veteranSmith);
     showDialogue(veteranSmith.name, getDialogue(veteranSmith), 1);
     //  showMessage(getDialogue(Manjunath), "", 2, Manjunath.name);
     if(player.level < 2)
@@ -2904,6 +3125,10 @@ public:
   }
 };
 
+//vector<NPC> npcList; //to add
+  // vector<Quest> allQuests; //to add
+  // Quest currentQuest; //to add
+
 
 void to_json(json& j, const Player& p) {
     j = json{
@@ -2929,7 +3154,8 @@ void to_json(json& j, const Player& p) {
         {"playerWalletUpgrade", p.playerWalletUpgrade}, {"sellerMarketBoot", p.sellerMarketBoot}, 
         {"guildUnlocked", p.guildUnlocked}, {"railwayStationUnlock", p.railwayStationUnlock}, 
         {"badges", p.badges}, {"cakeEventStart", p.cakeEventStart}, {"cakeEventMid", p.cakeEventMid}, 
-        {"cakeEventEnd", p.cakeEventEnd}, {"cakeEvent", p.cakeEvent}, {"fishingRodUpgradeUnlock" , p.fishingRodUpgradeUnlock}
+        {"cakeEventEnd", p.cakeEventEnd}, {"cakeEvent", p.cakeEvent}, {"fishingRodUpgradeUnlock" , p.fishingRodUpgradeUnlock},
+        {"npcList", p.npcList}, {"allQuests", p.allQuests}, {"currentQuest", p.currentQuest}, {"questsUnlock", p.questsUnlock}
     };
 }
 
@@ -3002,6 +3228,10 @@ void from_json(const json& j, Player& p) {
     j.at("cakeEventEnd").get_to(p.cakeEventEnd);
     j.at("cakeEvent").get_to(p.cakeEvent);
     j.at("fishingRodUpgradeUnlock").get_to(p.fishingRodUpgradeUnlock);
+    j.at("npcList").get_to(p.npcList);
+    j.at("allQuests").get_to(p.allQuests);
+    j.at("currentQuest").get_to(p.currentQuest);
+    j.at("questsUnlock").get_to(p.questsUnlock);
 }
 
 #endif
