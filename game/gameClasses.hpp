@@ -79,7 +79,7 @@ class Objective
 
 class event {
   public: 
-  bool occured{true}; // change to false before game
+  bool occured{false}; // change to false before game
   int timesOccured{0};
   Objective objective;
   bool ready = {false};
@@ -448,13 +448,13 @@ long double xp {0};
   vector<Objective> objectives;  
   vector<NPC> npcList; // = {Vivian, Manjunath, HomelessMan, veteranSmith};
   vector<Quest> allQuests; 
-  Quest currentQuest;
   Quest nothing = {"No active Quests right now!", "Go to notice board and pick a Quest to do it"};//add
+  Quest currentQuest = nothing;
 
   void getNpcList()
   {
     npcList.clear();
-
+    // cout << "inside npclist" << endl;
     vector<NPC> allNPCs = {Vivian, Manjunath, HomelessMan, veteranSmith};
     // for(int i = 0; i < allNPCs.size(); i++)
     // {
@@ -479,10 +479,15 @@ long double xp {0};
 
   void getQuests()
   {
+    // cout << "inside get quests." << endl;
+    getNpcList();
     allQuests.clear();
+    // cout << "allquests Clear done." << endl;
     // cout << "NPC list size: " << npcList.size() << endl;
     if(npcList.empty()) return;
+    // cout << npcList.size() << endl;
     int num = randInt(1, npcList.size());
+    //cout << num << endl;
     vector<NPC> npcListLocal = npcList;
     if(num == 0)
     {
@@ -494,8 +499,9 @@ long double xp {0};
     vector<string> descMessages = {"Need $count of $item. Planning to build something. Give it when you see me...", "Hey, would want $count $item! Don't ask why :)", "You got $item? I need about $count of them. I'll take it the next time we meet.", "Urgenly require $count pieces of $item for personal reasons. Hurry!", "Planning to make a lemonade stand. I need $count $item... can you get 'em?"};
 
     for(int i = 0; i < num; i++){
+    // cout << "inside loop." << endl;
       // cout << "creating quest " << i << endl;
-      int rand = randInt(0, npcListLocal.size() - 1);
+      int rand = randInt(1, npcListLocal.size() - 1);
       NPC selected = npcListLocal[rand];
       string title;
       string desc;
@@ -548,12 +554,14 @@ long double xp {0};
       quest.itemReq = itemReq;
       quest.description = desc;
       quest.itemReq.rareity = itemReq.rareity;
-      quest.reward = randInt(50, 400) / itemReq.rareity;
+
+      quest.reward = (randInt(50, 150) / itemReq.rareity) * (level + 0.1) ;
       quest.inProgress = false;
 
       allQuests.push_back(quest);
       
     }
+    // cout << "QOutise loop." << endl;
   }
 
   void validateQuest(NPC npc)
@@ -575,12 +583,12 @@ long double xp {0};
             {
               showDialogue(npc.name, "Thanks for your help!");
               // cout << "\t + " << moneyAsString(currentQuest.reward) << "\tKa-ching!";
-              cout << " - " << allItems[i]->count << endl;
+              // cout << " - " << allItems[i]->count << endl;
               //allItems[i]->count -= currentQuest.itemCount;
               cout << " - " << currentQuest.itemCount << " " << currentQuest.itemReq.name << endl;
               //cout << " - " << allItems[i]->count << endl;
               currentQuest = nothing;
-              getQuests();
+              // getQuests();
               return;
             } else 
             {
@@ -626,8 +634,12 @@ long double xp {0};
             {
               //cout << "allquests[ress -1]: " << allQuests[ress - 1].name;
               currentQuest = allQuests[ress - 1];
+
+
               //cout << "currentQuest" << currentQuest.name;
                 achievementMessage("Selected Quest!");
+
+                allQuests.erase(allQuests.begin() + (ress - 1));
                 sleep(1);
             break;
             }
@@ -678,11 +690,14 @@ long double xp {0};
          }
          cout << endl;
 
-         cout << "taking current quests..." << endl;
-          Quest q = currentQuest;
+        //  cout << "taking current quests..." << endl;
+        if(questsUnlock.occured)
+        {
+
+        Quest q = currentQuest;
 
           if(q.name == "") {
-            cout << "no quest found !!!" << endl;
+            currentQuest = nothing;
             return;
           }
           cout << "QUEST:" << endl;
@@ -691,6 +706,7 @@ long double xp {0};
           endl << "\t" << "Reward: " << moneyAsString(currentQuest.reward, 2 , "$") <<
           endl;
 
+        }
   }
 
   bool depositToWallet(float amount) {
@@ -930,8 +946,6 @@ void fishBootCutscene(Player &player);
 class Events {
 public:
   void FirstBoot(Player &player) {
-    cout << "First Boot Cutsence here..." << endl;
-
     ifstream ip("assets/FirstBoot.csv");
 
     if (!ip.is_open())
@@ -2060,6 +2074,7 @@ public:
           player.walletLimit = upgrades[limitLevel + 1];
           sleep(1);
           cout << "Wallet upgrade succesful! Cheers!" << endl;
+          player.playerWalletUpgrade.trigger();
           sleep(2);
         } else {
           cout << "Insufficient balance. Abort." << endl;
@@ -2073,6 +2088,7 @@ public:
           cout << "\t- " << moneyAsString(upgradeCost[limitLevel + 1], 2, "$")
                << "\t womp-womp!" << endl;
           sleep(1);
+          player.playerWalletUpgrade.trigger();
           cout << "Wallet upgrade succesful! Cheers!" << endl;
           sleep(2);
 

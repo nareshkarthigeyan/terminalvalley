@@ -43,7 +43,7 @@ public:
                    "\\__,_|_|_|\\___|_, |\n"
                    "                          a game by K V Naresh Karthigeyan "
                    "     |___/ \n"
-                   "Version 0.01\n";
+                   "Version 1.0\n";
 
     cout << balls << endl;
 
@@ -415,7 +415,7 @@ void triggerHomelessMan(Player &player) {
          {
           cout << "You win." << endl;
           float luckUp =
-              0.1 + ((float)(randInt(10, 90) * player.wallet / randInt(50, 60)) / 100);
+              0.1 + ((float)(randInt(10, 90) / randInt(50, 60)) / 100);
             player.luck += luckUp;
             ostringstream message;
             message << "\t + " << luckUp << " Player Luck!\t";
@@ -424,7 +424,7 @@ void triggerHomelessMan(Player &player) {
          } else {
              cout << "You lose." << endl;
           float luckUp =
-              0.1 + ((float)(randInt(10, 90) * player.wallet / randInt(50, 60)) / 100);
+              0.1 + ((float)(randInt(10, 90) / randInt(50, 60)) / 100);
             player.luck -= luckUp;
             ostringstream message;
             message << "\t - " << luckUp << " Player Luck!\t";
@@ -455,14 +455,13 @@ void saveThread(atomic<bool> &running, Savefile &save, Player &player)
 {
   int i = 0;
 
-  if(player.luck < 0.01)
-  {
-    player.luck = 1;
-    achievementMessage("Your luck is so bad that the universe decided to reset it");
-  }
-
   while(running)
   {
+    if(player.luck < 0.01)
+    {
+      player.luck = 1;
+      achievementMessage("Your luck is so bad that the universe decided to reset it");
+    }
     sleep(1);
     if(i % 5 == 0)
     {
@@ -483,9 +482,9 @@ void saveThread(atomic<bool> &running, Savefile &save, Player &player)
       // achievementMessage(stringThis.str());
     }
 
-    if(i % 300 == 0)
+    if(i % 240 == 0 && player.questsUnlock.occured)
     {
-      player.getNpcList();
+      achievementMessage("New Quests on the Notice Board!");
       player.getQuests();
     }
 
@@ -507,12 +506,17 @@ int main(void) {
   if (!player.firstBoot.occured) {
     Events event;
     event.FirstBoot(player);
-    // mine(player);
+    mine(player);
   }
 
 
-  player.firstBoot.occured = true;
-  player.firstBoot.timesOccured++;
+  // player.firstBoot.occured = true;
+  // player.firstBoot.timesOccured++;
+  // player.bankBoot.occured = true;
+  // player.wallet = 600;
+  // // player.walletLimit = 300;
+  // player.questsUnlock.occured = false;
+  // // player.playerWalletUpgrade.occured = false;
 
   npcDialogueInit(player);
 
@@ -523,8 +527,7 @@ int main(void) {
   // player.cakeEventEnd.occured = false;
   // player.timesFished = 0;
   // player.fishingRod.level = 1;
-
-      player.currentQuest = player.nothing;
+  // player.currentQuest = player.nothing;
 
   while (true) {
     
@@ -559,6 +562,17 @@ int main(void) {
     {
       achievementMessage("Go to Vivian in Terminille to deliver the cake!");
     }
+
+    if(player.playerWalletUpgrade.occured && !player.questsUnlock.occured)
+    {
+      achievementMessage("Notice board Quests Unlocked! Click 'n' to go there");
+      sleep(1);
+      player.questsUnlock.occured = true;
+      player.currentQuest = player.nothing;
+      // player.getNpcList();
+      // player.getQuests();      
+    }
+
     mainmenu(player);
 
 
@@ -576,16 +590,10 @@ int main(void) {
         (player.currentCity.name == Terminille.name)) {
       triggerHomelessMan(player);
     }
-    if (player.bankBoot.occured && player.guildUnlocked.occured && (player.bankBalance >= 500 || player.wallet >= 500) && !player.railwayStationUnlock.occured)
+    if (player.bankBoot.occured && player.guildUnlocked.occured && (player.bankBalance >= 500 || player.wallet >= 500) && !player.railwayStationUnlock.occured && (player.currentQuest.name == player.nothing.name))
     {
       achievementMessage("New Quest Unlocked. Visit Vivian at the bank.");
       sleep(1);
-    }
-    if(player.playerWalletUpgrade.occured && !player.questsUnlock.occured)
-    {
-      achievementMessage("Notice board Quests Unlocked! Click 'n' to go there");
-      player.questsUnlock.occured = true;
-      
     }
   }
 
