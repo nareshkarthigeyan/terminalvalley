@@ -946,6 +946,7 @@ void fishBootCutscene(Player &player);
 class Events {
 public:
   void FirstBoot(Player &player) {
+    player.firstBoot.occured = true;
     ifstream ip("assets/FirstBoot.csv");
 
     if (!ip.is_open())
@@ -1288,6 +1289,7 @@ public:
 
         cout << "Back to mine..." << endl;
       }
+      break;
     case 20:
       achievementMessage("Bank Unlocked");
       achievementMessage("You can access other stuff in the main menu. Click 'q' to quit mine and go to main menu");

@@ -451,6 +451,34 @@ void triggerHomelessMan(Player &player) {
   }
 }
 
+void luckEvents(Player &player)
+{
+  int random = randInt(0, 100);
+
+  if(random <= 15)
+  {
+    if(player.luck < 1)
+    {
+      if(!randInt(0,100) % 2)
+      {
+        if(player.wallet > 2)
+        {
+          float moneyLost =  randInt(1, floor(player.wallet));
+          cout << "You tripped and fell. Lost " << moneyAsString(moneyLost, 2, "$") << endl;
+          player.wallet -= moneyLost; 
+        }
+      } 
+    } else {
+      if(!randInt(0,100) % 2)
+      {
+          float moneyGained =  randInt(1, floor(player.wallet));
+          cout << "Lucky! You found " << moneyAsString(moneyGained, 2, "$") << " on the ground!" << endl;
+          player.wallet += moneyGained; 
+      }
+    }
+  }
+}
+
 void saveThread(atomic<bool> &running, Savefile &save, Player &player)
 {
   int i = 0;
@@ -472,12 +500,12 @@ void saveThread(atomic<bool> &running, Savefile &save, Player &player)
       }
     }
 
-    if(i % 120 == 0) //change to 30
+    if(i % 30 == 0) //change to 30
     {
       float byThis =  static_cast<float>(rand()) / static_cast<float>(RAND_MAX) / 10;
       // ostringstream stringThis;
       // stringThis << "Player luck change: " << player.luck << " to ";
-      randInt(1, 100) % 2 == 0 && player.luck - byThis > 0.2 || player.luck > 2.4 ? player.luck -= byThis : player.luck += byThis;
+      randInt(1, 100) % 2 == 0 && player.luck - byThis > 0.01 || player.luck > 2.4 ? player.luck -= byThis : player.luck += byThis;
       // stringThis << player.luck;
       // achievementMessage(stringThis.str());
     }
@@ -486,6 +514,10 @@ void saveThread(atomic<bool> &running, Savefile &save, Player &player)
     {
       achievementMessage("New Quests on the Notice Board!");
       player.getQuests();
+    }
+    if(i % 120 == 0)
+    {
+      player.bankBalance += player.bankBalance * 0.03;
     }
 
     i++;
@@ -509,48 +541,11 @@ int main(void) {
     mine(player);
   }
 
-
-  // player.firstBoot.occured = true;
-  // player.firstBoot.timesOccured++;
-  // player.bankBoot.occured = true;
-  // player.wallet = 600;
-  // // player.walletLimit = 300;
-  // player.questsUnlock.occured = false;
-  // // player.playerWalletUpgrade.occured = false;
-
   npcDialogueInit(player);
 
-  //remove this:
-  // player.currentCity.name = "Syntax City";
-  // player.cakeEventStart.occured = true;
-  // player.cakeEventMid.occured = true;
-  // player.cakeEventEnd.occured = false;
-  // player.timesFished = 0;
-  // player.fishingRod.level = 1;
-  // player.currentQuest = player.nothing;
 
   while (true) {
     
-    //remove this: {
-      // Vivian.interactionCount = 55;
-      // HomelessMan.interactionCount = 99;
-      // Manjunath.interactionCount = 5;
-      // veteranSmith.interactionCount = 10;
-
-
-      // player.incrementItemCount(player.wood.name, 10);
-      // player.incrementItemCount(player.rock.name, 10);
-      // player.incrementItemCount(player.usedCondom.name, 10);
-      // player.walletLimit = 1000;
-      // player.getNpcList();
-      // // cout << "getting quests..." << endl;
-      // player.getQuests();
-      // // cout << "displaying quests..." << endl;
-      // player.displayQuests();
-
-      // cout << player.currentQuest.name << player.currentQuest.description;
-      //}
-
 
     if(player.currentCity.name == "Syntax City" && player.cakeEventStart.occured && !player.cakeEventMid.occured)
     {
@@ -596,6 +591,8 @@ int main(void) {
       sleep(1);
     }
   }
+
+  luckEvents(player);
 
   running = false;
   return 0;
