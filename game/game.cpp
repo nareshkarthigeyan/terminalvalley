@@ -515,9 +515,9 @@ void saveThread(atomic<bool> &running, Savefile &save, Player &player)
       achievementMessage("New Quests on the Notice Board!");
       player.getQuests();
     }
-    if(i % 120 == 0)
+    if(i % 300 == 0)
     {
-      player.bankBalance += player.bankBalance * 0.03;
+      player.bankBalance += player.bankBalance * 0.01;
     }
 
     i++;
@@ -558,7 +558,7 @@ int main(void) {
       achievementMessage("Go to Vivian in Terminille to deliver the cake!");
     }
 
-    if(player.playerWalletUpgrade.occured && !player.questsUnlock.occured)
+    if(player.walletLimit > 300 && !player.questsUnlock.occured)
     {
       achievementMessage("Notice board Quests Unlocked! Click 'n' to go there");
       sleep(1);
@@ -585,7 +585,7 @@ int main(void) {
         (player.currentCity.name == Terminille.name)) {
       triggerHomelessMan(player);
     }
-    if (player.bankBoot.occured && player.guildUnlocked.occured && (player.bankBalance >= 500 || player.wallet >= 500) && !player.railwayStationUnlock.occured && (player.currentQuest.name == player.nothing.name))
+    if (player.bankBoot.occured && player.guildUnlocked.occured && (player.bankBalance >= 1000 || player.wallet >= 1000) && !player.railwayStationUnlock.occured && (player.currentQuest.name == player.nothing.name))
     {
       achievementMessage("New Quest Unlocked. Visit Vivian at the bank.");
       sleep(1);

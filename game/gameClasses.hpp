@@ -1596,6 +1596,7 @@ public:
           if (player.wallet < player.pickaxe.upgradeCost[level] &&
               player.bankBalance < player.pickaxe.upgradeCost[level]) {
             achievementMessage("Insufficient Funds!");
+            insufficient = true;
           }
           if (player.pickaxe.requiredCount[level][i] >
               player.pickaxe.required[level][i].count) {
@@ -1621,8 +1622,7 @@ public:
 
         if (player.withdrawFromWallet(player.pickaxe.upgradeCost[level])) {
           for (int i = 0; i < 2; i++) {
-            player.pickaxe.required[level][i].count -=
-                player.pickaxe.requiredCount[level][i];
+            player.pickaxe.required[level][i].count -= player.pickaxe.requiredCount[level][i];
           }
           player.addXP(player.pickaxe.upgradeXP[player.pickaxe.level]);
           player.pickaxe.level++;
@@ -2136,6 +2136,11 @@ public:
     } 
   }
 
+  void stockMarket(Player &player)
+  {
+
+  }
+
   void enter(Player &player) {
 
     if((player.bankBoot.occured && player.guildUnlocked.occured && (player.bankBalance >= 1000 || player.wallet >= 1000) && !player.railwayStationUnlock.occured) || player.cakeEventStart.occured && player.cakeEventMid.occured && !player.cakeEventEnd.occured)
@@ -2177,8 +2182,7 @@ public:
 
       vector<string> menu = {"a) Withdraw Amount",   "b) Deposit Amount",
                              "c) Check Balance",     "d) Upgrade Wallet Limit",
-                             "e) Credit Card Plans", "f) Insurance & Loans",
-                             "q) quit bank"};
+                             "e) Credit Card Plans", "q) quit bank"};
 
       while (true) {
         for (int i = 0; i < menu.size(); i++) {
