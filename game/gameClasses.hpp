@@ -332,6 +332,26 @@ public:
 
   }
 
+  void decrementItemCount(string itemName, int byThis)
+  {
+      vector <item*> items = getMineItemsByAddress();
+      for(auto &item : items){
+          if(itemName == item->name)
+          {
+              item->count -= byThis;
+              break;
+          }
+      }
+
+      vector <item *> items2 = getFishItemsByAddress();
+      for(auto &fish : items2){
+          if(itemName == fish->name){
+              fish->count -= byThis;
+              break;
+          }
+      }
+  }
+
   NLOHMANN_DEFINE_TYPE_INTRUSIVE(Inventory, hasPickaxe, pickaxe, fishingRod,
                                  dirt, rock, wood, coal, granite, iron, copper,
                                  silver, tin, hardRock, gold, diamond, ruby,
@@ -588,6 +608,7 @@ long double xp {0};
               // cout << "\t + " << moneyAsString(currentQuest.reward) << "\tKa-ching!";
               // cout << " - " << allItems[i]->count << endl;
               //allItems[i]->count -= currentQuest.itemCount;
+              decrementItemCount(allItems[i]->name, currentQuest.itemCount);
               cout << " - " << currentQuest.itemCount << " " << currentQuest.itemReq.name << endl;
               //cout << " - " << allItems[i]->count << endl;
               currentQuest = nothing;
@@ -1625,7 +1646,8 @@ public:
 
         if (player.withdrawFromWallet(player.pickaxe.upgradeCost[level])) {
           for (int i = 0; i < 2; i++) {
-            player.pickaxe.required[level][i].count -= player.pickaxe.requiredCount[level][i];
+              player.decrementItem(player.pickaxe.required[level][i].name, player.pickaxe.requiredCount[level][i]);
+           //  player.pickaxe.required[level][i].count -= player.pickaxe.requiredCount[level][i];
           }
           player.addXP(player.pickaxe.upgradeXP[player.pickaxe.level]);
           player.pickaxe.level++;

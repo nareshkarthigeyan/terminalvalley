@@ -1,21 +1,21 @@
 {
     "allQuests": [
         {
-            "description": "Need 12 of Dirt. Planning to build something. Give it when you see me...",
+            "description": "Urgenly require 15 pieces of Rock for personal reasons. Hurry!",
             "inProgress": false,
-            "itemCount": 12,
+            "itemCount": 15,
             "itemReq": {
                 "buyPrice": 0.0,
                 "count": 0,
                 "luckFactor": 1.0,
-                "name": "Dirt",
+                "name": "Rock",
                 "rareity": 1.0,
                 "rareityString": "",
                 "sellPrice": 0.0,
                 "totalCount": 0,
                 "xp": 0.5
             },
-            "name": "Do me a favour this one time - Manjunath",
+            "name": "A little help for Manjunath",
             "npc": {
                 "description": "Buyer. Likes Dad Jokes",
                 "dialogues": [
@@ -48,24 +48,24 @@
                 "money": 0.0,
                 "name": "Manjunath"
             },
-            "reward": 252.0
+            "reward": 168.0
         },
         {
-            "description": "Urgenly require 37 pieces of Dirt for personal reasons. Hurry!",
+            "description": "You got Rock? I need about 26 of them. I'll take it the next time we meet.",
             "inProgress": false,
-            "itemCount": 37,
+            "itemCount": 26,
             "itemReq": {
                 "buyPrice": 0.0,
                 "count": 0,
                 "luckFactor": 1.0,
-                "name": "Dirt",
+                "name": "Rock",
                 "rareity": 1.0,
                 "rareityString": "",
                 "sellPrice": 0.0,
                 "totalCount": 0,
                 "xp": 0.5
             },
-            "name": "Do me a favour this one time - Homeless Man",
+            "name": "Help wanted! - Homeless Man",
             "npc": {
                 "description": "Asks for spare change. Claims to be your guardian angel",
                 "dialogues": [
@@ -91,15 +91,15 @@
                     "Even after so much of a man's life force has been lost, his beard continues to grow."
                 ],
                 "heartPoints": 0,
-                "interactionCount": 0,
+                "interactionCount": 1,
                 "money": 0.0,
                 "name": "Homeless Man"
             },
-            "reward": 111.30000305175781
+            "reward": 228.89999389648438
         }
     ],
     "badges": [],
-    "bankBalance": 396.9927197283547,
+    "bankBalance": 404.41015190577286,
     "bankBoot": {
         "objective": {
             "completed": true,
@@ -213,13 +213,13 @@
     },
     "coal": {
         "buyPrice": 5.6,
-        "count": 23,
+        "count": 0,
         "luckFactor": 1.0,
         "name": "Coal",
         "rareity": 0.7200000286102295,
         "rareityString": "",
-        "sellPrice": 0.14731660235525607,
-        "totalCount": 92,
+        "sellPrice": 9.392279040423182,
+        "totalCount": 96,
         "xp": 4.110000133514404
     },
     "copper": {
@@ -283,12 +283,12 @@
     },
     "dirt": {
         "buyPrice": 1.79,
-        "count": 34,
+        "count": 0,
         "luckFactor": 1.0,
         "name": "Dirt",
         "rareity": 0.8500000238418579,
         "rareityString": "",
-        "sellPrice": 0.046845703347471006,
+        "sellPrice": 2.1896524903701633,
         "totalCount": 146,
         "xp": 1.3799999952316284
     },
@@ -520,7 +520,7 @@
         "name": "Granite",
         "rareity": 0.5799999833106995,
         "rareityString": "",
-        "sellPrice": 5.485075642942216,
+        "sellPrice": 18.094565810264815,
         "totalCount": 10,
         "xp": 5.179999828338623
     },
@@ -560,7 +560,7 @@
         },
         "occured": true,
         "ready": false,
-        "timesOccured": 4
+        "timesOccured": 6
     },
     "inventoryUnlock": {
         "objective": {
@@ -582,7 +582,7 @@
         "name": "Iron",
         "rareity": 0.3100000023841858,
         "rareityString": "",
-        "sellPrice": 57.71730891408873,
+        "sellPrice": 113.94581477353047,
         "totalCount": 0,
         "xp": 11.210000038146973
     },
@@ -597,7 +597,7 @@
         "totalCount": 0,
         "xp": 56.5
     },
-    "level": 2,
+    "level": 3,
     "loansUnlocked": {
         "objective": {
             "completed": true,
@@ -622,7 +622,7 @@
         "totalCount": 0,
         "xp": 69.69000244140625
     },
-    "luck": 0.2812371850013733,
+    "luck": 1.2080919742584229,
     "magma": {
         "buyPrice": 7200.33,
         "count": 0,
@@ -746,7 +746,7 @@
                 "Even after so much of a man's life force has been lost, his beard continues to grow."
             ],
             "heartPoints": 0,
-            "interactionCount": 0,
+            "interactionCount": 1,
             "money": 0.0,
             "name": "Homeless Man"
         }
@@ -781,24 +781,24 @@
             [
                 {
                     "buyPrice": 2.75,
-                    "count": 76,
+                    "count": 0,
                     "luckFactor": 1.0,
                     "name": "Rock",
                     "rareity": 0.75,
                     "rareityString": "",
-                    "sellPrice": 1.256465494397059,
-                    "totalCount": 271,
+                    "sellPrice": 4.28831094338621,
+                    "totalCount": 278,
                     "xp": 2.75
                 },
                 {
                     "buyPrice": 3.25,
-                    "count": 55,
+                    "count": 0,
                     "luckFactor": 1.0,
                     "name": "Wood",
                     "rareity": 0.6800000071525574,
                     "rareityString": "",
-                    "sellPrice": 1.7472956133851767,
-                    "totalCount": 228,
+                    "sellPrice": 6.006740875475943,
+                    "totalCount": 245,
                     "xp": 3.2100000381469727
                 }
             ],
@@ -810,19 +810,19 @@
                     "name": "Granite",
                     "rareity": 0.5799999833106995,
                     "rareityString": "",
-                    "sellPrice": 5.485075642942216,
+                    "sellPrice": 18.094565810264815,
                     "totalCount": 10,
                     "xp": 5.179999828338623
                 },
                 {
                     "buyPrice": 3.25,
-                    "count": 110,
+                    "count": 55,
                     "luckFactor": 1.0,
                     "name": "Wood",
                     "rareity": 0.6800000071525574,
                     "rareityString": "",
-                    "sellPrice": 1.7472956133851767,
-                    "totalCount": 228,
+                    "sellPrice": 6.006740875475943,
+                    "totalCount": 245,
                     "xp": 3.2100000381469727
                 }
             ],
@@ -1010,13 +1010,13 @@
     },
     "rock": {
         "buyPrice": 2.75,
-        "count": 101,
+        "count": 25,
         "luckFactor": 1.0,
         "name": "Rock",
         "rareity": 0.75,
         "rareityString": "",
-        "sellPrice": 0.07225665254151004,
-        "totalCount": 271,
+        "sellPrice": 4.28831094338621,
+        "totalCount": 278,
         "xp": 2.75
     },
     "ruby": {
@@ -1112,7 +1112,7 @@
         "xp": 11.180000305175781
     },
     "timesFished": 0,
-    "timesMined": 208,
+    "timesMined": 216,
     "tin": {
         "buyPrice": 71.42,
         "count": 0,
@@ -1168,7 +1168,7 @@
         "totalCount": 0,
         "xp": 1.6799999475479126
     },
-    "wallet": -0.004925966262817383,
+    "wallet": 219.1103607416153,
     "walletLimit": 1000.0,
     "whaleTooth": {
         "buyPrice": 10000.0,
@@ -1183,16 +1183,16 @@
     },
     "wood": {
         "buyPrice": 3.25,
-        "count": 110,
+        "count": 55,
         "luckFactor": 1.0,
         "name": "Wood",
         "rareity": 0.6800000071525574,
         "rareityString": "",
-        "sellPrice": 0.0856324545263047,
-        "totalCount": 228,
+        "sellPrice": 6.006740875475943,
+        "totalCount": 245,
         "xp": 3.2100000381469727
     },
-    "xp": 1299.310005903244,
+    "xp": 1675.8700063228607,
     "xpToLvl": [
         300,
         1500,
