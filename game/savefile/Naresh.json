@@ -1,7 +1,105 @@
 {
-    "allQuests": [],
+    "allQuests": [
+        {
+            "description": "Need 12 of Dirt. Planning to build something. Give it when you see me...",
+            "inProgress": false,
+            "itemCount": 12,
+            "itemReq": {
+                "buyPrice": 0.0,
+                "count": 0,
+                "luckFactor": 1.0,
+                "name": "Dirt",
+                "rareity": 1.0,
+                "rareityString": "",
+                "sellPrice": 0.0,
+                "totalCount": 0,
+                "xp": 0.5
+            },
+            "name": "Do me a favour this one time - Manjunath",
+            "npc": {
+                "description": "Buyer. Likes Dad Jokes",
+                "dialogues": [
+                    "Howdy! How's the business going?",
+                    "Back in my days, we use to mine by hand, the current convinences like pickaxe never existed!",
+                    "Sometimes I feel I pay too much to you...",
+                    "What makes a good miner? Well, just keep mining and you will know...",
+                    "You know, when my wife left me for that seal navy, the only thing that kept me going was the smell of coal",
+                    "I went to the bank the other day, that lady is a peculiar one, I must say...",
+                    "In my army days, the war fleet use to have magazines with pictures of women, it was popular among the folks!",
+                    "The only thing that kept me going in darkness was the light that it didn't show me.",
+                    "Kid... don't tell me you are one of those new-age miners that disregard the beauty of hand mining... ahh those days!",
+                    "The business has been a bit rough recently",
+                    "New technologies confuse me sometimes...",
+                    "Have I ever been scammed? I don't know, you should ask me when I do.",
+                    "You ough to meet my son someday, he lives across the globe.",
+                    "I wish my son would meet me some days, he works too hard for his own good...",
+                    "My son called me the other day, he can't make it this weekend... I guess I'll have to wait for the next holiday season",
+                    "When people ask me why she left me, I still don't know what to say...",
+                    "Items use to cost way less when I was your age, stock market has ruined everything...",
+                    "Do I hate navy seals? Young soul, I hold nothing against them.",
+                    "Discount? I'm already offering you the best prices...",
+                    "News paper companies have really \"fell off\" now...",
+                    "I could do with one of the good ol' magazines right now...",
+                    "The older you grow, the more you realise life is meaningless",
+                    "It never really gets better, we just get used to things being worse and shitty all the time."
+                ],
+                "heartPoints": 0,
+                "interactionCount": 0,
+                "money": 0.0,
+                "name": "Manjunath"
+            },
+            "reward": 252.0
+        },
+        {
+            "description": "Urgenly require 37 pieces of Dirt for personal reasons. Hurry!",
+            "inProgress": false,
+            "itemCount": 37,
+            "itemReq": {
+                "buyPrice": 0.0,
+                "count": 0,
+                "luckFactor": 1.0,
+                "name": "Dirt",
+                "rareity": 1.0,
+                "rareityString": "",
+                "sellPrice": 0.0,
+                "totalCount": 0,
+                "xp": 0.5
+            },
+            "name": "Do me a favour this one time - Homeless Man",
+            "npc": {
+                "description": "Asks for spare change. Claims to be your guardian angel",
+                "dialogues": [
+                    "I say the world can go to hell, but I must have my tea",
+                    "How do you claim to be alive, and you have no story to tell",
+                    "Most things they claim to change life don't amuse me",
+                    "Morality? [laughs] what even is that? A fantasy?",
+                    "It's better to be delusional and in a mental paradise than being wound up in reality and suffering",
+                    "The stars seem to align to tell me that I am insignificant.",
+                    "There is not much difference between me and you, we both are the same, yes",
+                    "Being sincere can also mean being stupid at the same time.",
+                    "love is suffering, there is no other meaning to it",
+                    "My god, a moment of bliss, isn't that enough for this lifetime?",
+                    "The secure ones are the most insecure if you watch them closely...",
+                    "I have seen the things you can never imagine...",
+                    "Nowadays all capable people are terribly afraid of being judged, hence turn into miserable pieces of shits.",
+                    "I will never understand how a man of my thoughts can continue living...",
+                    "Standing against injustice? Isn't is just showing off to the world how much justice you are... a good person.",
+                    "Denial of death is the single most thing that drives us from being afraid to live.",
+                    "Why bother not looking rude when all your actions are rude enough?",
+                    "[sings 'why this kolaveri']",
+                    "Just remember, life is a box of chocolates.",
+                    "Even after so much of a man's life force has been lost, his beard continues to grow."
+                ],
+                "heartPoints": 0,
+                "interactionCount": 0,
+                "money": 0.0,
+                "name": "Homeless Man"
+            },
+            "reward": 111.30000305175781
+        }
+    ],
     "badges": [],
-    "bankBalance": 370.282277277926,
+    "bankBalance": 396.9927197283547,
     "bankBoot": {
         "objective": {
             "completed": true,
@@ -462,7 +560,7 @@
         },
         "occured": true,
         "ready": false,
-        "timesOccured": 0
+        "timesOccured": 4
     },
     "inventoryUnlock": {
         "objective": {
@@ -524,7 +622,7 @@
         "totalCount": 0,
         "xp": 69.69000244140625
     },
-    "luck": 0.16560369729995728,
+    "luck": 0.2812371850013733,
     "magma": {
         "buyPrice": 7200.33,
         "count": 0,

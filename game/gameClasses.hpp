@@ -486,23 +486,26 @@ long double xp {0};
     // cout << "NPC list size: " << npcList.size() << endl;
     if(npcList.empty()) return;
     // cout << npcList.size() << endl;
-    int num = randInt(1, npcList.size());
-    //cout << num << endl;
+    int num = randInt(0, npcList.size() - 1);
+    // cout << num << endl;
     vector<NPC> npcListLocal = npcList;
+    // cout << npcListLocal.size() << endl;
     if(num == 0)
     {
       // achievementMessage("There are no requests right now. Come back later.");
       return;
     }
 
-    vector<string> titleMessages = {"A little help for $NPC", "Help wanted! - $NPC", "$NPC - Need a favour!", "Do me a favour this one time - $NPC" };
-    vector<string> descMessages = {"Need $count of $item. Planning to build something. Give it when you see me...", "Hey, would want $count $item! Don't ask why :)", "You got $item? I need about $count of them. I'll take it the next time we meet.", "Urgenly require $count pieces of $item for personal reasons. Hurry!", "Planning to make a lemonade stand. I need $count $item... can you get 'em?"};
+    vector<string> titleMessages = {"A little help for $NPC", "Help wanted! - $NPC", "$NPC - Need a favour!", "Do me a favour this one time - $NPC", "Whats up? Assistance required!" };
+    vector<string> descMessages = {"Need $count of $item. Planning to build something. Give it when you see me...", "Hey, would want $count $item! Don't ask why :)", "You got $item? I need about $count of them. I'll take it the next time we meet.", "Urgenly require $count pieces of $item for personal reasons. Hurry!", "Planning to make a lemonade stand. I need $count $item... can you get 'em?", "Get me $count pieces of $item. FAST!!"};
 
     for(int i = 0; i < num; i++){
     // cout << "inside loop." << endl;
-      // cout << "creating quest " << i << endl;
-      int rand = randInt(1, npcListLocal.size() - 1);
+    //   cout << "creating quest " << i << endl;
+      int rand = randInt(0, npcListLocal.size() - 1);
+      // cout << "rand: " << rand << endl;
       NPC selected = npcListLocal[rand];
+      // cout << npcListLocal[rand].name << endl;
       string title;
       string desc;
       item itemReq;

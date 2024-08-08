@@ -494,7 +494,7 @@ void saveThread(atomic<bool> &running, Savefile &save, Player &player)
     if(i % 5 == 0)
     {
       save.saveGameState(player);
-      if(i % 70 == 0)
+      if(i % 300 == 0)
       {
         achievementMessage("Game autosaved");
       }
@@ -510,10 +510,11 @@ void saveThread(atomic<bool> &running, Savefile &save, Player &player)
       // achievementMessage(stringThis.str());
     }
 
-    if(i % 240 == 0 && player.questsUnlock.occured)
+    if(i % 350 == 0 && player.questsUnlock.occured)
     {
       achievementMessage("New Quests on the Notice Board!");
       player.getQuests();
+     // player.displayQuests(); //remove
     }
     if(i % 300 == 0)
     {
@@ -533,7 +534,8 @@ int main(void) {
   thread saveThreading(saveThread, ref(running), ref(save), ref(player));
   saveThreading.detach();
 
-// player.fishingRod.level = 1;
+// // player.fishingRod.level = 1;
+// player.questsUnlock.occured = true;
 
   if (!player.firstBoot.occured) {
     Events event;
